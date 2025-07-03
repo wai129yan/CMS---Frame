@@ -1,0 +1,679 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./output.css" rel="stylesheet">
+  <style>
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+        width: 80px;
+      }
+      .sidebar.open {
+        transform: translateX(0);
+        width: 260px;
+      }
+      .sidebar .menu-text {
+        display: none;
+      }
+      .sidebar.open .menu-text {
+        display: block;
+      }
+      .secondary-sidebar {
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+        position: fixed;
+        top: 0;
+        left: 260px;
+        width: 280px;
+        height: 100%;
+        background: #f8fafc;
+        z-index: 60;
+      }
+      .sidebar.open + .secondary-sidebar {
+        left: 260px;
+      }
+      .sidebar:not(.open) + .secondary-sidebar {
+        left: 80px;
+      }
+      .secondary-sidebar.open {
+        transform: translateX(0);
+      }
+      .main-content {
+        transition: margin-left 0.3s ease-in-out;
+      }
+      .sidebar.open + .main-content {
+        margin-left: 260px;
+      }
+      @media (max-width: 768px) {
+        .sidebar {
+          position: fixed;
+          z-index: 50;
+          width: 80px;
+        }
+        .sidebar.open {
+          width: 260px;
+        }
+        .secondary-sidebar {
+          left: 260px;
+          width: 220px;
+        }
+        .sidebar.open + .main-content {
+          margin-left: 0;
+        }
+      }
+      /* Dark mode styles */
+      .dark {
+        --bg-color: #111827;
+        --text-color: #e5e7eb;
+        --secondary-text-color: #9ca3af;
+        --sidebar-bg: #111827;
+        --secondary-sidebar-bg: #111827;
+        --table-bg: #1f2937;
+        --border-color: #4b5563;
+        --button-bg: #374151;
+        --button-text: #e5e7eb;
+        --header-bg: #111827;
+        --card-bg: #1f2937;
+        --active-border: #60a5fa;
+      }
+      .dark .bg-gray-50 {
+        background-color: var(--bg-color);
+      }
+      .dark .text-[#101518] {
+        color: var(--text-color);
+      }
+      .dark .text-[#5c748a] {
+        color: var(--secondary-text-color);
+      }
+      .dark .sidebar {
+        background-color: var(--sidebar-bg);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+      .dark .secondary-sidebar {
+        background-color: var(--secondary-sidebar-bg);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+      .dark .bg-[#eaedf1] {
+        background-color: var(--button-bg);
+      }
+      .dark .bg-[#dce8f3] {
+        background-color: var(--button-bg);
+      }
+      .dark .text-[#101518] {
+        color: var(--button-text);
+      }
+      .dark .border-[#d4dce2] {
+        border-color: var(--border-color);
+      }
+      .dark .border-[#eaedf1] {
+        border-color: var(--border-color);
+      }
+      .dark .bg-gray-50 table {
+        background-color: var(--table-bg);
+      }
+      .dark header {
+        background-color: var(--header-bg);
+      }
+      .dark .bg-white {
+        background-color: var(--card-bg);
+      }
+      /* Enhanced styles for visibility and beauty */
+      .card, table, .new-issue-form input, .new-issue-form select, button {
+        transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out, opacity 0.2s ease-in-out;
+      }
+      .dark .card, .dark table tr:nth-child(odd) {
+        background-color: #1f2937;
+      }
+      .dark table tr:nth-child(even) {
+        background-color: #111827;
+      }
+      .nav-link.active {
+        @apply border-b-[3px] border-b-[#dce8f3] text-[#101518];
+      }
+      .dark .nav-link.active {
+        @apply border-b-[3px] border-b-[var(--active-border)] text-[var(--text-color)];
+      }
+      .new-issue-form label {
+        color: var(--text-color);
+        font-weight: 600;
+      }
+      .new-issue-form input, .new-issue-form select {
+        background-color: #eaedf1;
+        border-color: #d4dce2;
+        color: #101518;
+        border-radius: 0.5rem;
+        padding: 0.5rem 1rem;
+      }
+      .dark .new-issue-form input, .dark .new-issue-form select {
+        background-color: var(--button-bg);
+        color: var(--button-text);
+        border-color: var(--border-color);
+      }
+      .new-issue-form input:focus, .new-issue-form select:focus {
+        outline: none;
+        border-color: var(--active-border);
+        box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2);
+      }
+      button:hover, .new-issue-form input:hover, .new-issue-form select:hover {
+        opacity: 0.9;
+      }
+      .dark button:hover, .dark .new-issue-form input:hover, .dark .new-issue-form select:hover {
+        background-color: #4b5563;
+      }
+      th {
+        color: var(--text-color);
+      }
+    </style>
+</head>
+<body class="transition-colors duration-300">
+    <div class="relative flex size-full min-h-screen flex-col bg-gray-50 group/design-root overflow-x-hidden" style='font-family: Inter, "Noto Sans", sans-serif;'>
+      <div class="flex h-full grow">
+        <!-- Primary Sidebar -->
+        <div class="sidebar fixed top-0 left-0 h-full bg-gray-50 p-4 flex flex-col justify-between">
+          <div class="flex flex-col gap-4">
+            <div class="flex justify-between items-center mb-4">
+              <button id="close-sidebar" class="text-[#101518] p-2 hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                  <path
+                    d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31l-66.34,66.35a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+            <div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-[#eaedf1] cursor-pointer" data-category="inbox">
+              <div class="text-[#101518]" data-icon="Tray" data-size="24px" data-weight="fill">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                  <path
+                    d="M208,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32Zm0,176H48V168H76.69L96,187.32A15.89,15.89,0,0,0,107.31,192h41.38A15.86,15.86,0,0,0,160,187.31L179.31,168H208v40Z"
+                  ></path>
+                </svg>
+              </div>
+              <p class="menu-text text-[#101518] text-sm font-medium leading-normal">Inbox</p>
+            </div>
+            <div class="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-[#eaedf1] rounded-lg" data-category="my-issues">
+              <div class="text-[#101518]" data-icon="ListBullets" data-size="24px" data-weight="regular">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                  <path
+                    d="M80,64a8,8,0,0,1,8-8H216a8,8,0,0,1,0,16H88A8,8,0,0,1,80,64Zm136,56H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Zm0,64H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16ZM44,52A12,12,0,1,0,56,64,12,12,0,0,0,44,52Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,116Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,180Z"
+                  ></path>
+                </svg>
+              </div>
+              <p class="menu-text text-[#101518] text-sm font-medium leading-normal">My Issues</p>
+            </div>
+            <div class="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-[#eaedf1] rounded-lg" data-category="assigned-to-me">
+              <div class="text-[#101518]" data-icon="User" data-size="24px" data-weight="regular">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                  <path
+                    d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,0,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,0,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"
+                  ></path>
+                </svg>
+              </div>
+              <p class="menu-text text-[#101518] text-sm font-medium leading-normal">Assigned to Me</p>
+            </div>
+            <div class="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-[#eaedf1] rounded-lg" data-category="recently-updated">
+              <div class="text-[#101518]" data-icon="ClockCounterClockwise" data-size="24px" data-weight="regular">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                  <path
+                    d="M136,80v43.47l36.12,21.67a8,8,0,0,1-8.24,13.72l-40-24A8,8,0,0,1,120,128V80a8,8,0,0,1,16,0Zm-8-48A95.44,95.44,0,0,0,60.08,60.15C52.81,67.51,46.35,74.59,40,82V64a8,8,0,0,0-16,0v40a8,8,0,0,0,8,8H72a8,8,0,0,0,0-16H49c7.15-8.42,14.27-16.35,22.39-24.57a80,80,0,1,1,1.66,114.75,8,8,0,1,0-11,11.64A96,96,0,1,0,128,32Z"
+                  ></path>
+                </svg>
+              </div>
+              <p class="menu-text text-[#101518] text-sm font-medium leading-normal">Recently Updated</p>
+            </div>
+            <div class="flex items-center gap-3 px-3 py-2 cursor-pointer hover:bg-[#eaedf1] rounded-lg" data-category="all-issues">
+              <div class="text-[#101518]" data-icon="ListBullets" data-size="24px" data-weight="regular">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                  <path
+                    d="M80,64a8,8,0,0,1,8-8H216a8,8,0,0,1,0,16H88A8,8,0,0,1,80,64Zm136,56H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Zm0,64H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16ZM44,52A12,12,0,1,0,56,64,12,12,0,0,0,44,52Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,116Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,180Z"
+                  ></path>
+                </svg>
+              </div>
+              <p class="menu-text text-[#101518] text-sm font-medium leading-normal">All Issues</p>
+            </div>
+          </div>
+          <button
+            id="new-issue-button"
+            class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#dce8f3] text-[#101518] text-sm font-bold leading-normal tracking-[0.015em] shadow-sm hover:bg-gray-200 dark:hover:bg-gray-600"
+          >
+            <span class="menu-text truncate">New Issue</span>
+          </button>
+        </div>
+        <!-- Secondary Sidebar -->
+        <div class="secondary-sidebar hidden p-4 flex flex-col gap-4">
+          <div class="flex items-center justify-between">
+            <h3 id="secondary-sidebar-title" class="text-[#101518] text-lg font-extrabold leading-tight">Category Details</h3>
+            <button id="close-secondary-sidebar" class="text-[#101518] p-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                <path
+                  d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31l-66.34,66.35a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"
+                ></path>
+              </svg>
+            </button>
+          </div>
+          <div id="secondary-sidebar-content" class="text-[#5c748a] text-sm font-normal leading-relaxed">
+            <!-- Content will be dynamically updated -->
+          </div>
+          <div id="new-issue-form-container" class="new-issue-form hidden flex flex-col gap-4">
+            <form id="new-issue-form" class="flex flex-col gap-4">
+              <div class="flex flex-col">
+                <label class="text-[#101518] text-sm font-semibold" for="issue-key">Issue Key</label>
+                <input
+                  id="issue-key"
+                  type="text"
+                  placeholder="e.g., ISSUE-103"
+                  class="form-input rounded-lg border border-[#d4dce2] bg-[#eaedf1] text-[#101518] px-4 py-2 text-sm shadow-sm"
+                />
+              </div>
+              <div class="flex flex-col">
+                <label class="text-[#101518] text-sm font-semibold" for="summary">Summary</label>
+                <input
+                  id="summary"
+                  type="text"
+                  placeholder="Enter issue summary"
+                  class="form-input rounded-lg border border-[#d4dce2] bg-[#eaedf1] text-[#101518] px-4 py-2 text-sm shadow-sm"
+                />
+              </div>
+              <div class="flex flex-col">
+                <label class="text-[#101518] text-sm font-semibold" for="assignee">Assignee</label>
+                <select
+                  id="assignee"
+                  class="form-select rounded-lg border border-[#d4dce2] bg-[#eaedf1] text-[#101518] px-4 py-2 text-sm shadow-sm"
+                >
+                  <option value="unassigned">Unassigned</option>
+                  <option value="ethan">Ethan</option>
+                  <option value="olivia">Olivia</option>
+                </select>
+              </div>
+              <div class="flex flex-col">
+                <label class="text-[#101518] text-sm font-semibold" for="status">Status</label>
+                <select
+                  id="status"
+                  class="form-select rounded-lg border border-[#d4dce2] bg-[#eaedf1] text-[#101518] px-4 py-2 text-sm shadow-sm"
+                >
+                  <option value="to-do">To Do</option>
+                  <option value="in-progress">In Progress</option>
+                  <option value="done">Done</option>
+                </select>
+              </div>
+              <div class="flex flex-col">
+                <label class="text-[#101518] text-sm font-semibold" for="priority">Priority</label>
+                <select
+                  id="priority"
+                  class="form-select rounded-lg border border-[#d4dce2] bg-[#eaedf1] text-[#101518] px-4 py-2 text-sm shadow-sm"
+                >
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </div>
+              <div class="flex flex-col">
+                <label class="text-[#101518] text-sm font-semibold" for="created">Created</label>
+                <input
+                  id="created"
+                  type="date"
+                  value="2025-07-03"
+                  class="form-input rounded-lg border border-[#d4dce2] bg-[#eaedf1] text-[#101518] px-4 py-2 text-sm shadow-sm"
+                />
+              </div>
+              <button
+                type="submit"
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#dce8f3] text-[#101518] text-sm font-bold leading-normal tracking-[0.015em] shadow-sm hover:bg-gray-200 dark:hover:bg-gray-600"
+              >
+                Submit Issue
+              </button>
+            </form>
+          </div>
+        </div>
+        <!-- Main Content -->
+        <div class="layout-container flex h-full grow flex-col main-content">
+          <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#eaedf1] px-10 py-3">
+            <div class="flex items-center gap-4 text-[#101518]">
+              <button id="toggle-sidebar" class="text-[#101518] p-2 hover:bg-[#eaedf1] rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                  <path
+                    d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"
+                  ></path>
+                </svg>
+              </button>
+              <div class="size-8">
+                <img src="../src/izqz8glllguody54aofs.webp" class="w-20 object-contain" alt="Logo">
+              </div>
+              <h2 class="text-[#101518] text-lg font-extrabold leading-tight tracking-[-0.015em]">OUTWARD</h2>
+            </div>
+            <div class="flex flex-1 justify-end gap-8">
+              <div class="flex items-center gap-9">
+                <a class="nav-link text-[#101518] text-sm font-semibold leading-normal hover:text-[#4b5563]" href="#" data-section="dashboard">Dashboard</a>
+                <a class="nav-link text-[#101518] text-sm font-semibold leading-normal active" href="#" data-section="backlog">Backlog</a>
+                <a class="nav-link text-[#101518] text-sm font-semibold leading-normal hover:text-[#4b5563]" href="#" data-section="roadmaps">Roadmaps</a>
+                <a class="nav-link text-[#101518] text-sm font-semibold leading-normal hover:text-[#4b5563]" href="#" data-section="reports">Reports</a>
+              </div>
+              <button id="toggle-dark-mode" class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#eaedf1] text-[#101518] text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-3 shadow-sm hover:bg-gray-200 dark:hover:bg-gray-600">
+                <div class="text-[#101518]" data-icon="Sun" data-size="20px" data-weight="regular">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" viewBox="0 0 256 256">
+                    <path
+                      d="M128,56a72,72,0,1,0,72,72A72.08,72.08,0,0,0,128,56Zm0,128a56,56,0,1,1,56-56A56.06,56.06,0,0,1,128,184ZM116,28V12a8,8,0,0,1,16,0V28a8,8,0,0,1-16,0Zm0,200v16a8,8,0,0,1-16,0V228a8,8,0,0,1,16,0ZM44,108H28a8,8,0,0,0,0,16H44a8,8,0,0,0,0-16Zm200,0H228a8,8,0,0,0,0,16h16a8,8,0,0,0,0-16ZM62.22,34.75a8,8,0,0,0-11.31,11.31L58.63,58.6A8,8,0,0,0,69.94,47.29ZM197.37,197.4a8,8,0,0,0-11.31,11.31l7.74,7.75a8,8,0,0,0,11.31-11.31Zm-146.14,0-7.75,7.74a8,8,0,0,0,11.31,11.31l7.74-7.75a8,8,0,0,0-11.31-11.31ZM193.78,47.29a8,8,0,0,0,11.31-11.31l-7.74-7.75a8,8,0,0,0-11.31,11.31Z"
+                    ></path>
+                  </svg>
+                </div>
+              </button>
+              <div class="flex items-center gap-2">
+                <div
+                  class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDWqrYQNPXsESYU6gkA-0Fye_lhbAZWE0bAuFuCD3-jw12dj0xqBbbQb1umrRFukw1e2oV1btXli7Y_jo9wJpIlFOGrzCl9bHKZpSIsi0LNLHp38c-50cnsKyGH6g9Uw1edb2H9OKvUi1mSxIhTCEMH-vA0nIcFNRVSTudPhEwklm0tm2l6GN28OQ8Ng69PIkUAlfv4pja4fcDDGa3nLoT4zguUWWWO1buBzSx2ze_QqUaTnA6z7kY-EmHx-Apn9LEJIuw4IXGBqg");'
+                ></div>
+                <span class="text-[#101518] text-sm font-semibold">John Doe</span>
+              </div>
+            </div>
+          </header>
+          <div class="gap-1 px-6 flex flex-1 justify-center py-5">
+            <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+              <div id="main-content" class="flex flex-col gap-4">
+                <!-- Backlog Content (Default) -->
+                <div id="backlog-content" class="content-section">
+                  <div class="flex flex-wrap justify-between gap-3 p-4">
+                    <div class="flex min-w-72 flex-col gap-3">
+                      <p class="text-[#101518] tracking-light text-[32px] font-extrabold leading-tight">Backlog</p>
+                      <p class="text-[#5c748a] text-sm font-normal leading-relaxed">Manage and prioritize your team's work</p>
+                    </div>
+                  </div>
+                  <div class="px-4 py-3">
+                    <label class="flex flex-col min-w-40 h-12 w-full">
+                      <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+                        <div
+                          class="text-[#5c748a] flex border-none bg-[#eaedf1] items-center justify-center pl-4 rounded-l-lg border-r-0"
+                          data-icon="MagnifyingGlass"
+                          data-size="24px"
+                          data-weight="regular"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                            <path
+                              d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"
+                            ></path>
+                          </svg>
+                        </div>
+                        <input
+                          placeholder="Search issues"
+                          class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#101518] focus:outline-0 focus:ring-0 border-none bg-[#eaedf1] focus:border-none h-full placeholder:text-[#5c748a] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal shadow-sm"
+                        />
+                      </div>
+                    </label>
+                  </div>
+                  <div class="pb-3">
+                    <div class="flex border-b border-[#d4dce2] px-4 gap-8">
+                      <a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#5c748a] pb-[13px] pt-4 hover:text-[#101518]" href="#">
+                        <p class="text-[#5c748a] text-sm font-bold leading-normal tracking-[0.015em]">Board</p>
+                      </a>
+                      <a class="flex flex-col items-center justify-center border-b-[3px] border-b-[#dce8f3] text-[#101518] pb-[13px] pt-4" href="#">
+                        <p class="text-[#101518] text-sm font-bold leading-normal tracking-[0.015em]">List</p>
+                      </a>
+                      <a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#5c748a] pb-[13px] pt-4 hover:text-[#101518]" href="#">
+                        <p class="text-[#5c748a] text-sm font-bold leading-normal tracking-[0.015em]">Timeline</p>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="px-4 py-3 @container">
+                    <div class="flex overflow-hidden rounded-lg border border-[#d4dce2] bg-gray-50">
+                      <table class="flex-1">
+                        <thead>
+                          <tr class="bg-gray-50">
+                            <th class="table-f9770b17-5b42-427d-8141-0f7ccf57a955-column-120 px-4 py-3 text-left text-[#101518] w-[400px] text-sm font-semibold leading-normal">Key</th>
+                            <th class="table-f9770b17-5b42-427d-8141-0f7ccf57a955-column-240 px-4 py-3 text-left text-[#101518] w-[400px] text-sm font-semibold leading-normal">Summary</th>
+                            <th class="table-f9770b17-5b42-427d-8141-0f7ccf57a955-column-360 px-4 py-3 text-left text-[#101518] w-[400px] text-sm font-semibold leading-normal">Assignee</th>
+                            <th class="table-f9770b17-5b42-427d-8141-0f7ccf57a955-column-480 px-4 py-3 text-left text-[#101518] w-60 text-sm font-semibold leading-normal">Status</th>
+                            <th class="table-f9770b17-5b42-427d-8141-0f7ccf57a955-column-600 px-4 py-3 text-left text-[#101518] w-60 text-sm font-semibold leading-normal">Priority</th>
+                            <th class="table-f9770b17-5b42-427d-8141-0f7ccf57a955-column-720 px-4 py-3 text-left text-[#101518] w-[400px] text-sm font-semibold leading-normal">Created</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="border-t border-t-[#d4dce2]">
+                            <td class="table-f9770b17-5b42-427d-8141-0f7ccf57a955-column-120 h-[72px] px-4 py-2 w-[400px] text-[#101518] text-sm font-normal leading-normal">ISSUE-101</td>
+                            <td class="table-f9770b17-5b42-427d-8141-0f7ccf57a955-column-240 h-[72px] px-4 py-2 w-[400px] text-[#5c748a] text-sm font-normal leading-normal">Implement user authentication</td>
+                            <td class="table-f9770b17-5b42-427d-8141-0f7ccf57a955-column-360 h-[72px] px-4 py-2 w-[400px] text-[#5c748a] text-sm font-normal leading-normal">Ethan</td>
+                            <td class="table-f9770b17-5b42-427d-8141-0f7ccf57a955-column-480 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal">
+                              <button
+                                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 bg-[#eaedf1] text-[#101518] text-sm font-medium leading-normal w-full shadow-sm hover:bg-gray-200 dark:hover:bg-gray-600"
+                              >
+                                <span class="truncate">In Progress</span>
+                              </button>
+                            </td>
+                            <td class="table-f9770b17-5b42-427d-8141-0f7ccf57a955-column-600 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal">
+                              <button
+                                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 bg-[#eaedf1] text-[#101518] text-sm font-medium leading-normal w-full shadow-sm hover:bg-gray-200 dark:hover:bg-gray-600"
+                              >
+                                <span class="truncate">High</span>
+                              </button>
+                            </td>
+                            <td class="table-f9770b17-5b42-427d-8141-0f7ccf57a955-column-720 h-[72px] px-4 py-2 w-[400px] text-[#5c748a] text-sm font-normal leading-normal">2023-01-15</td>
+                          </tr>
+                          <tr class="border-t border-t-[#d4dce2]">
+                            <td class="table-f9770b17-5b42-427d-8141-0f7ccf57a955-column-120 h-[72px] px-4 py-2 w-[400px] text-[#101518] text-sm font-normal leading-normal">ISSUE-102</td>
+                            <td class="table-f9770b17-5b42-427d-8141-0f7ccf57a955-column-240 h-[72px] px-4 py-2 w-[400px] text-[#5c748a] text-sm font-normal leading-normal">Design landing page</td>
+                            <td class="table-f9770b17-5b42-427d-8141-0f7ccf57a955-column-360 h-[72px] px-4 py-2 w-[400px] text-[#5c748a] text-sm font-normal leading-normal">Olivia</td>
+                            <td class="table-f9770b17-5b42-427d-8141-0f7ccf57a955-column-480 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal">
+                              <button
+                                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 bg-[#eaedf1] text-[#101518] text-sm font-medium leading-normal w-full shadow-sm hover:bg-gray-200 dark:hover:bg-gray-600"
+                              >
+                                <span class="truncate">To Do</span>
+                              </button>
+                            </td>
+                            <td class="table-f9770b17-5b42-427d-8141-0f7ccf57a955-column-600 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal">
+                              <button
+                                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 bg-[#eaedf1] text-[#101518] text-sm font-medium leading-normal w-full shadow-sm hover:bg-gray-200 dark:hover:bg-gray-600"
+                              >
+                                <span class="truncate">Medium</span>
+                              </button>
+                            </td>
+                            <td class="table-f9770b17-5b42-427d-8141-0f7ccf57a955-column-720 h-[72px] px-4 py-2 w-[400px] text-[#5c748a] text-sm font-normal leading-normal">2023-01-16</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <style>
+                      @container(max-width:120px){.table-f9770b17-5b42-427d-8141-0f7ccf57a955-column-120{display: none;}}
+                      @container(max-width:240px){.table-f9770b17-5b42-427d-8141-0f7ccf57a955-column-240{display: none;}}
+                      @container(max-width:360px){.table-f9770b17-5b42-427d-8141-0f7ccf57a955-column-360{display: none;}}
+                      @container(max-width:480px){.table-f9770b17-5b42-427d-8141-0f7ccf57a955-column-480{display: none;}}
+                      @container(max-width:600px){.table-f9770b17-5b42-427d-8141-0f7ccf57a955-column-600{display: none;}}
+                      @container(max-width:720px){.table-f9770b17-5b42-427d-8141-0f7ccf57a955-column-720{display: none;}}
+                    </style>
+                  </div>
+                </div>
+                <!-- Dashboard Content -->
+                <div id="dashboard-content" class="content-section hidden">
+                  <div class="flex flex-wrap justify-between gap-3 p-4">
+                    <div class="flex min-w-72 flex-col gap-3">
+                      <p class="text-[#101518] tracking-light text-[32px] font-extrabold leading-tight">Dashboard</p>
+                      <p class="text-[#5c748a] text-sm font-normal leading-relaxed">Overview of your team's performance</p>
+                    </div>
+                  </div>
+                  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+                    <div class="card bg-white p-4 rounded-lg border border-[#d4dce2] shadow-sm">
+                      <h3 class="text-[#101518] text-lg font-extrabold">Tasks Completed</h3>
+                      <p class="text-[#5c748a] text-sm leading-relaxed">25 tasks completed this sprint</p>
+                    </div>
+                    <div class="card bg-white p-4 rounded-lg border border-[#d4dce2] shadow-sm">
+                      <h3 class="text-[#101518] text-lg font-extrabold">Active Projects</h3>
+                      <p class="text-[#5c748a] text-sm leading-relaxed">3 ongoing projects</p>
+                    </div>
+                    <div class="card bg-white p-4 rounded-lg border border-[#d4dce2] shadow-sm">
+                      <h3 class="text-[#101518] text-lg font-extrabold">Team Workload</h3>
+                      <p class="text-[#5c748a] text-sm leading-relaxed">Balanced across team members</p>
+                    </div>
+                  </div>
+                </div>
+                <!-- Roadmaps Content -->
+                <div id="roadmaps-content" class="content-section hidden">
+                  <div class="flex flex-wrap justify-between gap-3 p-4">
+                    <div class="flex min-w-72 flex-col gap-3">
+                      <p class="text-[#101518] tracking-light text-[32px] font-extrabold leading-tight">Roadmaps</p>
+                      <p class="text-[#5c748a] text-sm font-normal leading-relaxed">Plan and track project milestones</p>
+                    </div>
+                  </div>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+                    <div class="card bg-white p-4 rounded-lg border border-[#d4dce2] shadow-sm">
+                      <h3 class="text-[#101518] text-lg font-extrabold">Q1 Release</h3>
+                      <p class="text-[#5c748a] text-sm leading-relaxed">Scheduled for March 2025</p>
+                    </div>
+                    <div class="card bg-white p-4 rounded-lg border border-[#d4dce2] shadow-sm">
+                      <h3 class="text-[#101518] text-lg font-extrabold">Q2 Planning</h3>
+                      <p class="text-[#5c748a] text-sm leading-relaxed">In progress, due April 2025</p>
+                    </div>
+                  </div>
+                </div>
+                <!-- Reports Content -->
+                <div id="reports-content" class="content-section hidden">
+                  <div class="flex flex-wrap justify-between gap-3 p-4">
+                    <div class="flex min-w-72 flex-col gap-3">
+                      <p class="text-[#101518] tracking-light text-[32px] font-extrabold leading-tight">Reports</p>
+                      <p class="text-[#5c748a] text-sm font-normal leading-relaxed">Analyze team performance and progress</p>
+                    </div>
+                  </div>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+                    <div class="card bg-white p-4 rounded-lg border border-[#d4dce2] shadow-sm">
+                      <h3 class="text-[#101518] text-lg font-extrabold">Sprint Velocity</h3>
+                      <p class="text-[#5c748a] text-sm leading-relaxed">Average of 30 points per sprint</p>
+                    </div>
+                    <div class="card bg-white p-4 rounded-lg border border-[#d4dce2] shadow-sm">
+                      <h3 class="text-[#101518] text-lg font-extrabold">Bug Resolution Time</h3>
+                      <p class="text-[#5c748a] text-sm leading-relaxed">Average 2 days per bug</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // Toggle primary sidebar
+      const sidebar = document.querySelector('.sidebar');
+      const toggleSidebarButton = document.getElementById('toggle-sidebar');
+      const closeSidebarButton = document.getElementById('close-sidebar');
+
+      toggleSidebarButton.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+        closeSidebarButton.classList.toggle('hidden', !sidebar.classList.contains('open'));
+      });
+
+      closeSidebarButton.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+        closeSidebarButton.classList.add('hidden');
+      });
+
+      // Category content mapping for secondary sidebar
+      const categoryContent = {
+        'inbox': 'View all incoming tasks and notifications assigned to you or your team.',
+        'my-issues': 'List of issues created by you, including status and priority details.',
+        'assigned-to-me': 'Tasks specifically assigned to you for action or review.',
+        'recently-updated': 'Issues that have been recently modified or updated.',
+        'all-issues': 'Comprehensive list of all issues across the project.'
+      };
+
+      // Handle category clicks to open secondary sidebar
+      document.querySelectorAll('.sidebar [data-category]').forEach(item => {
+        item.addEventListener('click', () => {
+          const category = item.getAttribute('data-category');
+          const secondarySidebar = document.querySelector('.secondary-sidebar');
+          const titleElement = document.getElementById('secondary-sidebar-title');
+          const contentElement = document.getElementById('secondary-sidebar-content');
+          const formContainer = document.getElementById('new-issue-form-container');
+
+          // Update title and content, hide form
+          titleElement.textContent = item.querySelector('.menu-text').textContent;
+          contentElement.textContent = categoryContent[category] || 'No content available for this category.';
+          contentElement.classList.remove('hidden');
+          formContainer.classList.add('hidden');
+
+          // Show secondary sidebar
+          secondarySidebar.classList.remove('hidden');
+          setTimeout(() => secondarySidebar.classList.add('open'), 10);
+        });
+      });
+
+      // Handle New Issue button click
+      document.getElementById('new-issue-button').addEventListener('click', () => {
+        const secondarySidebar = document.querySelector('.secondary-sidebar');
+        const titleElement = document.getElementById('secondary-sidebar-title');
+        const contentElement = document.getElementById('secondary-sidebar-content');
+        const formContainer = document.getElementById('new-issue-form-container');
+
+        // Update title, hide content, show form
+        titleElement.textContent = 'New Issue';
+        contentElement.classList.add('hidden');
+        formContainer.classList.remove('hidden');
+
+        // Show secondary sidebar
+        secondarySidebar.classList.remove('hidden');
+        setTimeout(() => secondarySidebar.classList.add('open'), 10);
+      });
+
+      // Close secondary sidebar
+      document.getElementById('close-secondary-sidebar').addEventListener('click', () => {
+        const secondarySidebar = document.querySelector('.secondary-sidebar');
+        secondarySidebar.classList.remove('open');
+        setTimeout(() => secondarySidebar.classList.add('hidden'), 300);
+      });
+
+      // Navbar menu navigation
+      const navLinks = document.querySelectorAll('.nav-link');
+      const contentSections = document.querySelectorAll('.content-section');
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const section = link.getAttribute('data-section');
+
+          // Remove active class from all nav links
+          navLinks.forEach(nav => nav.classList.remove('active'));
+          // Add active class to clicked nav link
+          link.classList.add('active');
+
+          // Hide all content sections
+          contentSections.forEach(section => section.classList.add('hidden'));
+          // Show the selected content section
+          document.getElementById(`${section}-content`).classList.remove('hidden');
+        });
+      });
+
+      // Dark mode toggle
+      const toggleDarkModeButton = document.getElementById('toggle-dark-mode');
+      const darkModeIcon = toggleDarkModeButton.querySelector('svg');
+
+      // Check for saved theme preference or system preference
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.body.classList.add('dark');
+        darkModeIcon.innerHTML = `
+          <path
+            d="M136,32a8,8,0,0,0-8,8V76.09A56,56,0,0,0,72,132c-.35,0-.69.05-1,0A56,56,0,0,0,184,132a56.06,56.06,0,0,0-56-56V40A8,8,0,0,0,136,32ZM80,132a48,48,0,0,1,96,0A48.05,48.05,0,0,1,80,132Zm136-8a8,8,0,0,1,0,16H184a8,8,0,0,1,0-16ZM72,124a8,8,0,0,1,0-16H40a8,8,0,0,1,0,16ZM53.05,178.07a8,8,0,0,1,11.31-11.31l22.63,22.62a8,8,0,0,1-11.31,11.32ZM165.64,178.07a8,8,0,0,1,11.31,11.31l-22.62,22.63a8,8,0,0,1-11.32-11.31Zm-22.62-79.39a8,8,0,0,1,11.32-11.31l22.62,22.62a8,8,0,0,1-11.31,11.32ZM53.05,77.76a8,8,0,0,1,11.32,11.31L41.74,111.69a8,8,0,0,1-11.31-11.31Zm79.39,123.29a8,8,0,0,1,0,16H88a8,8,0,0,1,0-16Z"
+          ></path>`;
+      }
+
+      toggleDarkModeButton.addEventListener('click', () => {
+        document.body.classList.toggle('dark');
+        const isDark = document.body.classList.contains('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        
+        // Update icon
+        darkModeIcon.innerHTML = isDark ? `
+          <path
+            d="M136,32a8,8,0,0,0-8,8V76.09A56,56,0,0,0,72,132c-.35,0-.69.05-1,0A56,56,0,0,0,184,132a56.06,56.06,0,0,0-56-56V40A8,8,0,0,0,136,32ZM80,132a48,48,0,0,1,96,0A48.05,48.05,0,0,1,80,132Zm136-8a8,8,0,0,1,0,16H184a8,8,0,0,1,0-16ZM72,124a8,8,0,0,1,0-16H40a8,8,0,0,1,0,16ZM53.05,178.07a8,8,0,0,1,11.31-11.31l22.63,22.62a8,8,0,0,1-11.31,11.32ZM165.64,178.07a8,8,0,0,1,11.31,11.31l-22.62,22.63a8,8,0,0,1-11.32-11.31Zm-22.62-79.39a8,8,0,0,1,11.32-11.31l22.62,22.62a8,8,0,0,1-11.31,11.32ZM53.05,77.76a8,8,0,0,1,11.32,11.31L41.74,111.69a8,8,0,0,1-11.31-11.31Zm79.39,123.29a8,8,0,0,1,0,16H88a8,8,0,0,1,0-16Z"
+          ></path>` : `
+          <path
+            d="M128,56a72,72,0,1,0,72,72A72.08,72.08,0,0,0,128,56Zm0,128a56,56,0,1,1,56-56A56.06,56.06,0,0,1,128,184ZM116,28V12a8,8,0,0,1,16,0V28a8,8,0,0,1-16,0Zm0,200v16a8,8,0,0,1-16,0V228a8,8,0,0,1,16,0ZM44,108H28a8,8,0,0,0,0,16H44a8,8,0,0,0,0-16Zm200,0H228a8,8,0,0,0,0,16h16a8,8,0,0,0,0-16ZM62.22,34.75a8,8,0,0,0-11.31,11.31L58.63,58.6A8,8,0,0,0,69.94,47.29ZM197.37,197.4a8,8,0,0,0-11.31,11.31l7.74,7.75a8,8,0,0,0,11.31-11.31Zm-146.14,0-7.75,7.74a8,8,0,0,0,11.31,11.31l7.74-7.75a8,8,0,0,0-11.31-11.31ZM193.78,47.29a8,8,0,0,0,11.31-11.31l-7.74-7.75a8,8,0,0,0-11.31,11.31Z"
+          ></path>`;
+      });
+
+      // Handle form submission (placeholder)
+      document.getElementById('new-issue-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Issue submitted (simulated)!');
+      });
+    </script>
+  </body>
+</html>
