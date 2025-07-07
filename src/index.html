@@ -4,6 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OUTWARD CMS Dashboard</title>
+  <link rel="stylesheet" href="./output.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -363,20 +365,20 @@
           <h1 class="text-[var(--text-color)] text-3xl font-bold">ダッシュボード</h1>
           <p class="text-[var(--secondary-text)] text-sm">コンテンツの概要</p>
         </div>
-        <div class="flex flex-col space-x-6">
-          <div class="flex flex-col bg-white shadow-md rounded-2xl p-6 w-80 space-y-4">
+        <div class="md:grid grid-cols-3 space-x-6">
+          <div class="flex flex-col  bg-white shadow-md rounded-2xl p-6 space-y-4">
 
             <h2 class="text-xl font-semibold text-gray-800">総記事件数 150</h2>
             <p class="text-gray-600 text-sm">This card represents the total number of incidents recorded.</p>
             <button class="bg-blue-600 text-white rounded-lg py-2 px-4 hover:bg-blue-700 self-start">Read More</button>
           </div>
-          <div class="flex flex-col bg-white shadow-md rounded-2xl p-6 w-80 space-y-4">
+          <div class="flex flex-col bg-white shadow-md rounded-2xl p-6  space-y-4">
 
             <h2 class="text-xl font-semibold text-gray-800">公開記事件数 120</h2>
             <p class="text-gray-600 text-sm">This card shows the number of publicly recorded incidents.</p>
             <button class="bg-blue-600 text-white rounded-lg py-2 px-4 hover:bg-blue-700 self-start">Read More</button>
           </div>
-          <div class="flex flex-col bg-white shadow-md rounded-2xl p-6 w-80 space-y-4">
+          <div class="flex flex-col bg-white shadow-md rounded-2xl p-6  space-y-4">
 
             <h2 class="text-xl font-semibold text-gray-800">下書き記事件数 30</h2>
             <p class="text-gray-600 text-sm">This card indicates the number of draft incidents.</p>
@@ -584,22 +586,22 @@
               </tbody>
             </table>
           </div>
-           <div class="flex items-center justify-between p-4 border-t border-gray-200">
-                    <span class="text-sm text-gray-700">
-                        全 <span class="font-semibold text-gray-900">10</span> 件中 <span
-                            class="font-semibold text-gray-900">1-5</span> 件を表示
-                    </span>
-                    <div class="inline-flex -space-x-px rounded-md shadow-sm">
-                        <button
-                            class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">
-                            前へ
-                        </button>
-                        <button
-                            class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">
-                            次へ
-                        </button>
-                    </div>
-                </div>
+          <div class="flex items-center justify-between p-4 border-t border-gray-200">
+            <span class="text-sm text-gray-700">
+              全 <span class="font-semibold text-gray-900">10</span> 件中 <span
+                class="font-semibold text-gray-900">1-5</span> 件を表示
+            </span>
+            <div class="inline-flex -space-x-px rounded-md shadow-sm">
+              <button
+                class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">
+                前へ
+              </button>
+              <button
+                class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">
+                次へ
+              </button>
+            </div>
+          </div>
           <div class="flex items-center justify-between p-4 border-t border-gray-200">
             <span class="text-sm text-gray-700">
               全 <span class="font-semibold text-gray-900">10</span> 件中 <span
