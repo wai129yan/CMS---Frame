@@ -91,7 +91,7 @@
 
     .sidebar-item:hover {
       /* background-color: rgba(247, 208, 208, 0.24); */
-      background-color:#daebecc7;
+      background-color: #daebecc7;
       transform: translateX(4px);
     }
 
@@ -316,148 +316,175 @@
   <div class="relative flex min-h-screen flex-col">
     <div class="flex h-full grow">
       <!-- Primary Sidebar -->
-      <div class="sidebar open transition-all duration-300 ease-in-out">
-        <div class="flex flex-col gap-2">
-          <div class="sidebar-item active flex items-center justify-start md:justify-between" data-category="dashboard">
-            <div class="flex items-center gap-3">
-              <i class="fa-solid fa-table-cells"></i>
-              <p class="menu-text whitespace-nowrap">ダッシュボード</p>
+      <div class="flex flex-col md:flex-row">
+        <!-- Main Sidebar -->
+        <div class="sidebar open transition-all duration-300 ease-in-out w-full md:w-auto">
+          <div class="flex flex-col gap-2">
+            <div class="sidebar-item active flex items-center justify-start" data-category="dashboard">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-table-cells"></i>
+                <p class="menu-text whitespace-nowrap">ダッシュボード</p>
+              </div>
             </div>
 
-          </div>
+            <div class="sidebar-item flex items-center justify-start" data-category="home">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-house"></i>
+                <p class="menu-text whitespace-nowrap">ホーム</p>
+              </div>
+            </div>
 
-          <div class="sidebar-item flex items-center justify-start md:justify-between" data-category="home">
-            <div class="flex items-center gap-3">
-              <i class="fa-solid fa-house"></i>
-              <p class="menu-text whitespace-nowrap">ホーム</p>
-            </div>
-          </div>
+            <!-- Articles section with child menu trigger -->
+            <div
+              class="sidebar-item flex items-center justify-start cursor-pointer hover:bg-gray-700 rounded-lg p-3 transition-colors duration-200"
+              data-category="articles" onclick="toggleChildSidebar(this)">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-newspaper"></i>
+                <p class="menu-text whitespace-nowrap font-medium me-5">記事<i class="fa-solid fa-caret-down ms-2"></i>
+                </p>
 
-          <!-- 記事  -->
-          <div
-            class="sidebar-item flex items-center justify-between cursor-pointer hover:bg-gray-700 rounded-lg p-3 transition-colors duration-200"
-            data-category="articles" onclick="toggleSubmenu(this)">
-            <div class="flex items-center gap-3">
-              <i class="fa-solid fa-newspaper"></i>
-              <p class="menu-text whitespace-nowrap font-medium">記事</p>
+              </div>
             </div>
-            <div class="submenu-icons">
-              <i class="fa-solid fa-chevron-down transition-transform duration-300 text-neutral-500"></i>
+
+            <div class="sidebar-item flex items-center justify-start" data-category="pages">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-file-circle-plus"></i>
+                <p class="menu-text whitespace-nowrap">固定ページ</p>
+              </div>
+            </div>
+
+            <div class="sidebar-item flex items-center justify-start" data-category="notifications">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-bell"></i>
+                <p class="menu-text whitespace-nowrap">お知らせ</p>
+              </div>
+            </div>
+
+            <div class="sidebar-item flex items-center justify-start" data-category="forms">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-folder"></i>
+                <p class="menu-text whitespace-nowrap">フォーム</p>
+              </div>
+            </div>
+
+            <div class="sidebar-item flex items-center justify-start" data-category="files">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-file"></i>
+                <p class="menu-text whitespace-nowrap">ファイル</p>
+              </div>
+            </div>
+
+            <div class="sidebar-item flex items-center justify-start" data-category="logs">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-user-tie"></i>
+                <p class="menu-text whitespace-nowrap">CMS操作管理者ログ</p>
+              </div>
+            </div>
+
+            <div class="sidebar-item flex items-center justify-start" data-category="categories">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-layer-group"></i>
+                <p class="menu-text whitespace-nowrap">カテゴリ・タグ</p>
+              </div>
+            </div>
+
+            <div class="sidebar-item flex items-center justify-start" data-category="users">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-users"></i>
+                <p class="menu-text whitespace-nowrap">ユーザー</p>
+              </div>
+            </div>
+
+            <div class="sidebar-item flex items-center justify-start" data-category="settings">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-gear"></i>
+                <p class="menu-text whitespace-nowrap">設定</p>
+              </div>
             </div>
           </div>
-          <div class="submenu">
-            <div class="sidebar-item pl-8 hover:bg-gray-700 rounded-lg p-3 transition-colors duration-200"
+        </div>
+
+        <!-- Child Sidebar for Articles -->
+        <div id="articles-child-sidebar"
+          class="child-sidebar hidden transition-all duration-300 ease-in-out bg-gray-100 w-full md:w-48 min-h-screen">
+          <div class="flex flex-col gap-2 p-3">
+            <!-- Close button for sidebar -->
+            <div class="flex justify-end mb-2">
+              <button 
+                onclick="toggleChildSidebar(this)" 
+                class="p-2 rounded-full text-gray-500 hover:text-white hover:bg-gray-50 transition-all duration-200 ease-in-out transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-gray-300 active:scale-95"
+                aria-label="Close sidebar"
+              >
+                <i class="fa-solid fa-xmark text-lg"></i>
+              </button>
+            </div>
+            
+            <div class="sidebar-item hover:bg-gray-700 rounded-lg p-3 transition-colors duration-200"
               data-category="article-list">
               <div class="flex items-center gap-3">
                 <i class="fa-solid fa-list"></i>
-                <p class="menu-text whitespace-nowrap text-sm">記事一覧</p>
+                <p class="whitespace-nowrap text-sm">記事一覧</p>
               </div>
             </div>
-            <div class="sidebar-item pl-8 hover:bg-gray-700 rounded-lg p-3 transition-colors duration-200"
+            <div class="sidebar-item hover:bg-gray-700 rounded-lg p-3 transition-colors duration-200"
               data-category="article-edit">
               <div class="flex items-center gap-3">
                 <i class="fa-solid fa-pen-to-square"></i>
-                <p class="menu-text whitespace-nowrap text-sm">記事編集</p>
+                <p class="whitespace-nowrap text-sm">記事編集</p>
               </div>
             </div>
-          </div>
-          <!-- 記事  -->
 
-          <div class="sidebar-item flex items-center justify-start md:justify-between" data-category="pages">
-            <div class="flex items-center gap-3">
-              <i class="fa-solid fa-file-circle-plus"></i>
-              <p class="menu-text whitespace-nowrap">固定ページ</p>
-            </div>
-          </div>
-
-          <div class="sidebar-item flex items-center justify-start md:justify-between" data-category="notifications">
-            <div class="flex items-center gap-3">
-              <i class="fa-solid fa-bell"></i>
-              <p class="menu-text whitespace-nowrap">お知らせ</p>
-            </div>
-          </div>
-
-          <div class="sidebar-item flex items-center justify-start md:justify-between" data-category="forms">
-            <div class="flex items-center gap-3">
-              <i class="fa-solid fa-folder"></i>
-              <p class="menu-text whitespace-nowrap">フォーム</p>
-            </div>
-          </div>
-
-          <div class="sidebar-item flex items-center justify-start md:justify-between" data-category="files">
-            <div class="flex items-center gap-3">
-              <i class="fa-solid fa-file"></i>
-              <p class="menu-text whitespace-nowrap">ファイル</p>
-            </div>
-          </div>
-
-          <div class="sidebar-item flex items-center justify-start md:justify-between" data-category="logs">
-            <div class="flex items-center gap-3">
-              <i class="fa-solid fa-user-tie"></i>
-              <p class="menu-text whitespace-nowrap">CMS操作管理者ログ</p>
-            </div>
-          </div>
-
-          <div class="sidebar-item flex items-center justify-start md:justify-between" data-category="categories">
-            <div class="flex items-center gap-3">
-              <i class="fa-solid fa-layer-group"></i>
-              <p class="menu-text whitespace-nowrap">カテゴリ・タグ</p>
-            </div>
-          </div>
-
-          <div class="sidebar-item flex items-center justify-start md:justify-between" data-category="users">
-            <div class="flex items-center gap-3">
-              <i class="fa-solid fa-users"></i>
-              <p class="menu-text whitespace-nowrap">ユーザー</p>
-            </div>
-          </div>
-
-          <div class="sidebar-item flex items-center justify-start md:justify-between" data-category="settings">
-            <div class="flex items-center gap-3">
-              <i class="fa-solid fa-gear"></i>
-              <p class="menu-text whitespace-nowrap">設定</p>
+            <div class="sidebar-item hover:bg-gray-700 rounded-lg p-3 transition-colors duration-200"
+              data-category="article-edit">
+              <div class="flex items-center gap-3">
+                <i class="fa-regular fa-address-card"></i>
+                <p class="whitespace-nowrap text-sm">記事登録</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
       <!-- Main Content -->
       <div class="main-content">
-        <header>
-          <div class="flex items-center">
-            <button id="toggle-sidebar"
-              class="open-button text-[var(--text-color)] p-2 hover:bg-[var(--hover-bg)] rounded-lg">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor"
-                viewBox="0 0 256 256">
-                <path
-                  d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z">
-                </path>
-              </svg>
-            </button>
-          </div>
-          <div class="header-right">
-            <div class="logo-container">
-              <div class="size-8 rounded-full overflow-hidden">
-                <img src="https://via.placeholder.com/32" class="w-full h-full object-contain" alt="Logo">
-              </div>
-              <h2 class="text-[var(--text-color)] text-lg font-extrabold">OUTWARD</h2>
-            </div>
-            <button id="toggle-dark-mode"
-              class="flex items-center justify-center rounded-lg h-10 bg-[var(--hover-bg)] text-[var(--text-color)] text-sm font-bold px-3">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
-                viewBox="0 0 256 256">
-                <path
-                  d="M128,56a72,72,0,1,0,72,72A72.08,72.08,0,0,0,128,56Zm0,128a56,56,0,1,1,56-56A56.06,56.06,0,0,1,128,184ZM116,28V12a8,8,0,0,1,16,0V28a8,8,0,0,1-16,0Zm0,200v16a8,8,0,0,1-16,0V228a8,8,0,0,1,16,0ZM44,108H28a8,8,0,0,0,0,16H44a8,8,0,0,0,0-16Zm200,0H228a8,8,0,0,0,0,16h16a8,8,0,0,0,0-16ZM62.22,34.75a8,8,0,0,0-11.31,11.31L58.63,58.6A8,8,0,0,0,69.94,47.29ZM197.37,197.4a8,8,0,0,0-11.31,11.31l7.74,7.75a8,8,0,0,0,11.31-11.31Zm-146.14,0-7.75,7.74a8,8,0,0,0,11.31,11.31l7.74-7.75a8,8,0,0,0-11.31-11.31ZM193.78,47.29a8,8,0,0,0,11.31-11.31l-7.74-7.75a8,8,0,0,0-11.31,11.31Z">
-                </path>
-              </svg>
-            </button>
-            <div class="user-profile">
-              <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDWqrYQNPXsESYU6gkA-0Fye_lhbAZWE0bAuFuCD3-jw12dj0xqBbbQb1umrRFukw1e2oV1btXli7Y_jo9wJpIlFOGrzCl9bHKZpSIsi0LNLHp38c-50cnsKyGH6g9Uw1edb2H9OKvUi1mSxIhTCEMH-vA0nIcFNRVSTudPhEwklm0tm2l6GN28OQ8Ng69PIkUAlfv4pja4fcDDGa3nLoT4zguUWWWO1buBzSx2ze_QqUaTnA6z7kY-EmHx-Apn9LEJIuw4IXGBqg');">
-              </div>
-              <span class="text-[var(--text-color)] text-sm font-semibold">John Doe</span>
-            </div>
-          </div>
-        </header>
+<header>
+  <div class="flex items-center">
+    <button id="toggle-sidebar"
+      class="open-button text-[var(--text-color)] p-2 hover:bg-[var(--hover-bg)] rounded-lg">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor"
+        viewBox="0 0 256 256">
+        <path
+          d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z">
+        </path>
+      </svg>
+    </button>
+  </div>
+  <div class="header-right">
+    <div class="logo-container">
+     
+      <h2 class="text-[var(--text-color)] text-lg font-extrabold">OUTWARD</h2>
+    </div>
+    <a class="flex items-center text-[var(--text-color)] hover:text-indigo-600 gap-2" href="#">
+      <i class="fa-regular fa-bell"></i>
+      <span class="text-sm">お知らせ</span>
+    </a>
+    <button id="toggle-dark-mode"
+      class="flex items-center justify-center rounded-lg h-10 bg-[var(--hover-bg)] text-[var(--text-color)] text-sm font-bold px-3">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
+        viewBox="0 0 256 256">
+        <path
+          d="M128,56a72,72,0,1,0,72,72A72.08,72.08,0,0,0,128,56Zm0,128a56,56,0,1,1,56-56A56.06,56.06,0,0,1,128,184ZM116,28V12a8,8,0,0,1,16,0V28a8,8,0,0,1-16,0Zm0,200v16a8,8,0,0,1-16,0V228a8,8,0,0,1,16,0ZM44,108H28a8,8,0,0,0,0,16H44a8,8,0,0,0,0-16Zm200,0H228a8,8,0,0,0,0,16h16a8,8,0,0,0,0-16ZM62.22,34.75a8,8,0,0,0-11.31,11.31L58.63,58.6A8,8,0,0,0,69.94,47.29ZM197.37,197.4a8,8,0,0,0-11.31,11.31l7.74,7.75a8,8,0,0,0,11.31-11.31Zm-146.14,0-7.75,7.74a8,8,0,0,0,11.31,11.31l7.74-7.75a8,8,0,0,0-11.31-11.31ZM193.78,47.29a8,8,0,0,0,11.31-11.31l-7.74-7.75a8,8,0,0,0-11.31,11.31Z">
+        </path>
+      </svg>
+    </button>
+    <div class="user-profile">
+      <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDWqrYQNPXsESYU6gkA-0Fye_lhbAZWE0bAuFuCD3-jw12dj0xqBbbQb1umrRFukw1e2oV1btXli7Y_jo9wJpIlFOGrzCl9bHKZpSIsi0LNLHp38c-50cnsKyGH6g9Uw1edb2H9OKvUi1mSxIhTCEMH-vA0nIcFNRVSTudPhEwklm0tm2l6GN28OQ8Ng69PIkUAlfv4pja4fcDDGa3nLoT4zguUWWWO1buBzSx2ze_QqUaTnA6z7kY-EmHx-Apn9LEJIuw4IXGBqg');">
+      </div>
+      <span class="text-[var(--text-color)] text-sm font-semibold">田中 太郎 (プロ)</span>
+    </div>
+  </div>
+</header>
         <!-- ダッシュボード -->
         <div class="content-section active mt-5" data-section="dashboard">
           <div class="flex flex-row gap-2 mb-6">
@@ -1106,6 +1133,23 @@
       sidebar.classList.toggle('open');
     });
 
+    function toggleChildSidebar(element) {
+      const childSidebar = document.getElementById('articles-child-sidebar');
+      const mainSidebar = element.closest('.sidebar');
+
+      // Toggle child sidebar visibility
+      childSidebar.classList.toggle('hidden');
+
+      // If child sidebar is visible, collapse main sidebar to show only icons
+      if (!childSidebar.classList.contains('hidden')) {
+        mainSidebar.classList.remove('open');
+        document.querySelectorAll('.menu-text').forEach(text => text.style.display = 'none');
+      } else {
+        mainSidebar.classList.add('open');
+        document.querySelectorAll('.menu-text').forEach(text => text.style.display = 'block');
+      }
+    }
+
     // Search dialog
     searchButton.addEventListener('click', () => {
       searchDialog.classList.toggle('hidden');
@@ -1116,63 +1160,63 @@
     });
 
     // 記事一覧ヘッダー
-    function toggleSubmenu(element) {
-      const submenu = element.nextElementSibling;
-      const chevron = element.querySelector('.fa-chevron-down');
-      submenu.classList.toggle('open');
-      chevron.classList.toggle('chevron-rotate');
-    }
+    // function toggleSubmenu(element) {
+    //   const submenu = element.nextElementSibling;
+    //   const chevron = element.querySelector('.fa-chevron-down');
+    //   submenu.classList.toggle('open');
+    //   chevron.classList.toggle('chevron-rotate');
+    // }
     // 記事一覧
-    document.querySelectorAll('.preview-button').forEach(button => {
-      button.addEventListener('click', () => {
-        const popup = button.nextElementSibling;
-        popup.classList.toggle('show');
-      });
-    });
+    // document.querySelectorAll('.preview-button').forEach(button => {
+    //   button.addEventListener('click', () => {
+    //     const popup = button.nextElementSibling;
+    //     popup.classList.toggle('show');
+    //   });
+    // });
     // 記事一覧content    Tab functionality
-    document.querySelectorAll('#articleTabs button').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('#articleTabs button').forEach(t => {
-          t.classList.remove('tab-active');
-          t.classList.add('border-transparent');
-          t.classList.remove('text-blue-600', 'border-blue-600');
-        });
-        tab.classList.add('tab-active');
-        // Note: Tab content switching would require additional divs with IDs (draft, pending, published)
-        // This script only handles tab styling; actual content switching needs backend or additional JS
-      });
-    });
+    // document.querySelectorAll('#articleTabs button').forEach(tab => {
+    //   tab.addEventListener('click', () => {
+    //     document.querySelectorAll('#articleTabs button').forEach(t => {
+    //       t.classList.remove('tab-active');
+    //       t.classList.add('border-transparent');
+    //       t.classList.remove('text-blue-600', 'border-blue-600');
+    //     });
+    //     tab.classList.add('tab-active');
+    //     // Note: Tab content switching would require additional divs with IDs (draft, pending, published)
+    //     // This script only handles tab styling; actual content switching needs backend or additional JS
+    //   });
+    // });
 
-    // Preview popup functionality
-    document.querySelectorAll('.preview-button').forEach(button => {
-      button.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const popup = button.nextElementSibling;
-        document.querySelectorAll('.popup.show').forEach(p => {
-          if (p !== popup) p.classList.remove('show');
-        });
-        popup.classList.toggle('show');
-      });
-    });
+    // // Preview popup functionality
+    // document.querySelectorAll('.preview-button').forEach(button => {
+    //   button.addEventListener('click', (e) => {
+    //     e.stopPropagation();
+    //     const popup = button.nextElementSibling;
+    //     document.querySelectorAll('.popup.show').forEach(p => {
+    //       if (p !== popup) p.classList.remove('show');
+    //     });
+    //     popup.classList.toggle('show');
+    //   });
+    // });
 
-    // Close popups when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.preview-button') && !e.target.closest('.popup')) {
-        document.querySelectorAll('.popup.show').forEach(popup => {
-          popup.classList.remove('show');
-        });
-      }
-    });
+    // // Close popups when clicking outside
+    // document.addEventListener('click', (e) => {
+    //   if (!e.target.closest('.preview-button') && !e.target.closest('.popup')) {
+    //     document.querySelectorAll('.popup.show').forEach(popup => {
+    //       popup.classList.remove('show');
+    //     });
+    //   }
+    // });
 
-    // Close popups when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.preview-button') && !e.target.closest('.popup')) {
-        document.querySelectorAll('.popup.show').forEach(popup => {
-          popup.classList.remove('show');
-        });
-      }
-    });
-    // 記事一覧　End
+    // // Close popups when clicking outside
+    // document.addEventListener('click', (e) => {
+    //   if (!e.target.closest('.preview-button') && !e.target.closest('.popup')) {
+    //     document.querySelectorAll('.popup.show').forEach(popup => {
+    //       popup.classList.remove('show');
+    //     });
+    //   }
+    // });
+    // // 記事一覧　End
 
     // Sidebar item click handler
     sidebarItems.forEach(item => {
@@ -1218,7 +1262,6 @@
         <path d="M136,32a8,8,0,0,0-8,8V76.09A56,56,0,0,0,72,132c-.35,0-.69.05-1,0A56,56,0,0,0,184,132a56.06,56.06,0,0,0-56-56V40A8,8,0,0,0,136,32ZM80,132a48,48,0,0,1,96,0A48.05,48.05,0,0,1,80,132Zm136-8a8,8,0,0,1,0,16H184a8,8,0,0,1,0-16ZM72,124a8,8,0,0,1,0-16H40a8,8,0,0,1,0,16ZM53.05,178.07a8,8,0,0,1,11.31-11.31l22.63,22.62a8,8,0,0,1-11.31,11.32ZM165.64,178.07a8,8,0,0,1,11.31,11.31l-22.62,22.63a8,8,0,0,1-11.32-11.31Zm-22.62-79.39a8,8,0,0,1,11.32-11.31l22.62,22.62a8,8,0,0,1-11.31,11.32ZM53.05,77.76a8,8,0,0,1,11.32,11.31L41.74,111.69a8,8,0,0,1-11.31-11.31Zm79.39,123.29a8,8,0,0,1,0,16H88a8,8,0,0,1,0-16Z"></path>` : `
         <path d="M128,56a72,72,0,1,0,72,72A72.08,72.08,0,0,0,128,56Zm0,128a56,56,0,1,1,56-56A56.06,56.06,0,0,1,128,184ZM116,28V12a8,8,0,0,1,16,0V28a8,8,0,0,1-16,0Zm0,200v16a8,8,0,0,1-16,0V228a8,8,0,0,1,16,0ZM44,108H28a8,8,0,0,0,0,16H44a8,8,0,0,0,0-16Zm200,0H228a8,8,0,0,0,0,16h16a8,8,0,0,0,0-16ZM62.22,34.75a8,8,0,0,0-11.31,11.31L58.63,58.6A8,8,0,0,0,69.94,47.29ZM197.37,197.4a8,8,0,0,0-11.31,11.31l7.74,7.75a8,8,0,0,0,11.31-11.31Zm-146.14,0-7.75,7.74a8,8,0,0,0,11.31,11.31l7.74-7.75a8,8,0,0,0-11.31-11.31ZM193.78,47.29a8,8,0,0,0,11.31-11.31l-7.74-7.75a8,8,0,0,0-11.31,11.31Z"></path>`;
     });
-
 
 
 
