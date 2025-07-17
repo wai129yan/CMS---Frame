@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>デザイン管理</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
+    <style>
+        .sidebar-collapsed {
+            width: 4rem;
+        }
+
+        .sidebar-collapsed .nav-text {
+            display: none;
+        }
+
+        .sidebar-collapsed .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .submenu {
+            display: none;
+        }
+
+        .menu-item.active .submenu {
+            display: block;
+        }
+
+        .menu-item.active>a {
+            background-color: #e5e7eb;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .menu-item.active .arrow-icon {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <div class="flex flex-col min-h-screen">
+        <header class="bg-white shadow-md z-10 sticky top-0">
+            <div class="container mx-auto px-4">
+                <div class="flex justify-between items-center py-4">
+                    <h1 class="text-xl font-bold text-gray-800">OUTWARD CMS</h1>
+                    <div class="flex items-center space-x-6">
+                        <a class="flex items-center text-gray-700 hover:text-indigo-600" href="#">
+                            <span class="material-icons">notifications</span>
+                            <span class="ml-1">お知らせ</span>
+                        </a>
+                        <div>
+                            <span class="text-gray-700">田中 太郎 (プロ)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="flex flex-1">
+            <aside
+                class="w-60 bg-white shadow-md transition-all duration-300 ease-in-out sticky top-[68px] h-[calc(100vh-68px)]"
+                id="sidebar">
+                <nav class="mt-4 pb-20 overflow-y-auto h-full">
+                    <ul>
+                        <li class="px-4 py-2 hover:bg-gray-100">
+                            <a class="flex items-center justify-between text-gray-700" href="#">
+                                <div class="flex items-center">
+                                    <span class="material-icons">dashboard</span>
+                                    <span class="ml-3 nav-text">ダッシュボード</span>
+                                </div>
+                                <button class="focus:outline-none" id="sidebar-toggle">
+                                    <span class="material-icons toggle-icon">chevron_left</span>
+                                </button>
+                            </a>
+                        </li>
+                        <li class="px-4 py-2 hover:bg-gray-100">
+                            <a class="flex items-center text-gray-700" href="#">
+                                <span class="material-icons">home</span>
+                                <span class="ml-3 nav-text">ホーム</span>
+                            </a>
+                        </li>
+                        <li class="px-4 py-2 hover:bg-gray-100">
+                            <a class="flex items-center text-gray-700" href="#">
+                                <span class="material-icons">article</span>
+                                <span class="ml-3 nav-text">記事</span>
+                            </a>
+                        </li>
+                        <li class="px-4 py-2 hover:bg-gray-100">
+                            <a class="flex items-center text-gray-700" href="#">
+                                <span class="material-icons">pages</span>
+                                <span class="ml-3 nav-text">固定ページ</span>
+                            </a>
+                        </li>
+                        <li class="relative menu-item" id="design-menu">
+                            <a class="flex items-center justify-between text-gray-700 hover:bg-gray-100 px-4 py-2"
+                                href="#" id="design-menu-toggle">
+                                <div class="flex items-center">
+                                    <span class="material-icons">design_services</span>
+                                    <span class="ml-3 nav-text">デザイン管理</span>
+                                </div>
+                                <span
+                                    class="material-icons arrow-icon nav-text transition-transform duration-300">chevron_right</span>
+                            </a>
+                            <ul class="submenu pl-8">
+                                <li class="py-2 hover:bg-gray-100"><a class="block text-gray-700 text-right pr-4"
+                                        href="#">テーマ</a></li>
+                            </ul>
+                        </li>
+                        <li class="px-4 py-2 hover:bg-gray-100">
+                            <a class="flex items-center text-gray-700" href="#">
+                                <span class="material-icons">description</span>
+                                <span class="ml-3 nav-text">フォーム</span>
+                            </a>
+                        </li>
+                        <li class="px-4 py-2 hover:bg-gray-100">
+                            <a class="flex items-center text-gray-700" href="#">
+                                <span class="material-icons">folder</span>
+                                <span class="ml-3 nav-text">ファイル</span>
+                            </a>
+                        </li>
+                        <li class="px-4 py-2 hover:bg-gray-100">
+                            <a class="flex items-center text-gray-700" href="#">
+                                <span class="material-icons">history</span>
+                                <span class="ml-3 nav-text">CMS内検索ログ</span>
+                            </a>
+                        </li>
+                        <li class="relative menu-item" id="category-menu">
+                            <a class="flex items-center justify-between text-gray-700 hover:bg-gray-100 px-4 py-2"
+                                href="#">
+                                <div class="flex items-center">
+                                    <span class="material-icons">label</span>
+                                    <span class="ml-3 nav-text">カテゴリ・タグ</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="px-4 py-2 hover:bg-gray-100">
+                            <a class="flex items-center text-gray-700" href="#">
+                                <span class="material-icons">person</span>
+                                <span class="ml-3 nav-text">ユーザー</span>
+                            </a>
+                        </li>
+                        <li class="px-4 py-2 hover:bg-gray-100">
+                            <a class="flex items-center text-gray-700" href="#">
+                                <span class="material-icons">settings</span>
+                                <span class="ml-3 nav-text">設定</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+            <main class="flex-1 p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">テーマ一覧</h2>
+                        <p class="text-gray-600">テーマ</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">新しいテーマを追加</button>
+                        <button class="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-gray-500">ステージングへ</button>
+                    </div>
+                </div>
+                <div class="mb-6 border-b border-gray-200">
+                    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500">
+                        <li class="mr-2">
+                            <a class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
+                                href="#">マイテーマ</a>
+                        </li>
+                        <li class="mr-2">
+                            <a aria-current="page"
+                                class="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active"
+                                href="#">推奨</a>
+                        </li>
+                        <li class="mr-2">
+                            <a class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
+                                href="#">すべて</a>
+                        </li>
+                        <li class="mr-2">
+                            <a class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
+                                href="#">ブログ</a>
+                        </li>
+                        <li class="mr-2">
+                            <a class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
+                                href="#">ビジネス</a>
+                        </li>
+                        <li class="mr-2">
+                            <a class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
+                                href="#">ストア</a>
+                        </li>
+                        <li class="relative">
+                            <button
+                                class="inline-flex items-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
+                                id="dropdown-button">
+                                続き <span class="material-icons text-sm ml-1">expand_more</span>
+                            </button>
+                            <div class="hidden absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44"
+                                id="dropdown-menu">
+                                <ul class="py-2 text-sm text-gray-700">
+                                    <li><a class="block px-4 py-2 hover:bg-gray-100" href="#">ポートフォリオ</a></li>
+                                    <li><a class="block px-4 py-2 hover:bg-gray-100" href="#">イベント</a></li>
+                                    <li><a class="block px-4 py-2 hover:bg-gray-100" href="#">その他</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="p-4 bg-gray-50 border-b flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-800">テーマ名1</h3>
+                            <div class="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">適用中</div>
+                        </div>
+                        <div class="relative">
+                            <img alt="Theme 1" class="w-full h-48 object-cover"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMh8kBvlYYmePg7h2wMUyZ9ugvCTIPU_868Uh4_ri2n4UlT_LePEDiyEm6HKyXSZLT_V0FYdlXJe9nYBvkOSR4n32TsMg3UJX2oP4ePf1wZdD-QJvIseOuRKFkZBEU2M2EHzi-HGlFOLwkX8xYQfXOvYKDd3TDEZp-95l-XVXKa5QluMenm1qCfW67mIvtWNs03TUeF5_9oh6eh3Lt5590_3wMmDz42sehLfXAqx8fqIEtIrofHsyBh-hd9H5b_ehgXL63bio2ZvY" />
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="p-4 bg-gray-50 border-b">
+                            <h3 class="text-lg font-semibold text-gray-800">テーマ名2</h3>
+                        </div>
+                        <img alt="Theme 2" class="w-full h-48 object-cover"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCY4GLbR2j9xKUMCsX10SnysAB48GkRcQEJUGBtbZ8qDD-Mgc5ORm0unktvLa0QvUGM3D6_U0trLfAdtxoYfHCCQ5ioq7n9wlMCiew8ZYNzmJx72N0J2XdWvC8nGHNYd-Z_f95_MfRKejW7mDVQkk-845e7HQAaeaJcTNEf2h9C_7op_KuP1nGQi-exxVQXkmk_3noeSOJuFtY5YyKDglduUmoDVa4-BaLA7Y7ijpezdoazJtre9uP9LWDipeNsDGS-BAUv2o_OTH8" />
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="p-4 bg-gray-50 border-b">
+                            <h3 class="text-lg font-semibold text-gray-800">テーマ名3</h3>
+                        </div>
+                        <img alt="Theme 3" class="w-full h-48 object-cover"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWpaHYQBUYr_ju1Cy3eV6v0MJPP26g8H4JsljV3gmb8xtTMLlOnEEJaq0o9dgm3iS_of5FYM3OdZfv1Tqb20fkJ3IY0S4ACZPRrq7X_78bl1IqqGY7apY7CJmTTCVhI7iXFq27yyWrCpZemLbS3ZWiIJG7kwS_WOg1VByWQQojFIfDEM8s3TKiKxdzXzHozFXiAp8mO2-KI8CFrLgFXJF-D0AP96F6TRM9y0stmQ1tUXVYu0ULiBu2rtvTYF_-ygbQoMi9F7Aoguo" />
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="p-4 bg-gray-50 border-b">
+                            <h3 class="text-lg font-semibold text-gray-800">テーマ名4</h3>
+                        </div>
+                        <img alt="Theme 4" class="w-full h-48 object-cover"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDADjfb5KHflFJBttJ1bErkrzb6MDIqRzzEx_o36OO3eiQcTQxypoVmVzPsrZtv2SceZAiUEr0Bb7GQ5nvpjPLp5s3Ni6TlpTDy01ecrkJpnyXXipP4XEzHX0_q7CHzhnImru_-nySczTep-07tg-7lXz5bX0_bhnRqLp_mBZPqOcLRF0u3J72IuzjpTPngnZNFIVgLhgYPRCMpRXkJjI9EwVERLQJ3AqJYndqbySlUx1euYcdPtsUttCu4CFIKUdZM9zdnepdD2Gc" />
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="p-4 bg-gray-50 border-b">
+                            <h3 class="text-lg font-semibold text-gray-800">テーマ名5</h3>
+                        </div>
+                        <img alt="Theme 5" class="w-full h-48 object-cover"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuChlSxAYh1NScuO4kpXL5y53qsZq-P7zembrDmAiiUIZ8FHCMd-gTrHY4lyBNxShGoW3SIpRqRvA_VL7fC4p2KfdhS9G2JB5z8zPZnhJ9u4UKrxgDXb602exDc-gfRI5BK0vX2ZpM3j-ANMfvmovVwdTFZVlD_BsTk2aUHdKPZ72l8CD5pW6UuWCBVrcTe5AvzyDwl_LiwLTjbwIZk9Q4gb45QmbOpirIWKM5pOX4FVVoMFLslNtbvHSvMDSyxcy6S_UVTI9lLV-nY" />
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="p-4 bg-gray-50 border-b">
+                            <h3 class="text-lg font-semibold text-gray-800">テーマ名6</h3>
+                        </div>
+                        <img alt="Theme 6" class="w-full h-48 object-cover"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5bmUTZYGgBPJf_Lf3FcVQKf-gP_7eBDfhm_8lNyP9y2KvD01WX21uT3zQG0YHpVtS9C_oMggW6H3LXm1HjOPTX5nBEPvql5OwvnSTypTbouf4Qe10GzuMRAStLaQ0NYpyv7BCU4ooOtoDkKw2oUK79zhPt7KcWhIEHRJRtyxw0tzHpccmRzpeGBkwFkYL4dulLE1OUus6ZN_TSckarYZIH0Uv4DIOzVq4Bf7JrN1EDMzKfTfyylwR6vLdyGj2o5B3wEYPvz9J9So" />
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="p-4 bg-gray-50 border-b">
+                            <h3 class="text-lg font-semibold text-gray-800">テーマ名7</h3>
+                        </div>
+                        <img alt="Theme 7" class="w-full h-48 object-cover"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaeD4PIeUWV93UJW95gLpF3iUpkuG5BlIDiLoigdicEbi6H5yMVYUt0_VEk71lZHD5Vi1R1HWweXgUcpFY09f9qliwx2ciwnq4r2SsZ7eJSUGrCtOYJhZqubTsBA9LFvIgBTOIjZ2cGx8dTkCd-Sowm185xWQdLLVSaC9F02VEFKgzzz8iifbSS7XpurPyMyc6GHAF9hKhSRMYihqLiqMJP0fkWPp7_dIi7XCMmoTTB4Q_4Ob4kkdHgWx3B2sXSEnIsNEJKU75czk" />
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="p-4 bg-gray-50 border-b">
+                            <h3 class="text-lg font-semibold text-gray-800">テーマ名8</h3>
+                        </div>
+                        <img alt="Theme 8" class="w-full h-48 object-cover"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwCWrU3th8LAwLfc8_21zWWdtI6_oSfWEfOYP_UR3-bQcPzGV3GJPd7cTb1IR8fVYlFznuPZufknn4ya6hQKFH_i3p8-F5x60RHLzJmp4IxvEzwMKLEtkmq8Nwb6pGsH9dFUXW_nrOD9ntF83opLAKQY3vC1m_VdoxUWs5tL2IHGuHDdaUR1RTRrTk08PR1J1IbR_KJxPz1cSEiXfip2V5q_ets_D-q9-sMKwSnHXLMSoJxwopFyf3WuZ7Ysu1Ox4cp21EW-Y9BjA" />
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="p-4 bg-gray-50 border-b">
+                            <h3 class="text-lg font-semibold text-gray-800">テーマ名9</h3>
+                        </div>
+                        <img alt="Theme 9" class="w-full h-48 object-cover"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRTitnt7_rlUryw8LRnsE85MH4PU_n_ZYadzOyxZFRdfYIqps1lnnwWW4xgJ052WJaIp3kA7810zKaqHJKpFaePHfTJnr5UZWCIcDSGA88ftpalZ23uUPTU6duyHZiNULsFeA7lndjqSW-agq38ByUXFxhE0MnnQK1sZ9CCC5hmcgiQBO7bTfvzzgRYXMH5Jamx_IEUXx4ebsbq6fh419SI9ly9vNYYfX2S65KSkcoYHNYAtLYf4OdfqM6JfyoUdqDhvaJE7F5jsU" />
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script>
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebar = document.getElementById('sidebar');
+        sidebarToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            sidebar.classList.toggle('sidebar-collapsed');
+        });
+        const designMenu = document.getElementById('design-menu');
+        const designMenuToggle = document.getElementById('design-menu-toggle');
+        // Set active state for the current page
+        designMenu.classList.add('active');
+        if (designMenuToggle) {
+            designMenuToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                designMenu.classList.toggle('active');
+            });
+        }
+        // Keep other menu items clickable but not active
+        const categoryMenu = document.getElementById('category-menu');
+        categoryMenu.classList.remove('active');
+        const dropdownButton = document.getElementById('dropdown-button');
+        const dropdownMenu = document.getElementById('dropdown-menu');
+        dropdownButton.addEventListener('click', () => {
+            dropdownMenu.classList.toggle('hidden');
+        });
+        window.addEventListener('click', function (e) {
+            if (!dropdownButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                dropdownMenu.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+
+</html>

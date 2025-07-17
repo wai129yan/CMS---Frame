@@ -52,7 +52,6 @@
     .sidebar {
       position: relative;
       width: 260px;
-      background: var(--primary-gradient);
       padding: 1.5rem 0.5rem;
       transition: width 0.3s ease-in-out, box-shadow 0.3s ease;
       z-index: 50;
@@ -70,7 +69,6 @@
 
     .sidebar .menu-text {
       display: block;
-      color: #ffffff;
       font-size: 0.875rem;
       font-weight: 500;
       transition: opacity 0.2s ease;
@@ -88,17 +86,18 @@
       padding: 0.75rem 1rem;
       border-radius: 0.5rem;
       cursor: pointer;
-      color: #fbfefff1;
       transition: background-color 0.2s ease, transform 0.2s ease;
     }
 
     .sidebar-item:hover {
-      background-color: rgba(255, 255, 255, 0.24);
+      /* background-color: rgba(247, 208, 208, 0.24); */
+      background-color:#daebecc7;
       transform: translateX(4px);
     }
 
     .sidebar-item.active {
-      background-color: var(--active-bg);
+      /* background-color: var(--active-bg); */
+      background-color: #cbdadbd7;
       font-weight: 600;
     }
 
@@ -166,6 +165,7 @@
 
     .main-content {
       flex-grow: 1;
+      background-color: #f9fafa;
       padding: 1.5rem;
       transition: opacity 0.3s ease;
     }
@@ -342,7 +342,7 @@
               <p class="menu-text whitespace-nowrap font-medium">記事</p>
             </div>
             <div class="submenu-icons">
-              <i class="fa-solid fa-chevron-down transition-transform duration-300 text-white"></i>
+              <i class="fa-solid fa-chevron-down transition-transform duration-300 text-neutral-500"></i>
             </div>
           </div>
           <div class="submenu">
@@ -801,10 +801,11 @@
                     <td class="px-6 py-4">山田 太郎</td>
                     <td class="px-6 py-4">2023/10/27 15:30</td>
                     <td class="px-6 py-4">2023/10/27 15:30</td>
-                    <td class="px-6 py-4 text-right">
+                    <!-- <td class="px-6 py-4 text-right">
                       <button class="text-gray-500 hover:text-gray-700"><span
-                          class="material-icons">more_vert</span></button>
-                    </td>
+                          class="material-icons">more_vert</span>
+                      </button>
+                    </td> -->
                   </tr>
                   <tr class="bg-white border-b hover:bg-gray-50">
                     <td class="px-6 py-4"><span
@@ -826,10 +827,10 @@
                     <td class="px-6 py-4">佐藤 花子</td>
                     <td class="px-6 py-4">2023/10/26 11:00</td>
                     <td class="px-6 py-4">2023/10/26 11:00</td>
-                    <td class="px-6 py-4 text-right">
+                    <!-- <td class="px-6 py-4 text-right">
                       <button class="text-gray-500 hover:text-gray-700"><span
                           class="material-icons">more_vert</span></button>
-                    </td>
+                    </td> -->
                   </tr>
                   <tr class="bg-white border-b hover:bg-gray-50">
                     <td class="px-6 py-4"><span
@@ -851,10 +852,10 @@
                     <td class="px-6 py-4">鈴木 一郎</td>
                     <td class="px-6 py-4">2023/10/25 09:45</td>
                     <td class="px-6 py-4">-</td>
-                    <td class="px-6 py-4 text-right">
+                    <!-- <td class="px-6 py-4 text-right">
                       <button class="text-gray-500 hover:text-gray-700"><span
                           class="material-icons">more_vert</span></button>
-                    </td>
+                    </td> -->
                   </tr>
                   <tr class="bg-white border-b hover:bg-gray-50">
                     <td class="px-6 py-4"><span
@@ -876,10 +877,10 @@
                     <td class="px-6 py-4">山田 太郎</td>
                     <td class="px-6 py-4">2023/10/24 18:00</td>
                     <td class="px-6 py-4">2023/10/24 18:00</td>
-                    <td class="px-6 py-4 text-right">
+                    <!-- <td class="px-6 py-4 text-right">
                       <button class="text-gray-500 hover:text-gray-700"><span
                           class="material-icons">more_vert</span></button>
-                    </td>
+                    </td> -->
                   </tr>
                   <tr class="bg-white hover:bg-gray-50">
                     <td class="px-6 py-4"><span
@@ -901,10 +902,10 @@
                     <td class="px-6 py-4">佐藤 花子</td>
                     <td class="px-6 py-4">2023/10/23 14:20</td>
                     <td class="px-6 py-4">-</td>
-                    <td class="px-6 py-4 text-right">
+                    <!-- <td class="px-6 py-4 text-right">
                       <button class="text-gray-500 hover:text-gray-700"><span
                           class="material-icons">more_vert</span></button>
-                    </td>
+                    </td> -->
                   </tr>
                 </tbody>
               </table>
