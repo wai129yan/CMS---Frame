@@ -102,6 +102,56 @@
       font-weight: 600;
     }
 
+    /* 記事 */
+    .submenu {
+      transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+    }
+
+    .submenu.open {
+      max-height: 200px;
+      /* Adjusted for content */
+      opacity: 1;
+    }
+
+    .chevron-rotate {
+      transform: rotate(180deg);
+    }
+
+    /* 記事一覧へ */
+    .popup {
+      display: none;
+    }
+
+    .popup.show {
+      display: block;
+    }
+
+    .popup {
+      display: none;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    }
+
+    .popup.show {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .tab-active {
+      border-color: #2563eb !important;
+      color: #2563eb !important;
+    }
+
+
+    /* End */
+
+    /* 記事 */
+
     .open-button {
       background-color: rgba(255, 255, 255, 0.2);
       border-radius: 50%;
@@ -283,16 +333,39 @@
             </div>
           </div>
 
-          <div class="sidebar-item flex items-center justify-start md:justify-between" data-category="articles">
+          <!-- 記事  -->
+          <div
+            class="sidebar-item flex items-center justify-between cursor-pointer hover:bg-gray-700 rounded-lg p-3 transition-colors duration-200"
+            data-category="articles" onclick="toggleSubmenu(this)">
             <div class="flex items-center gap-3">
               <i class="fa-solid fa-newspaper"></i>
-              <p class="menu-text whitespace-nowrap">記事</p>
+              <p class="menu-text whitespace-nowrap font-medium">記事</p>
+            </div>
+            <div class="submenu-icons">
+              <i class="fa-solid fa-chevron-down transition-transform duration-300 text-white"></i>
             </div>
           </div>
+          <div class="submenu">
+            <div class="sidebar-item pl-8 hover:bg-gray-700 rounded-lg p-3 transition-colors duration-200"
+              data-category="article-list">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-list"></i>
+                <p class="menu-text whitespace-nowrap text-sm">記事一覧</p>
+              </div>
+            </div>
+            <div class="sidebar-item pl-8 hover:bg-gray-700 rounded-lg p-3 transition-colors duration-200"
+              data-category="article-edit">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-pen-to-square"></i>
+                <p class="menu-text whitespace-nowrap text-sm">記事編集</p>
+              </div>
+            </div>
+          </div>
+          <!-- 記事  -->
 
           <div class="sidebar-item flex items-center justify-start md:justify-between" data-category="pages">
             <div class="flex items-center gap-3">
-            <i class="fa-solid fa-file-circle-plus"></i>
+              <i class="fa-solid fa-file-circle-plus"></i>
               <p class="menu-text whitespace-nowrap">固定ページ</p>
             </div>
           </div>
@@ -313,7 +386,7 @@
 
           <div class="sidebar-item flex items-center justify-start md:justify-between" data-category="files">
             <div class="flex items-center gap-3">
-             <i class="fa-solid fa-file"></i>
+              <i class="fa-solid fa-file"></i>
               <p class="menu-text whitespace-nowrap">ファイル</p>
             </div>
           </div>
@@ -465,6 +538,206 @@
               Article</button>
           </div>
         </div>
+        <!-- 記事一覧へ -->
+        <div class="content-section mt-5" data-section="article-list">
+          <!-- Header Section -->
+          <div class="flex justify-between items-center mb-8">
+            <div class="flex items-center gap-4">
+              <h1 class="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                記事一覧</h1>
+              <span
+                class="px-4 py-1.5 rounded-full bg-[var(--secondary-color)] text-sm font-medium shadow-sm ring-1 ring-blue-100">
+                記事の一覧と管理
+              </span>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <div class="relative group">
+                <div class="relative flex items-center">
+                  <input type="text"
+                    class="w-80 pl-10 pr-12 py-3 rounded-2xl border-2 border-gray-200 bg-gray-50 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm hover:bg-white hover:border-blue-300 transition-all duration-200 ease-in-out"
+                    placeholder="記事を検索..." />
+                  <i
+                    class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 transition-colors duration-200 group-hover:text-blue-500"></i>
+                  <div class="absolute right-3 top-1/2 -translate-y-1/2 flex gap-2">
+                    <i
+                      class="fa-solid fa-microphone text-gray-400 me-end hover:text-blue-500 cursor-pointer transition-colors duration-200"></i>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                class="px-4 py-2 rounded-lg bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 transition duration-200 flex items-center gap-2 shadow-sm">
+                <i class="fa-solid fa-filter-circle-xmark text-gray-500"></i>
+                <span>絞り込み解除</span>
+              </button>
+
+              <button
+                class="px-4 py-2 rounded-lg bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 transition duration-200 flex items-center gap-2 shadow-sm">
+                <i class="fa-solid fa-tags text-gray-500"></i>
+                <span>カテゴリ・タグ</span>
+              </button>
+
+              <button
+                class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition duration-200 flex items-center gap-2 shadow-md">
+                <i class="fa-solid fa-plus"></i>
+                <span>記事登録</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Tab Navigation -->
+          <div class="mb-6">
+            <ul class="flex gap-8 -mb-px text-sm font-medium" role="tablist">
+              <li role="presentation">
+                <button class="px-1 py-4 bg-[var(--secondary-color)] transition duration-200" role="tab">
+                  下書き
+                </button>
+              </li>
+              <li role="presentation">
+                <button class="px-1 py-4 bg-[var(--secondary-color)]" role="tab">
+                  申請中・保留
+                </button>
+              </li>
+              <li role="presentation">
+                <button class="px-1 py-4 bg-[var(--secondary-color)] transition duration-200" role="tab">
+                  公開・非公開
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Content Table -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+            <div class="overflow-x-auto">
+              <table class="w-full">
+                <thead>
+                  <tr class="bg-gray-50 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th class="px-6 py-4"></th>
+                    <th class="px-6 py-4">状態</th>
+                    <th class="px-6 py-4">記事ID</th>
+                    <th class="px-6 py-4">記事見出し</th>
+                    <th class="px-6 py-4">メディア</th>
+                    <th class="px-6 py-4">プレビュー</th>
+                    <th class="px-6 py-4">カテゴリ・タグ</th>
+                    <th class="px-6 py-4">記事作成者</th>
+                    <th class="px-6 py-4">記事作成日時</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                  <tr class="hover:bg-gray-50 transition duration-150">
+                    <td class="px-6 py-4">
+                      <div class="flex gap-2">
+                        <button
+                          class="px-3 py-1 text-xs font-medium text-blue-700 bg-blue-50 rounded-full hover:bg-blue-100 transition duration-150">公開</button>
+                        <button
+                          class="px-3 py-1 text-xs font-medium text-gray-700 bg-gray-50 rounded-full hover:bg-gray-100 transition duration-150">保留</button>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="px-2.5 py-1 text-xs font-medium text-yellow-700 bg-yellow-50 rounded-full">申請中</span>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-600">000001</td>
+                    <td class="px-6 py-4">
+                      <a href="#"
+                        class="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline">新しい働き方とオフィスの未来</a>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="flex gap-2 text-gray-400">
+                        <i class="fa-regular fa-image"></i>
+                        <i class="fa-solid fa-video"></i>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="relative group">
+                        <button class="text-sm text-blue-600 hover:text-blue-800 group-hover:underline">表示</button>
+                        <div
+                          class="hidden group-hover:block absolute top-full left-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-100 py-2">
+                          <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                            <i class="fa-solid fa-desktop mr-2"></i>PC
+                          </a>
+                          <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                            <i class="fa-solid fa-mobile-screen mr-2"></i>SP
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-600">コラム</td>
+                    <td class="px-6 py-4 text-sm text-gray-600">山田 太郎</td>
+                    <td class="px-6 py-4 text-sm text-gray-600">2025/07/14 18:30</td>
+                  </tr>
+
+                  <tr class="hover:bg-gray-50 transition duration-150">
+                    <td class="px-6 py-4">
+                      <div class="flex gap-2">
+                        <button
+                          class="px-3 py-1 text-xs font-medium text-blue-700 bg-blue-50 rounded-full hover:bg-blue-100 transition duration-150">公開</button>
+                        <button
+                          class="px-3 py-1 text-xs font-medium text-gray-700 bg-gray-50 rounded-full hover:bg-gray-100 transition duration-150">保留</button>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="px-2.5 py-1 text-xs font-medium text-gray-700 bg-gray-50 rounded-full">保留</span>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-600">000002</td>
+                    <td class="px-6 py-4">
+                      <a href="#"
+                        class="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline">AIが変える未来の教育</a>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="flex gap-2 text-gray-400">
+                        <i class="fa-regular fa-image"></i>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="relative group">
+                        <button class="text-sm text-blue-600 hover:text-blue-800 group-hover:underline">表示</button>
+                        <div
+                          class="hidden group-hover:block absolute top-full left-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-100 py-2">
+                          <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                            <i class="fa-solid fa-desktop mr-2"></i>PC
+                          </a>
+                          <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                            <i class="fa-solid fa-mobile-screen mr-2"></i>SP
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-600">教育</td>
+                    <td class="px-6 py-4 text-sm text-gray-600">佐藤 花子</td>
+                    <td class="px-6 py-4 text-sm text-gray-600">2025/07/13 14:20</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex items-center justify-between px-6 py-4 border-t border-gray-100">
+              <div class="flex items-center gap-3">
+                <span class="text-sm text-gray-600">表示件数:</span>
+                <select
+                  class="px-3 py-1.5 text-sm text-gray-600 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                  <option>25</option>
+                  <option>50</option>
+                  <option>100</option>
+                </select>
+              </div>
+              <div class="text-sm text-gray-600">
+                全 <span class="font-semibold text-gray-900">10</span> 件中
+                <span class="font-semibold text-gray-900">1-2</span> 件を表示
+              </div>
+
+              <div class="flex rounded-lg shadow-sm">
+                <button
+                  class="px-4 py-2 text-sm text-gray-600 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-50 transition duration-150">前へ</button>
+                <button class="px-4 py-2 text-sm text-white bg-blue-600 border border-blue-600">1</button>
+                <button
+                  class="px-4 py-2 text-sm text-gray-600 bg-white border border-gray-200 rounded-r-lg hover:bg-gray-50 transition duration-150">次へ</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--  -->
         <!-- END 記事 -->
 
         <!-- 固定ページ -->
@@ -487,7 +760,7 @@
               <button
                 class="bg-white text-gray-700 px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-100 flex items-center">絞り込み解除</button>
               <button class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center">
-                <span class="material-icons mr-2">add</span>固定ページ追加
+                <span class="material-icons mr-2"><i class="fa-solid fa-plus"></i></span>固定ページ追加
               </button>
             </div>
           </div>
@@ -841,6 +1114,65 @@
       searchDialog.classList.add('hidden');
     });
 
+    // 記事一覧ヘッダー
+    function toggleSubmenu(element) {
+      const submenu = element.nextElementSibling;
+      const chevron = element.querySelector('.fa-chevron-down');
+      submenu.classList.toggle('open');
+      chevron.classList.toggle('chevron-rotate');
+    }
+    // 記事一覧
+    document.querySelectorAll('.preview-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const popup = button.nextElementSibling;
+        popup.classList.toggle('show');
+      });
+    });
+    // 記事一覧content    Tab functionality
+    document.querySelectorAll('#articleTabs button').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('#articleTabs button').forEach(t => {
+          t.classList.remove('tab-active');
+          t.classList.add('border-transparent');
+          t.classList.remove('text-blue-600', 'border-blue-600');
+        });
+        tab.classList.add('tab-active');
+        // Note: Tab content switching would require additional divs with IDs (draft, pending, published)
+        // This script only handles tab styling; actual content switching needs backend or additional JS
+      });
+    });
+
+    // Preview popup functionality
+    document.querySelectorAll('.preview-button').forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const popup = button.nextElementSibling;
+        document.querySelectorAll('.popup.show').forEach(p => {
+          if (p !== popup) p.classList.remove('show');
+        });
+        popup.classList.toggle('show');
+      });
+    });
+
+    // Close popups when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.preview-button') && !e.target.closest('.popup')) {
+        document.querySelectorAll('.popup.show').forEach(popup => {
+          popup.classList.remove('show');
+        });
+      }
+    });
+
+    // Close popups when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.preview-button') && !e.target.closest('.popup')) {
+        document.querySelectorAll('.popup.show').forEach(popup => {
+          popup.classList.remove('show');
+        });
+      }
+    });
+    // 記事一覧　End
+
     // Sidebar item click handler
     sidebarItems.forEach(item => {
       item.addEventListener('click', () => {
@@ -885,6 +1217,9 @@
         <path d="M136,32a8,8,0,0,0-8,8V76.09A56,56,0,0,0,72,132c-.35,0-.69.05-1,0A56,56,0,0,0,184,132a56.06,56.06,0,0,0-56-56V40A8,8,0,0,0,136,32ZM80,132a48,48,0,0,1,96,0A48.05,48.05,0,0,1,80,132Zm136-8a8,8,0,0,1,0,16H184a8,8,0,0,1,0-16ZM72,124a8,8,0,0,1,0-16H40a8,8,0,0,1,0,16ZM53.05,178.07a8,8,0,0,1,11.31-11.31l22.63,22.62a8,8,0,0,1-11.31,11.32ZM165.64,178.07a8,8,0,0,1,11.31,11.31l-22.62,22.63a8,8,0,0,1-11.32-11.31Zm-22.62-79.39a8,8,0,0,1,11.32-11.31l22.62,22.62a8,8,0,0,1-11.31,11.32ZM53.05,77.76a8,8,0,0,1,11.32,11.31L41.74,111.69a8,8,0,0,1-11.31-11.31Zm79.39,123.29a8,8,0,0,1,0,16H88a8,8,0,0,1,0-16Z"></path>` : `
         <path d="M128,56a72,72,0,1,0,72,72A72.08,72.08,0,0,0,128,56Zm0,128a56,56,0,1,1,56-56A56.06,56.06,0,0,1,128,184ZM116,28V12a8,8,0,0,1,16,0V28a8,8,0,0,1-16,0Zm0,200v16a8,8,0,0,1-16,0V228a8,8,0,0,1,16,0ZM44,108H28a8,8,0,0,0,0,16H44a8,8,0,0,0,0-16Zm200,0H228a8,8,0,0,0,0,16h16a8,8,0,0,0,0-16ZM62.22,34.75a8,8,0,0,0-11.31,11.31L58.63,58.6A8,8,0,0,0,69.94,47.29ZM197.37,197.4a8,8,0,0,0-11.31,11.31l7.74,7.75a8,8,0,0,0,11.31-11.31Zm-146.14,0-7.75,7.74a8,8,0,0,0,11.31,11.31l7.74-7.75a8,8,0,0,0-11.31-11.31ZM193.78,47.29a8,8,0,0,0,11.31-11.31l-7.74-7.75a8,8,0,0,0-11.31,11.31Z"></path>`;
     });
+
+
+
 
     // Initialize Chart.js for Article Performance
     const ctx = document.getElementById('performance-chart').getContext('2d');
