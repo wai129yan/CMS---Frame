@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./src/output.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="flex flex-col md:flex-row bg-gray-900 text-white">
+        <!-- Main Sidebar -->
+        <div class="sidebar open transition-all duration-300 ease-in-out w-full md:w-64 bg-gray-800 shadow-lg">
+            <div class="flex flex-col gap-1 p-4">
+                <!-- Sidebar Header -->
+                <div class="mb-6">
+                    <h2 class="text-xl font-bold text-white">CMS Dashboard</h2>
+                </div>
+
+                <!-- Sidebar Items -->
+                <div class="sidebar-item active flex items-center justify-start rounded-lg p-3 bg-gray-700 text-white"
+                    data-category="dashboard">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-table-cells text-lg"></i>
+                        <p class="menu-text whitespace-nowrap font-medium">ダッシュボード</p>
+                    </div>
+                </div>
+
+                <div class="sidebar-item flex items-center justify-start rounded-lg p-3 hover:bg-gray-700 hover:text-white transition-colors duration-200"
+                    data-category="home">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-house text-lg"></i>
+                        <p class="menu-text whitespace-nowrap font-medium">ホーム</p>
+                    </div>
+                </div>
+
+                <!-- Articles Section -->
+                <div class="sidebar-item flex items-center justify-start cursor-pointer rounded-lg p-3 hover:bg-gray-700 hover:text-white transition-colors duration-200"
+                    data-category="articles" onclick="toggleChildSidebar(this, 'articles-child-sidebar')">
+                    <div class="flex items-center gap-3 flex-1">
+                        <i class="fa-solid fa-newspaper text-lg"></i>
+                        <p class="menu-text whitespace-nowrap font-medium">記事</p>
+                    </div>
+                    <i class="fa-solid fa-caret-down ms-2 transition-transform duration-200"></i>
+                </div>
+
+                <div class="sidebar-item flex items-center justify-start rounded-lg p-3 hover:bg-gray-700 hover:text-white transition-colors duration-200"
+                    data-category="pages">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-file-circle-plus text-lg"></i>
+                        <p class="menu-text whitespace-nowrap font-medium">固定ページ</p>
+                    </div>
+                </div>
+
+                <!-- Announce Section -->
+                <div class="sidebar-item flex items-center justify-start cursor-pointer rounded-lg p-3 hover:bg-gray-700 hover:text-white transition-colors duration-200"
+                    data-category="announce" onclick="toggleChildSidebar(this, 'announce-child-sidebar')">
+                    <div class="flex items-center gap-3 flex-1">
+                        <i class="fa-solid fa-newspaper text-lg"></i>
+                        <p class="menu-text whitespace-nowrap font-medium">お知らせ</p>
+                    </div>
+                    <i class="fa-solid fa-caret-down ms-2 transition-transform duration-200"></i>
+                </div>
+
+                <div class="sidebar-item flex items-center justify-start rounded-lg p-3 hover:bg-gray-700 hover:text-white transition-colors duration-200"
+                    data-category="forms">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-folder text-lg"></i>
+                        <p class="menu-text whitespace-nowrap font-medium">フォーム</p>
+                    </div>
+                </div>
+
+                <div class="sidebar-item flex items-center justify-start rounded-lg p-3 hover:bg-gray-700 hover:text-white transition-colors duration-200"
+                    data-category="files">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-file text-lg"></i>
+                        <p class="menu-text whitespace-nowrap font-medium">ファイル</p>
+                    </div>
+                </div>
+
+                <div class="sidebar-item flex items-center justify-start rounded-lg p-3 hover:bg-gray-700 hover:text-white transition-colors duration-200"
+                    data-category="logs">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-user-tie text-lg"></i>
+                        <p class="menu-text whitespace-nowrap font-medium">CMS操作管理者ログ</p>
+                    </div>
+                </div>
+
+                <div class="sidebar-item flex items-center justify-start rounded-lg p-3 hover:bg-gray-700 hover:text-white transition-colors duration-200"
+                    data-category="categories">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-layer-group text-lg"></i>
+                        <p class="menu-text whitespace-nowrap font-medium">カテゴリ・タグ</p>
+                    </div>
+                </div>
+
+                <div class="sidebar-item flex items-center justify-start rounded-lg p-3 hover:bg-gray-700 hover:text-white transition-colors duration-200"
+                    data-category="users">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-users text-lg"></i>
+                        <p class="menu-text whitespace-nowrap font-medium">ユーザー</p>
+                    </div>
+                </div>
+
+                <div class="sidebar-item flex items-center justify-start rounded-lg p-3 hover:bg-gray-700 hover:text-white transition-colors duration-200"
+                    data-category="settings">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-gear text-lg"></i>
+                        <p class="menu-text whitespace-nowrap font-medium">設定</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Child Sidebar for Articles -->
+        <div id="articles-child-sidebar"
+            class="child-sidebar hidden transition-all duration-300 ease-in-out bg-gray-700 w-full md:w-48 min-h-screen shadow-lg">
+            <div class="flex flex-col gap-2 p-4">
+                <!-- Close Button -->
+                <div class="flex justify-end mb-4">
+                    <button onclick="toggleChildSidebar(this, 'articles-child-sidebar')"
+                        class="p-2 rounded-full text-gray-300 hover:text-white hover:bg-gray-600 transition-all duration-200 ease-in-out transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-gray-500 active:scale-95"
+                        aria-label="Close sidebar">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+
+                <div class="sidebar-item rounded-lg p-3 hover:bg-gray-600 hover:text-white transition-colors duration-200"
+                    data-category="article-list">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-list text-base"></i>
+                        <p class="whitespace-nowrap text-sm font-medium">記事一覧</p>
+                    </div>
+                </div>
+                <div class="sidebar-item rounded-lg p-3 hover:bg-gray-600 hover:text-white transition-colors duration-200"
+                    data-category="article-edit">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-pen-to-square text-base"></i>
+                        <p class="whitespace-nowrap text-sm font-medium">記事編集</p>
+                    </div>
+                </div>
+                <div class="sidebar-item rounded-lg p-3 hover:bg-gray-600 hover:text-white transition-colors duration-200"
+                    data-category="article-register">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-regular fa-address-card text-base"></i>
+                        <p class="whitespace-nowrap text-sm font-medium">記事登録</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Child Sidebar for Announce -->
+        <div id="announce-child-sidebar"
+            class="child-sidebar hidden transition-all duration-300 ease-in-out bg-gray-700 w-full md:w-48 min-h-screen shadow-lg">
+            <div class="flex flex-col gap-2 p-4">
+                <!-- Close Button -->
+                <div class="flex justify-end mb-4">
+                    <button onclick="toggleChildSidebar(this, 'announce-child-sidebar')"
+                        class="p-2 rounded-full text-gray-300 hover:text-white hover:bg-gray-600 transition-all duration-200 ease-in-out transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-gray-500 active:scale-95"
+                        aria-label="Close sidebar">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+
+                <div class="sidebar-item rounded-lg p-3 hover:bg-gray-600 hover:text-white transition-colors duration-200"
+                    data-category="announce-list">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-list text-base"></i>
+                        <p class="whitespace-nowrap text-sm font-medium">一覧</p>
+                    </div>
+                </div>
+                <div class="sidebar-item rounded-lg p-3 hover:bg-gray-600 hover:text-white transition-colors duration-200"
+                    data-category="announce-edit">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-pen-to-square text-base"></i>
+                        <p class="whitespace-nowrap text-sm font-medium">編集</p>
+                    </div>
+                </div>
+                <div class="sidebar-item rounded-lg p-3 hover:bg-gray-600 hover:text-white transition-colors duration-200"
+                    data-category="announce-register">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-regular fa-address-card text-base"></i>
+                        <p class="whitespace-nowrap text-sm font-medium">登録</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Sidebar Toggle -->
+    <script>
+        function toggleChildSidebar(element, sidebarId) {
+            const childSidebar = document.getElementById(sidebarId);
+            const allChildSidebars = document.querySelectorAll('.child-sidebar');
+            const caret = element.querySelector('.fa-caret-down');
+
+            // Close all other child sidebars
+            allChildSidebars.forEach(sidebar => {
+                if (sidebar.id !== sidebarId) {
+                    sidebar.classList.add('hidden');
+                    const otherCaret = document.querySelector(`[onclick="toggleChildSidebar(this, '${sidebar.id}')"] .fa-caret-down`);
+                    if (otherCaret) otherCaret.classList.remove('rotate-180');
+                }
+            });
+
+            // Toggle the target sidebar
+            childSidebar.classList.toggle('hidden');
+            if (caret) caret.classList.toggle('rotate-180');
+        }
+    </script>
+
+    <style>
+        /* Ensure smooth transitions for sidebar items */
+        .sidebar-item {
+            cursor: pointer;
+        }
+
+        /* Active state styling */
+        .sidebar-item.active {
+            background-color: #4b5563;
+            /* gray-600 */
+            color: white;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hover effect for sidebar items */
+        .sidebar-item:hover {
+            transform: translateX(4px);
+        }
+
+        /* Child sidebar styling */
+        .child-sidebar {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+            }
+
+            .child-sidebar {
+                width: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+        }
+    </style>
+</body>
+
+</html>
+
+
+
+
+
+
+
+ <div class="sidebar open transition-all duration-300 ease-in-out w-full md:w-64 shadow-lg" role="navigation"
+          aria-label="Main navigation">
+          <div class="flex flex-col gap-1 p-4">
+            <!-- Sidebar Header -->
+            <div class="mb-6">
+              <h2 class="text-2xl font-bold text-center">OUTWARD</h2>
+            </div>
+
+            <!-- Sidebar Items -->
+            <div class="sidebar-item active flex items-center justify-start rounded-lg p-3  "
+              data-category="dashboard" role="button" aria-current="page">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-table-cells text-lg"></i>
+                <p class="menu-text whitespace-nowrap font-medium">ダッシュボード</p>
+              </div>
+            </div>
+
+            <div
+              class="sidebar-item flex items-center justify-start rounded-lg p-3 hover:bg-gray-700 hover:text-white transition-colors duration-200"
+              data-category="home" role="button">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-house text-lg"></i>
+                <p class="menu-text whitespace-nowrap font-medium">ホーム</p>
+              </div>
+            </div>
+
+            <!-- Articles Section -->
+            <div
+              class="sidebar-item flex items-center justify-start cursor-pointer rounded-lg p-3 hover:bg-gray-700 hover:text-white transition-colors duration-200"
+              data-category="articles" onclick="toggleChildSidebar(this, 'articles-child-sidebar')" role="button"
+              aria-expanded="false" aria-controls="articles-child-sidebar">
+              <div class="flex items-center gap-3 flex-1">
+                <i class="fa-solid fa-newspaper text-lg"></i>
+                <p class="menu-text whitespace-nowrap font-medium">記事</p>
+              </div>
+              <i class="fa-solid fa-caret-down ms-2 transition-transform duration-200"></i>
+            </div>
+
+            <div
+              class="sidebar-item flex items-center justify-start rounded-lg p-3 hover:bg-gray-700 hover:text-white transition-colors duration-200"
+              data-category="pages" role="button">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-file-circle-plus text-lg"></i>
+                <p class="menu-text whitespace-nowrap font-medium">固定ページ</p>
+              </div>
+            </div>
+
+            <!-- Announce Section -->
+            <div
+              class="sidebar-item flex items-center justify-start cursor-pointer rounded-lg p-3 hover:bg-gray-700 hover:text-white transition-colors duration-200"
+              data-category="announce" onclick="toggleChildSidebar(this, 'announce-child-sidebar')" role="button"
+              aria-expanded="false" aria-controls="announce-child-sidebar">
+              <div class="flex items-center gap-3 flex-1">
+                <i class="fa-solid fa-newspaper text-lg"></i>
+                <p class="menu-text whitespace-nowrap font-medium">お知らせ</p>
+              </div>
+              <i class="fa-solid fa-caret-down ms-2 transition-transform duration-200"></i>
+            </div>
+
+            <div
+              class="sidebar-item flex items-center justify-start rounded-lg p-3 hover:bg-gray-700 hover:text-white transition-colors duration-200"
+              data-category="forms" role="button">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-folder text-lg"></i>
+                <p class="menu-text whitespace-nowrap font-medium">フォーム</p>
+              </div>
+            </div>
+
+            <div
+              class="sidebar-item flex items-center justify-start rounded-lg p-3 hover:bg-gray-700 hover:text-white transition-colors duration-200"
+              data-category="files" role="button">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-file text-lg"></i>
+                <p class="menu-text whitespace-nowrap font-medium">ファイル</p>
+              </div>
+            </div>
+
+            <div
+              class="sidebar-item flex items-center justify-start rounded-lg p-3 hover:bg-gray-700 hover:text-white transition-colors duration-200"
+              data-category="logs" role="button">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-user-tie text-lg"></i>
+                <p class="menu-text whitespace-nowrap font-medium">CMS操作管理者ログ</p>
+              </div>
+            </div>
+
+            <div
+              class="sidebar-item flex items-center justify-start rounded-lg p-3 hover:bg-gray-700 hover:text-white transition-colors duration-200"
+              data-category="categories" role="button">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-layer-group text-lg"></i>
+                <p class="menu-text whitespace-nowrap font-medium">カテゴリ・タグ</p>
+              </div>
+            </div>
+
+            <div
+              class="sidebar-item flex items-center justify-start rounded-lg p-3 hover:bg-gray-700 hover:text-white transition-colors duration-200"
+              data-category="users" role="button">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-users text-lg"></i>
+                <p class="menu-text whitespace-nowrap font-medium">ユーザー</p>
+              </div>
+            </div>
+
+            <div
+              class="sidebar-item flex items-center justify-start rounded-lg p-3 hover:bg-gray-700 hover:text-white transition-colors duration-200"
+              data-category="settings" role="button">
+              <div class="flex items-center gap-3">
+                <i class="fa-solid fa-gear text-lg"></i>
+                <p class="menu-text whitespace-nowrap font-medium">設定</p>
+              </div>
+            </div>
+          </div>
+        </div>

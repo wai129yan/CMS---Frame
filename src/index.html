@@ -1,13 +1,15 @@
 <!doctype html>
-<html>
+<html lang="ja">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OUTWARD CMS Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> -->
-  <link rel="stylesheet" href="./output.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- <link rel="stylesheet" href="./output.css"> -->
 
   <style>
     :root {
@@ -16,11 +18,11 @@
       --secondary-color: #f1f5f9;
       --text-color: #1e293b;
       --secondary-text: #c5c8cc;
-      --sidebar-bg: #adb0bd;
+      --sidebar-bg: #f8fafc;
       --card-bg: #ffffff;
       --border-color: #e2e8f0;
-      --hover-bg: #122a5a98;
-      --active-bg: #96addf;
+      --hover-bg: #f1f5f9;
+      --active-bg: #e2e8f0;
       --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       --graph-line: #8aafee;
     }
@@ -29,282 +31,53 @@
       font-family: 'Inter', sans-serif;
       background-color: var(--secondary-color);
       color: var(--text-color);
-      transition: background-color 0.3s ease, color 0.3s ease;
       margin: 0;
       overflow-x: hidden;
     }
 
+    /* Sidebar Styles */
     .sidebar {
-      position: relative;
-      width: 260px;
-      padding: 1.5rem 0.5rem;
-      transition: width 0.3s ease-in-out, box-shadow 0.3s ease;
-      z-index: 50;
-      box-shadow: var(--shadow);
+      background-color: var(--sidebar-bg);
       min-height: 100vh;
-    }
-
-    .sidebar.open {
-      width: 260px;
-    }
-
-    .sidebar:not(.open) {
-      width: 80px;
-    }
-
-    .sidebar .menu-text {
-      display: block;
-      font-size: 0.875rem;
-      font-weight: 500;
-      transition: opacity 0.2s ease;
-    }
-
-    .sidebar:not(.open) .menu-text {
-      display: none;
-      opacity: 0;
+      transition: all 0.3s ease;
+      border-right: 1px solid var(--border-color);
     }
 
     .sidebar-item {
+      cursor: pointer;
+      padding: 12px 16px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      transition: background-color 0.2s ease, transform 0.2s ease;
+      gap: 12px;
+      margin-bottom: 4px;
     }
 
     .sidebar-item:hover {
-      /* background-color: rgba(247, 208, 208, 0.24); */
-      background-color: #daebecc7;
+      background-color: var(--hover-bg);
       transform: translateX(4px);
     }
 
     .sidebar-item.active {
-      /* background-color: var(--active-bg); */
-      background-color: #cbdadbd7;
+      background-color: var(--active-bg);
+      color: var(--primary-color);
       font-weight: 600;
     }
 
-    /* 記事 */
-    .submenu {
-      transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
-      max-height: 0;
-      opacity: 0;
-      overflow: hidden;
+    /* Child sidebar styling */
+    .child-sidebar {
+      background-color: #e2e8f0;
+      border-right: 1px solid var(--border-color);
+      min-height: 100vh;
     }
 
-    .submenu.open {
-      max-height: 200px;
-      /* Adjusted for content */
-      opacity: 1;
+    .child-sidebar .sidebar-item {
+      font-size: 0.875rem;
+      padding: 10px 12px;
     }
 
-    .chevron-rotate {
-      transform: rotate(180deg);
-    }
-
-    /* 記事一覧へ */
-    .popup {
-      display: none;
-    }
-
-    .popup.show {
-      display: block;
-    }
-
-    .popup {
-      display: none;
-      opacity: 0;
-      transform: translateY(-10px);
-      transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
-    }
-
-    .popup.show {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .tab-active {
-      border-color: #2563eb !important;
-      color: #2563eb !important;
-    }
-
-
-    /* End */
-
-    /* Edit Article */
-    .sidebar.collapsed {
-      width: 5rem;
-    }
-
-    .sidebar.collapsed .nav-text {
-      display: none;
-    }
-
-    .sidebar.collapsed .submenu {
-      display: none;
-    }
-
-    .sidebar.collapsed .toggle-button span:first-child {
-      transform: rotate(180deg);
-    }
-
-    .sidebar.collapsed~.main-content {
-      margin-left: 5rem;
-    }
-
-    .main-content {
-      transition: margin-left 0.3s;
-    }
-
-    .tab-content {
-      display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    .tab-pane {
-      display: none;
-    }
-
-    .tab-pane.active {
-      display: block;
-    }
-
-    /* End Edit */
-    /* 記事 */
-
-    .open-button {
-      background-color: rgba(255, 255, 255, 0.2);
-      border-radius: 50%;
-      padding: 0.5rem;
-      transition: background-color 0.2s ease, transform 0.2s ease;
-    }
-
-    .open-button:hover {
-      background-color: rgba(255, 255, 255, 0.3);
-      transform: scale(1.1);
-    }
-
-    .main-content {
-      flex-grow: 1;
-      background-color: #f9fafa;
-      padding: 1.5rem;
-      transition: opacity 0.3s ease;
-    }
-
-    .flex.h-full.grow {
-      display: flex;
-      flex-direction: row;
-    }
-
-    @media (max-width: 768px) {
-      .sidebar {
-        width: 60px;
-      }
-
-      .sidebar.open {
-        width: 220px;
-      }
-
-      .flex.h-full.grow {
-        flex-direction: column;
-      }
-
-      .sidebar {
-        min-height: auto;
-      }
-    }
-
-    header {
-      background-color: var(--card-bg);
-      border-bottom: 1px solid var(--border-color);
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: var(--shadow);
-    }
-
-    .header-right {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .logo-container {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: transform 0.2s ease;
-    }
-
-    .logo-container:hover {
-      transform: scale(1.05);
-    }
-
-    .user-profile {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: transform 0.2s ease;
-    }
-
-    .user-profile:hover {
-      transform: scale(1.05);
-    }
-
-    .card {
-      background-color: var(--card-bg);
-      border-radius: 1rem;
-      padding: 2rem;
-      box-shadow: var(--shadow);
-      transition: background-color 0.3s ease, transform 0.2s ease, opacity 0.3s ease;
-      opacity: 0;
-      animation: fadeIn 0.5s ease forwards;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-    }
-
-    button {
-      transition: background-color 0.2s ease, transform 0.2s ease;
-    }
-
-    button:hover {
-      background-color: var(--hover-bg);
-      transform: scale(1.05);
-    }
-
-    .dark button:hover {
-      background-color: var(--hover-bg);
-    }
-
-    .content-list li {
-      padding: 0.5rem 0;
-      border-bottom: 1px solid var(--border-color);
-      transition: background-color 0.2s ease;
-    }
-
-    .content-list li:hover {
-      background-color: var(--hover-bg);
-      padding-left: 0.5rem;
-    }
-
-    .popup {
-      display: none;
-    }
-
-    .preview-button:hover+.popup {
-      display: block;
-    }
-
+    /* Content section styles */
     .content-section {
       display: none;
       opacity: 0;
@@ -329,6 +102,106 @@
       }
     }
 
+    /* Tab styles */
+    .tab-button {
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tab-button.active {
+      border-color: var(--primary-color) !important;
+      color: var(--primary-color) !important;
+    }
+
+    /* Card styles */
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease;
+      margin-bottom: 1.5rem;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Popup styles */
+    .popup {
+      display: none;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .popup.show {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Header styles */
+    header {
+      background-color: var(--card-bg);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 2rem;
+      box-shadow: var(--shadow);
+    }
+
+    /* Button styles */
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: #2563eb;
+    }
+
+    /* Table styles */
+    .table-container {
+      overflow-x: auto;
+      border-radius: 0.5rem;
+      border: 1px solid var(--border-color);
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        position: fixed;
+        z-index: 50;
+        transform: translateX(-100%);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .child-sidebar {
+        position: absolute;
+        top: 0;
+        left: 100%;
+        width: 100%;
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+    }
+
+    /* Hidden by default */
+    .hidden {
+      display: none !important;
+    }
+
+    /* Chart container */
     .chart-container {
       height: 200px;
       background-color: var(--card-bg);
@@ -336,453 +209,287 @@
       padding: 1rem;
       box-shadow: var(--shadow);
     }
+
+    /* Rotation utility */
+    .rotate-180 {
+      transform: rotate(180deg);
+    }
   </style>
 </head>
+
 <body>
-  <div class="relative flex min-h-screen flex-col">
-    <div class="flex h-full grow">
-      <!-- Primary Sidebar -->
-      <div class="flex flex-col md:flex-row">
-        <!-- Main Sidebar -->
-        <div class="sidebar open transition-all duration-300 ease-in-out w-full md:w-auto">
-          <div class="flex flex-col gap-2">
-            <div class="sidebar-item active flex items-center justify-start" data-category="dashboard">
-              <div class="flex items-center gap-3">
-                <i class="fa-solid fa-table-cells"></i>
-                <p class="menu-text whitespace-nowrap">ダッシュボード</p>
-              </div>
-            </div>
-
-            <div class="sidebar-item flex items-center justify-start" data-category="home">
-              <div class="flex items-center gap-3">
-                <i class="fa-solid fa-house"></i>
-                <p class="menu-text whitespace-nowrap">ホーム</p>
-              </div>
-            </div>
-
-            <!-- Articles section with child menu trigger -->
-            <div
-              class="sidebar-item flex items-center justify-start cursor-pointer hover:bg-gray-700 rounded-lg p-3 transition-colors duration-200"
-              data-category="articles" onclick="toggleChildSidebar(this)">
-              <div class="flex items-center gap-3">
-                <i class="fa-solid fa-newspaper"></i>
-                <p class="menu-text whitespace-nowrap font-medium me-5">記事<i class="fa-solid fa-caret-down ms-2"></i>
-                </p>
-
-              </div>
-            </div>
-
-            <div class="sidebar-item flex items-center justify-start" data-category="pages">
-              <div class="flex items-center gap-3">
-                <i class="fa-solid fa-file-circle-plus"></i>
-                <p class="menu-text whitespace-nowrap">固定ページ</p>
-              </div>
-            </div>
-
-            <div class="sidebar-item flex items-center justify-start" data-category="notifications">
-              <div class="flex items-center gap-3">
-                <i class="fa-solid fa-bell"></i>
-                <p class="menu-text whitespace-nowrap">お知らせ</p>
-              </div>
-            </div>
-
-            <div class="sidebar-item flex items-center justify-start" data-category="forms">
-              <div class="flex items-center gap-3">
-                <i class="fa-solid fa-folder"></i>
-                <p class="menu-text whitespace-nowrap">フォーム</p>
-              </div>
-            </div>
-
-            <div class="sidebar-item flex items-center justify-start" data-category="files">
-              <div class="flex items-center gap-3">
-                <i class="fa-solid fa-file"></i>
-                <p class="menu-text whitespace-nowrap">ファイル</p>
-              </div>
-            </div>
-
-            <div class="sidebar-item flex items-center justify-start" data-category="logs">
-              <div class="flex items-center gap-3">
-                <i class="fa-solid fa-user-tie"></i>
-                <p class="menu-text whitespace-nowrap">CMS操作管理者ログ</p>
-              </div>
-            </div>
-
-            <div class="sidebar-item flex items-center justify-start" data-category="categories">
-              <div class="flex items-center gap-3">
-                <i class="fa-solid fa-layer-group"></i>
-                <p class="menu-text whitespace-nowrap">カテゴリ・タグ</p>
-              </div>
-            </div>
-
-            <div class="sidebar-item flex items-center justify-start" data-category="users">
-              <div class="flex items-center gap-3">
-                <i class="fa-solid fa-users"></i>
-                <p class="menu-text whitespace-nowrap">ユーザー</p>
-              </div>
-            </div>
-
-            <div class="sidebar-item flex items-center justify-start" data-category="settings">
-              <div class="flex items-center gap-3">
-                <i class="fa-solid fa-gear"></i>
-                <p class="menu-text whitespace-nowrap">設定</p>
-              </div>
-            </div>
+  <div class="flex min-h-screen">
+    <!-- Sidebar Container -->
+    <div class="flex">
+      <!-- Main Sidebar -->
+      <div class="sidebar w-64 flex-shrink-0" id="main-sidebar">
+        <div class="p-4">
+          <!-- Sidebar Header -->
+          <div class="mb-6 text-center">
+            <h2 class="text-2xl font-bold text-gray-800">OUTWARD</h2>
           </div>
-        </div>
 
-        <!-- Child Sidebar for Articles -->
-        <div id="articles-child-sidebar"
-          class="child-sidebar hidden transition-all duration-300 ease-in-out bg-gray-100 w-full md:w-48 min-h-screen">
-          <div class="flex flex-col gap-2 p-3">
-            <!-- Close button for sidebar -->
-            <div class="flex justify-end mb-2">
-              <button onclick="toggleChildSidebar(this)"
-                class="p-2 rounded-full text-gray-500 hover:text-white hover:bg-gray-50 transition-all duration-200 ease-in-out transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-gray-300 active:scale-95"
-                aria-label="Close sidebar">
-                <i class="fa-solid fa-xmark text-lg"></i>
-              </button>
+          <!-- Sidebar Items -->
+          <nav class="space-y-1">
+            <div class="sidebar-item active" data-category="dashboard">
+              <i class="fa-solid fa-table-cells text-lg"></i>
+              <span class="menu-text">ダッシュボード</span>
             </div>
 
-            <div class="sidebar-item hover:bg-gray-700 rounded-lg p-3 transition-colors duration-200"
-              data-category="article-list">
-              <div class="flex items-center gap-3">
-                <i class="fa-solid fa-list"></i>
-                <p class="whitespace-nowrap text-sm">記事一覧</p>
-              </div>
+            <div class="sidebar-item" data-category="home">
+              <i class="fa-solid fa-house text-lg"></i>
+              <span class="menu-text">ホーム</span>
             </div>
-            <div class="sidebar-item hover:bg-gray-700 rounded-lg p-3 transition-colors duration-200"
-              data-category="article-edit">
-              <div class="flex items-center gap-3">
-                <i class="fa-solid fa-pen-to-square"></i>
-                <p class="whitespace-nowrap text-sm">記事編集</p>
-              </div>
+
+            <div class="sidebar-item" data-category="articles"
+              onclick="toggleChildSidebar(this, 'articles-child-sidebar')">
+              <i class="fa-solid fa-newspaper text-lg"></i>
+              <span class="menu-text">記事</span>
+              <i class="fa-solid fa-caret-down ml-auto transition-transform duration-200"></i>
             </div>
-            <div class="sidebar-item hover:bg-gray-700 rounded-lg p-3 transition-colors duration-200"
-              data-category="article-register">
-              <div class="flex items-center gap-3">
-                <i class="fa-regular fa-address-card"></i>
-                <p class="whitespace-nowrap text-sm">記事登録</p>
-              </div>
+
+            <div class="sidebar-item" data-category="pages">
+              <i class="fa-solid fa-file-circle-plus text-lg"></i>
+              <span class="menu-text">固定ページ</span>
             </div>
-          </div>
+
+            <div class="sidebar-item" data-category="announce"
+              onclick="toggleChildSidebar(this, 'announce-child-sidebar')">
+              <i class="fa-solid fa-bell text-lg"></i>
+              <span class="menu-text">お知らせ</span>
+              <i class="fa-solid fa-caret-down ml-auto transition-transform duration-200"></i>
+            </div>
+
+            <div class="sidebar-item" data-category="forms">
+              <i class="fa-solid fa-folder text-lg"></i>
+              <span class="menu-text">フォーム</span>
+            </div>
+
+            <div class="sidebar-item" data-category="files">
+              <i class="fa-solid fa-file text-lg"></i>
+              <span class="menu-text">ファイル</span>
+            </div>
+
+            <div class="sidebar-item" data-category="logs">
+              <i class="fa-solid fa-user-tie text-lg"></i>
+              <span class="menu-text">CMS操作管理者ログ</span>
+            </div>
+
+            <div class="sidebar-item" data-category="categories">
+              <i class="fa-solid fa-layer-group text-lg"></i>
+              <span class="menu-text">カテゴリ・タグ</span>
+            </div>
+
+            <div class="sidebar-item" data-category="users">
+              <i class="fa-solid fa-users text-lg"></i>
+              <span class="menu-text">ユーザー</span>
+            </div>
+
+            <div class="sidebar-item" data-category="settings">
+              <i class="fa-solid fa-gear text-lg"></i>
+              <span class="menu-text">設定</span>
+            </div>
+          </nav>
         </div>
-        <!-- End Child Sidebar for Articles -->
       </div>
-      <!-- End Primary Sidebar -->
 
-      <!-- Main Content -->
-      <div class="main-content">
-        <header>
-          <div class="flex items-center">
-            <button id="toggle-sidebar"
-              class="open-button text-[var(--text-color)] p-2 hover:bg-[var(--hover-bg)] rounded-lg">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor"
-                viewBox="0 0 256 256">
-                <path
-                  d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z">
-                </path>
-              </svg>
+      <!-- Child Sidebar for Articles -->
+      <div id="articles-child-sidebar" class="child-sidebar w-48 hidden">
+        <div class="p-4">
+          <div class="flex justify-end mb-4">
+            <button onclick="toggleChildSidebar(this, 'articles-child-sidebar')" class="p-2 hover:bg-gray-300 rounded">
+              <i class="fa-solid fa-xmark"></i>
             </button>
           </div>
-          <div class="header-right">
-            <div class="logo-container">
-
-              <h2 class="text-[var(--text-color)] text-lg font-extrabold">OUTWARD</h2>
+          <nav class="space-y-1">
+            <div class="sidebar-item" data-category="article-list">
+              <i class="fa-solid fa-list"></i>
+              <span>記事一覧</span>
             </div>
-            <a class="flex items-center text-[var(--text-color)] hover:text-indigo-600 gap-2" href="#">
-              <i class="fa-regular fa-bell"></i>
-              <span class="text-sm">お知らせ</span>
-            </a>
-
-            <div class="user-profile">
-              <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDWqrYQNPXsESYU6gkA-0Fye_lhbAZWE0bAuFuCD3-jw12dj0xqBbbQb1umrRFukw1e2oV1btXli7Y_jo9wJpIlFOGrzCl9bHKZpSIsi0LNLHp38c-50cnsKyGH6g9Uw1edb2H9OKvUi1mSxIhTCEMH-vA0nIcFNRVSTudPhEwklm0tm2l6GN28OQ8Ng69PIkUAlfv4pja4fcDDGa3nLoT4zguUWWWO1buBzSx2ze_QqUaTnA6z7kY-EmHx-Apn9LEJIuw4IXGBqg');">
-              </div>
-              <span class="text-[var(--text-color)] text-sm font-semibold">田中 太郎 (プロ)</span>
+            <div class="sidebar-item" data-category="article-edit">
+              <i class="fa-solid fa-pen-to-square"></i>
+              <span>記事編集</span>
             </div>
+            <div class="sidebar-item" data-category="article-register">
+              <i class="fa-regular fa-address-card"></i>
+              <span>記事登録</span>
+            </div>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Child Sidebar for Announce -->
+      <div id="announce-child-sidebar" class="child-sidebar w-48 hidden">
+        <div class="p-4">
+          <div class="flex justify-end mb-4">
+            <button onclick="toggleChildSidebar(this, 'announce-child-sidebar')" class="p-2 hover:bg-gray-300 rounded">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
           </div>
-        </header>
-        <!-- ダッシュボード -->
-        <div class="content-section active mt-5" data-section="dashboard">
-          <div class="flex flex-row gap-2 mb-6">
-            <h1 class="text-[var(--text-color)] text-3xl font-bold">ダッシュボード</h1>
-            <p
-              class="flex items-center px-3 py-1 rounded-full bg-[var(--secondary-color)] border border-[var(--border-color)]">
-              コンテンツの概要</p>
-          </div>
+          <nav class="space-y-1">
+            <div class="sidebar-item" data-category="announce-list">
+              <i class="fa-solid fa-list"></i>
+              <span>一覧</span>
+            </div>
+            <div class="sidebar-item" data-category="announce-edit">
+              <i class="fa-solid fa-pen-to-square"></i>
+              <span>編集</span>
+            </div>
+            <div class="sidebar-item" data-category="announce-register">
+              <i class="fa-regular fa-address-card"></i>
+              <span>登録</span>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="card w-full">
-              <h2 class="text-xl font-semibold text-gray-800">総記事件数 150</h2>
-              <p class="text-gray-600 text-sm">This card represents the total number of incidents recorded.</p>
-              <button class="bg-blue-600 text-white rounded-lg py-2 px-4 hover:bg-blue-700 self-start mt-4">Read
-                More</button>
-            </div>
-            <div class="card w-full">
-              <h2 class="text-xl font-semibold text-gray-800">公開記事件数 120</h2>
-              <p class="text-gray-600 text-sm">This card shows the number of publicly recorded incidents.</p>
-              <button class="bg-blue-600 text-white rounded-lg py-2 px-4 hover:bg-blue-700 self-start mt-4">Read
-                More</button>
-            </div>
-            <div class="card w-full">
-              <h2 class="text-xl font-semibold text-gray-800">下書き記事件数 30</h2>
-              <p class="text-gray-600 text-sm">This card indicates the number of draft incidents.</p>
-              <button class="bg-blue-600 text-white rounded-lg py-2 px-4 hover:bg-blue-700 self-start mt-4">Read
-                More</button>
-            </div>
-          </div>
+    <!-- Main Content -->
+    <div class="flex-1">
+      <!-- Header -->
+      <header class="flex justify-between items-center">
+        <div class="flex items-center gap-4">
+          <button id="mobile-menu-toggle" class="md:hidden p-2 hover:bg-gray-100 rounded">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <h1 class="text-2xl font-bold text-gray-800">OUTWARD</h1>
+        </div>
 
-          <div class="flex flex-wrap gap-4 px-4 py-6">
-            <div class="card flex min-w-72 flex-1 flex-col gap-2">
-              <p class="text-[#101418] text-base font-medium leading-normal">Article Performance</p>
-              <p class="text-[#101418] tracking-tight text-[32px] font-bold leading-tight truncate">+15%</p>
-              <div class="flex gap-1">
-                <p class="text-[#5c738a] text-base font-normal leading-normal">Last 30 Days</p>
-                <p class="text-[#078838] text-base font-medium leading-normal">+15%</p>
-              </div>
-              <div class="chart-container">
-                <canvas id="performance-chart"></canvas>
-              </div>
-            </div>
+        <div class="flex items-center gap-6">
+          <a href="#" class="flex items-center gap-2 text-gray-600 hover:text-blue-600">
+            <i class="fa-regular fa-bell"></i>
+            <span class="text-sm">お知らせ</span>
+          </a>
+
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-gray-300 rounded-full"></div>
+            <span class="text-sm font-semibold">田中 太郎 (プロ)</span>
           </div>
         </div>
-        <!-- END ダッシュボード -->
+      </header>
 
-        <!-- ホーム -->
-        <div class="content-section mt-5" data-section="home">
-          <div class="flex flex-row gap-2 mb-6">
-            <h1 class="text-[var(--text-color)] text-3xl font-bold">ホーム</h1>
-            <p
-              class="flex items-center px-3 py-1 rounded-full bg-[var(--secondary-color)] border border-[var(--border-color)]">
-              サイトのホーム画面</p>
+      <!-- Content Area -->
+      <main class="p-6">
+        <!-- Dashboard Content -->
+        <div class="content-section active" data-section="dashboard">
+          <div class="flex items-center gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">ダッシュボード</h1>
+            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">コンテンツの概要</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <div class="card">
+              <h3 class="text-xl font-semibold text-gray-800 mb-2">総記事件数</h3>
+              <p class="text-3xl font-bold text-blue-600 mb-2">150</p>
+              <p class="text-gray-600 text-sm">全体の記事数</p>
+            </div>
+            <div class="card">
+              <h3 class="text-xl font-semibold text-gray-800 mb-2">公開記事件数</h3>
+              <p class="text-3xl font-bold text-green-600 mb-2">120</p>
+              <p class="text-gray-600 text-sm">公開中の記事数</p>
+            </div>
+            <div class="card">
+              <h3 class="text-xl font-semibold text-gray-800 mb-2">下書き記事件数</h3>
+              <p class="text-3xl font-bold text-orange-600 mb-2">30</p>
+              <p class="text-gray-600 text-sm">下書き状態の記事数</p>
+            </div>
           </div>
 
           <div class="card">
-            <h2 class="text-xl font-semibold text-gray-800">ようこそ</h2>
-            <p class="text-gray-600 text-sm">This is the home section of your CMS. Here you can manage the main page
-              content.</p>
-            <button class="bg-blue-600 text-white rounded-lg py-2 px-4 hover:bg-blue-700 self-start mt-4">Edit Home
-              Page</button>
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">記事パフォーマンス</h3>
+            <div class="chart-container">
+              <canvas id="performance-chart"></canvas>
+            </div>
           </div>
         </div>
-        <!-- END ホーム -->
 
+        <!-- Home Content -->
+        <div class="content-section" data-section="home">
+          <div class="flex items-center gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">ホーム</h1>
+            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">サイトのホーム画面</span>
+          </div>
+          <div class="card">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">ようこそ</h2>
+            <p class="text-gray-600 mb-4">ホームページの管理を行います。</p>
+            <button class="btn-primary">ホームページを編集</button>
+          </div>
+        </div>
 
-
-
-
-
-        <!--  Start 記事の一覧 Section -->
-        <div class="content-section mt-5" data-section="article-list">
-
+        <!-- Article List Content -->
+        <div class="content-section" data-section="article-list">
           <div class="flex justify-between items-center mb-8">
             <div class="flex items-center gap-4">
-              <h1 class="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                記事一覧</h1>
-              <span
-                class="px-4 py-1.5 rounded-full bg-[var(--secondary-color)] text-sm font-medium shadow-sm ring-1 ring-blue-100">
-                記事の一覧と管理
-              </span>
+              <h1 class="text-3xl font-bold text-gray-800">記事一覧</h1>
+              <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">記事の一覧と管理</span>
             </div>
             <div class="flex items-center gap-4">
-              <div class="relative group">
-                <div class="relative flex items-center">
-                  <input type="text"
-                    class="w-80 pl-10 pr-12 py-3 rounded-2xl border-2 border-gray-200 bg-gray-50 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm hover:bg-white hover:border-blue-300 transition-all duration-200 ease-in-out"
-                    placeholder="記事を検索..." />
-                  <i
-                    class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 transition-colors duration-200 group-hover:text-blue-500"></i>
-                  <div class="absolute right-3 top-1/2 -translate-y-1/2 flex gap-2">
-                    <i
-                      class="fa-solid fa-microphone text-gray-400 me-end hover:text-blue-500 cursor-pointer transition-colors duration-200"></i>
-                  </div>
-                </div>
-              </div>
-              <button
-                class="px-4 py-2 rounded-lg bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 transition duration-200 flex items-center gap-2 shadow-sm">
-                <i class="fa-solid fa-filter-circle-xmark text-gray-500"></i>
-                <span>絞り込み解除</span>
-              </button>
-              <button
-                class="px-4 py-2 rounded-lg bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 transition duration-200 flex items-center gap-2 shadow-sm">
-                <i class="fa-solid fa-tags text-gray-500"></i>
-                <span>カテゴリ・タグ</span>
-              </button>
-              <button
-                class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition duration-200 flex items-center gap-2 shadow-md">
-                <i class="fa-solid fa-plus"></i>
-                <span>記事登録</span>
+              <input type="text" placeholder="記事を検索..." class="px-4 py-2 border border-gray-300 rounded-lg">
+              <button class="btn-primary">
+                <i class="fa-solid fa-plus mr-2"></i>記事登録
               </button>
             </div>
           </div>
 
-          <!-- ✅ Tabs -->
+          <!-- Tabs -->
           <div class="border-b border-gray-200 mb-6">
-            <nav class="flex gap-8 -mb-px text-sm font-medium" role="tablist">
-              <button type="button"
-                class="tab-button px-1 py-4 border-b-2 border-blue-600 text-blue-600 font-semibold transition duration-200"
-                data-tab-target="unique-tab-draft" role="tab" aria-selected="true" aria-controls="unique-tab-draft"
-                id="unique-tab-draft-tab">
+            <nav class="flex gap-8 -mb-px">
+              <button class="tab-button px-1 py-4 border-b-2 border-blue-600 text-blue-600 font-semibold active"
+                data-tab="draft">
                 下書き
               </button>
-              <button type="button"
-                class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600 transition duration-200"
-                data-tab-target="unique-tab-pending" role="tab" aria-selected="false" aria-controls="unique-tab-pending"
-                id="unique-tab-pending-tab">
+              <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600"
+                data-tab="pending">
                 申請中・保留
               </button>
-              <button type="button"
-                class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600 transition duration-200"
-                data-tab-target="unique-tab-published" role="tab" aria-selected="false"
-                aria-controls="unique-tab-published" id="unique-tab-published-tab">
+              <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600"
+                data-tab="published">
                 公開・非公開
               </button>
             </nav>
           </div>
-          <!-- End ✅ Tabs -->
-          <!-- ✅ 記事の一覧 Tab Panels -->
-          <div>
-            <!-- Tab 1: 下書き -->
-            <div id="unique-tab-draft" role="tabpanel" aria-labelledby="unique-tab-draft-tab">
-              <div class="p-4 border border-gray-100 rounded-lg bg-white shadow">
-                <div class="bg-white shadow rounded-lg flex-grow overflow-y-auto">
-                  <div class="overflow-x-auto">
-                    <table class="w-full text-left text-gray-500 text-xs @container">
-                      <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                        <tr>
-                          <th class="px-2 py-3 @[40rem]:px-4"></th>
-                          <th class="px-2 py-3 @[40rem]:px-4">状態</th>
-                          <th class="px-2 py-3 @[40rem]:px-4">記事ID</th>
-                          <th class="px-2 py-3 @[40rem]:px-4">記事見出し</th>
-                          <th class="px-2 py-3 @[40rem]:px-4">メディア</th>
-                          <th class="px-2 py-3 @[40rem]:px-4">プレビュー</th>
-                          <th class="px-2 py-3 @[40rem]:px-4">カテゴリ・タグ</th>
-                          <th class="px-2 py-3 @[40rem]:px-4">記事作成者</th>
-                          <th class="px-2 py-3 @[40rem]:px-4">記事作成日時</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr class="bg-white border-b hover:bg-gray-50">
-                          <td class="px-2 py-4 @[40rem]:px-4"><button class="text-red-600 hover:underline">削除</button>
-                          </td>
-                          <td class="px-2 py-4 @[40rem]:px-4"><span
-                              class="bg-yellow-100 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">下書き</span>
-                          </td>
-                          <td class="px-2 py-4 @[40rem]:px-4">000002</td>
-                          <td class="px-2 py-4 @[40rem]:px-4 font-medium text-gray-900 whitespace-nowrap"><a
-                              class="text-blue-600 hover:underline" href="#">オフィスの生産性を高めるアイデア</a></td>
-                          <td class="px-2 py-4 @[40rem]:px-4">
-                            <div class="flex space-x-1"><span class="material-icons text-gray-400">image</span></div>
-                          </td>
-                          <td class="px-2 py-4 @[40rem]:px-4 relative">
-                            <button class="preview-button text-blue-600 hover:underline">表示</button>
-                            <div
-                              class="popup absolute -top-20 left-0 bg-white border rounded-md shadow-lg p-2 z-20 hidden">
-                              <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
-                                href="#"><span class="material-icons text-sm mr-1">computer</span>PC</a>
-                              <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
-                                href="#"><span class="material-icons text-sm mr-1">smartphone</span>SP</a>
-                            </div>
-                          </td>
-                          <td class="px-2 py-4 @[40rem]:px-4">コラム</td>
-                          <td class="px-2 py-4 @[40rem]:px-4">佐藤 花子</td>
-                          <td class="px-2 py-4 @[40rem]:px-4">2023/10/26 15:00</td>
-                        </tr>
-                        <tr class="bg-white border-b hover:bg-gray-50">
-                          <td class="px-2 py-4 @[40rem]:px-4"><button class="text-red-600 hover:underline">削除</button>
-                          </td>
-                          <td class="px-2 py-4 @[40rem]:px-4"><span
-                              class="bg-yellow-100 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">下書き</span>
-                          </td>
-                          <td class="px-2 py-4 @[40rem]:px-4">000010</td>
-                          <td class="px-2 py-4 @[40rem]:px-4 font-medium text-gray-900 whitespace-nowrap"><a
-                              class="text-blue-600 hover:underline" href="#">記事タイトル10</a></td>
-                          <td class="px-2 py-4 @[40rem]:px-4">
-                            <div class="flex space-x-1"></div>
-                          </td>
-                          <td class="px-2 py-4 @[40rem]:px-4 relative">
-                            <button class="preview-button text-blue-600 hover:underline">表示</button>
-                            <div
-                              class="popup absolute -top-20 left-0 bg-white border rounded-md shadow-lg p-2 z-20 hidden">
-                              <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
-                                href="#"><span class="material-icons text-sm mr-1">computer</span>PC</a>
-                              <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
-                                href="#"><span class="material-icons text-sm mr-1">smartphone</span>SP</a>
-                            </div>
-                          </td>
-                          <td class="px-2 py-4 @[40rem]:px-4">カテゴリD</td>
-                          <td class="px-2 py-4 @[40rem]:px-4">山田 太郎</td>
-                          <td class="px-2 py-4 @[40rem]:px-4">2023/10/28 09:00</td>
-                        </tr>
-                        <tr class="bg-white border-b hover:bg-gray-50">
-                          <td class="px-2 py-4 @[40rem]:px-4"><button class="text-red-600 hover:underline">削除</button>
-                          </td>
-                          <td class="px-2 py-4 @[40rem]:px-4"><span
-                              class="bg-yellow-100 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">下書き</span>
-                          </td>
-                          <td class="px-2 py-4 @[40rem]:px-4">000015</td>
-                          <td class="px-2 py-4 @[40rem]:px-4 font-medium text-gray-900 whitespace-nowrap"><a
-                              class="text-blue-600 hover:underline" href="#">記事タイトル15</a></td>
-                          <td class="px-2 py-4 @[40rem]:px-4">
-                            <div class="flex space-x-1"><span class="material-icons text-gray-400">videocam</span></div>
-                          </td>
-                          <td class="px-2 py-4 @[40rem]:px-4 relative">
-                            <button class="preview-button text-blue-600 hover:underline">表示</button>
-                            <div
-                              class="popup absolute -top-20 left-0 bg-white border rounded-md shadow-lg p-2 z-20 hidden">
-                              <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
-                                href="#"><span class="material-icons text-sm mr-1">computer</span>PC</a>
-                              <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
-                                href="#"><span class="material-icons text-sm mr-1">smartphone</span>SP</a>
-                            </div>
-                          </td>
-                          <td class="px-2 py-4 @[40rem]:px-4">カテゴリA</td>
-                          <td class="px-2 py-4 @[40rem]:px-4">鈴木 一郎</td>
-                          <td class="px-2 py-4 @[40rem]:px-4">2023/10/30 14:00</td>
-                        </tr>
-                      </tbody>
-                      <tfoot class="sticky-footer-header text-xs text-gray-700 uppercase bg-gray-50">
-                        <tr>
-                          <th class="px-2 py-3 @[40rem]:px-4"></th>
-                          <th class="px-2 py-3 @[40rem]:px-4">状態</th>
-                          <th class="px-2 py-3 @[40rem]:px-4">記事ID</th>
-                          <th class="px-2 py-3 @[40rem]:px-4">記事見出し</th>
-                          <th class="px-2 py-3 @[40rem]:px-4">メディア</th>
-                          <th class="px-2 py-3 @[40rem]:px-4">プレビュー</th>
-                          <th class="px-2 py-3 @[40rem]:px-4">カテゴリ・タグ</th>
-                          <th class="px-2 py-3 @[40rem]:px-4">記事作成者</th>
-                          <th class="px-2 py-3 @[40rem]:px-4">記事作成日時</th>
-                        </tr>
-                      </tfoot>
-                    </table>
-                  </div>
-                </div>
-                <div class="flex items-center justify-between p-4 border-t border-gray-200 mt-auto">
-                  <div class="flex items-center space-x-2 text-sm text-gray-700">
-                    <span>表示件数:</span>
-                    <select class="border border-gray-300 rounded-md p-1">
-                      <option value="25">25</option>
-                      <option value="50">50</option>
-                      <option value="100">100</option>
-                    </select>
-                  </div>
-                  <span class="text-sm text-gray-700">
-                    全 <span class="font-semibold text-gray-900">3</span> 件中 <span
-                      class="font-semibold text-gray-900">1-3</span> 件を表示
-                  </span>
-                  <div class="inline-flex -space-x-px rounded-md shadow-sm">
-                    <button
-                      class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">前へ</button>
-                    <button
-                      class="px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300">1</button>
-                    <button
-                      class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">次へ</button>
-                  </div>
-                </div>
+
+          <!-- Tab Content -->
+          <div class="tab-content active" data-tab-content="draft">
+            <div class="card">
+              <div class="table-container">
+                <table class="w-full text-sm text-left">
+                  <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <tr>
+                      <th class="px-6 py-3">状態</th>
+                      <th class="px-6 py-3">記事ID</th>
+                      <th class="px-6 py-3">記事見出し</th>
+                      <th class="px-6 py-3">作成者</th>
+                      <th class="px-6 py-3">作成日時</th>
+                      <th class="px-6 py-3">操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="bg-white border-b hover:bg-gray-50">
+                      <td class="px-6 py-4">
+                        <span
+                          class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full">下書き</span>
+                      </td>
+                      <td class="px-6 py-4">000002</td>
+                      <td class="px-6 py-4 font-medium text-gray-900">
+                        <a href="#" class="text-blue-600 hover:underline">オフィスの生産性を高めるアイデア</a>
+                      </td>
+                      <td class="px-6 py-4">佐藤 花子</td>
+                      <td class="px-6 py-4">2023/10/26 15:00</td>
+                      <td class="px-6 py-4">
+                        <button class="text-blue-600 hover:underline mr-2">編集</button>
+                        <button class="text-red-600 hover:underline">削除</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
-            <!-- Tab 2: 申請中・保留 -->
-            <div id="unique-tab-pending" class="hidden" role="tabpanel" aria-labelledby="unique-tab-pending-tab">
+          </div>
+
+          <div class="tab-content hidden" data-tab-content="pending">
+            <div class="card">
+              <p>申請中・保留の記事一覧</p>
               <div class="p-4 border border-gray-100 rounded-lg bg-white shadow">
                 <div class="bg-white shadow rounded-lg flex-grow overflow-y-auto">
                   <div class="overflow-x-auto">
@@ -903,8 +610,10 @@
                 </div>
               </div>
             </div>
-            <!-- Tab 3: 公開・非公開 -->
-            <div id="unique-tab-published" class="hidden" role="tabpanel" aria-labelledby="unique-tab-published-tab">
+          </div>
+          <div class="tab-content hidden" data-tab-content="published">
+            <div class="card">
+              <p>公開・非公開の記事一覧</p>
               <div class="p-4 border border-gray-100 rounded-lg bg-white shadow">
                 <div class="bg-white shadow rounded-lg flex-grow overflow-y-auto">
                   <div class="overflow-x-auto">
@@ -1009,7 +718,8 @@
                           <td class="px-2 py-4 @[40rem]:px-4 font-medium text-gray-900 whitespace-nowrap"><a
                               class="text-blue-600 hover:underline" href="#">記事タイトル5</a></td>
                           <td class="px-2 py-4 @[40rem]:px-4">
-                            <div class="flex space-x-1"><span class="material-icons text-gray-400">videocam</span></div>
+                            <div class="flex space-x-1"><span class="material-icons text-gray-400">videocam</span>
+                            </div>
                           </td>
                           <td class="px-2 py-4 @[40rem]:px-4 relative">
                             <button class="preview-button text-blue-600 hover:underline">表示</button>
@@ -1096,24 +806,17 @@
               </div>
             </div>
           </div>
-          <!-- End ✅ 記事の一覧 Tab Panels -->
         </div>
-        <!-- End 記事の一覧 Section -->
 
 
 
-        <!-- Start 記事編集 -->
-        <div class="content-section mt-5" data-section="article-edit">
 
-          <!-- 記事編集 header -->
+        <!-- Article Edit Content -->
+        <div class="content-section" data-section="article-edit">
           <div class="flex justify-between items-center mb-8">
             <div class="flex items-center gap-4">
-              <h1 class="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                記事編集</h1>
-              <span
-                class="px-4 py-1.5 rounded-full bg-[var(--secondary-color)] text-sm font-medium shadow-sm ring-1 ring-blue-100">
-                記事の編集と管理
-              </span>
+              <h1 class="text-3xl font-bold text-gray-800">記事編集一覧</h1>
+              <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">編集一覧管理</span>
             </div>
             <div class="flex items-center space-x-4">
               <div class="text-sm">
@@ -1125,33 +828,22 @@
                 class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">一覧</button>
             </div>
           </div>
-
-          <!-- Tabs -->
           <div class="border-b border-gray-200 mb-6">
-            <nav class="flex gap-8 -mb-px text-sm font-medium" role="tablist">
-              <button type="button"
-                class="tab-button px-1 py-4 border-b-2 border-blue-600 text-blue-600 font-semibold transition duration-200"
-                data-tab-target="edit-tab-draft" role="tab" aria-selected="true" aria-controls="edit-tab-draft"
-                id="edit-tab-draft-tab">
+            <nav class="flex gap-8 -mb-px">
+              <button class="tab-button px-1 py-4 border-b-2 border-blue-600 text-blue-600 font-semibold active"
+                data-tab="draft">
                 下書き
               </button>
-              <button type="button"
-                class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600 transition duration-200"
-                data-tab-target="edit-tab-pending" role="tab" aria-selected="false" aria-controls="edit-tab-pending"
-                id="edit-tab-pending-tab">
+              <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600"
+                data-tab="pending">
                 申請中・保留
               </button>
-              <button type="button"
-                class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600 transition duration-200"
-                data-tab-target="edit-tab-published" role="tab" aria-selected="false" aria-controls="edit-tab-published"
-                id="edit-tab-published-tab">
+              <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600"
+                data-tab="published">
                 公開・非公開
               </button>
             </nav>
           </div>
-          <!-- End Tabs -->
-
-          <!-- table -->
           <div>
             <!-- Tab 1: 下書き -->
             <div id="edit-tab-draft" role="tabpanel" aria-labelledby="edit-tab-draft-tab">
@@ -1227,7 +919,8 @@
                   <div class="col-span-1 space-y-6">
                     <div class="bg-white p-6 rounded-lg shadow">
                       <div class="mb-4">
-                        <p class="text-sm font-medium text-gray-700">フロントの表示状態: <span class="font-normal">非公開</span></p>
+                        <p class="text-sm font-medium text-gray-700">フロントの表示状態: <span class="font-normal">非公開</span>
+                        </p>
                       </div>
                       <div class="mb-4">
                         <p class="text-sm font-medium text-gray-700">記事ステータス: <span class="font-normal">編集中</span></p>
@@ -1443,10 +1136,12 @@
                   <div class="col-span-1 space-y-6">
                     <div class="bg-white p-6 rounded-lg shadow">
                       <div class="mb-4">
-                        <p class="text-sm font-medium text-gray-700">フロントの表示状態: <span class="font-normal">非公開</span></p>
+                        <p class="text-sm font-medium text-gray-700">フロントの表示状態: <span class="font-normal">非公開</span>
+                        </p>
                       </div>
                       <div class="mb-4">
-                        <p class="text-sm font-medium text-gray-700">記事ステータス: <span class="font-normal">編集完了</span></p>
+                        <p class="text-sm font-medium text-gray-700">記事ステータス: <span class="font-normal">編集完了</span>
+                        </p>
                       </div>
                       <h3 class="text-lg font-semibold text-gray-800 mb-4">カテゴリ・タグ</h3>
                       <div
@@ -1829,285 +1524,49 @@
               </div>
             </div>
           </div>
-          <!-- End table -->
         </div>
-        <!-- End 記事編集 Section -->
-        <!-- Start 記事登録 -->
-        <div class="content-section mt-5 mx-auto max-w-7xl px-4" data-section="article-register">
-          <!-- 記事編集 header -->
-          <div class="flex justify-between items-center mb-8">
-            <div class="flex items-center gap-4">
-              <h1 class="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                記事登録
-              </h1>
-              <span class="px-4 py-1.5 rounded-full bg-blue-100 text-sm font-medium shadow-sm ring-1 ring-blue-200">
-                記事登録管理
-              </span>
-            </div>
-            <div class="flex items-center space-x-4">
-              <button
-                class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md shadow-sm hover:bg-blue-700 flex items-center">
-                <span class="material-icons mr-2"><i class="fa-solid fa-plus fa-lg"></i></span>
-                記事登録
-              </button>
-              <button
-                class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">一覧</button>
-            </div>
-          </div>
 
-          <!-- Tabs -->
-          <div class="border-b border-gray-200 mb-6">
-            <nav class="flex gap-8 -mb-px text-sm font-medium" role="tablist">
-              <button type="button"
-                class="tab-button px-1 py-4 border-b-2 border-blue-600 text-blue-600 font-semibold transition duration-200"
-                data-tab-target="register-tab-draft" role="tab" aria-selected="true" aria-controls="register-tab-draft"
-                id="register-tab-draft-tab">
-                下書き
-              </button>
-              <button type="button"
-                class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600 transition duration-200"
-                data-tab-target="register-tab-pending" role="tab" aria-selected="false"
-                aria-controls="register-tab-pending" id="register-tab-pending-tab">
-                申請中・保留
-              </button>
-              <button type="button"
-                class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600 transition duration-200"
-                data-tab-target="register-tab-published" role="tab" aria-selected="false"
-                aria-controls="register-tab-published" id="register-tab-published-tab">
-                公開・非公開
-              </button>
-            </nav>
-          </div>
-          <!-- End Tabs -->
 
-          <!-- Tab Panels -->
-          <div>
-            <!-- Tab 1: 下書き -->
-            <div id="register-tab-draft" class="tab-panel" role="tabpanel" aria-labelledby="register-tab-draft-tab">
-              <div class="flex-grow grid grid-cols-3 gap-6">
-                <div class="col-span-2 bg-white p-6 rounded-lg shadow">
-                  <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-1" for="headline">見出し</label>
-                    <input class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                      id="headline" type="text" />
-                  </div>
-                  <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">本文</label>
-                    <div class="border border-gray-300 rounded-md">
-                      <div class="p-2 bg-gray-50 border-b border-gray-300 flex flex-wrap items-center gap-2">
-                        <button class="p-1 text-gray-600 hover:bg-gray-200 rounded"><span
-                            class="material-icons text-base">format_h2</span></button>
-                        <button class="p-1 text-gray-600 hover:bg-gray-200 rounded"><span
-                            class="material-icons text-base">format_align_right</span></button>
-                        <button class="p-1 text-gray-600 hover:bg-gray-200 rounded"><span
-                            class="material-icons text-base">format_align_center</span></button>
-                        <button class="p-1 text-gray-600 hover:bg-gray-200 rounded"><span
-                            class="material-icons text-base">link</span></button>
-                        <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">NewTabLink</button>
-                        <button class="p-1 text-gray-600 hover:bg-gray-200 rounded"><span
-                            class="material-icons text-base">format_bold</span></button>
-                        <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">改ページ</button>
-                        <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">キャプション</button>
-                        <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">ルビ</button>
-                        <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">会話（左）</button>
-                        <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">会話（右）</button>
-                        <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">プロフィール</button>
-                        <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">プロフィール詳細</button>
-                        <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">文字サイズ</button>
-                        <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">ルビ（JS）</button>
-                      </div>
-                      <textarea class="w-full h-64 p-4 border-0 focus:ring-0"></textarea>
-                    </div>
-                  </div>
-                  <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">写真</label>
-                    <div class="border-2 border-dashed border-gray-300 rounded-md p-6 text-center">
-                      <p class="text-gray-500 mb-2">写真を選択・アップロード</p>
-                      <button
-                        class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">ファイルを開く</button>
-                    </div>
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">動画タグ</label>
-                    <div class="border border-gray-300 rounded-lg">
-                      <div class="flex border-b" id="video-tag-tabs">
-                        <button class="px-4 py-2 text-sm text-blue-600 border-b-2 border-blue-600 video-tag-tab"
-                          data-target="add-tag">追加</button>
-                      </div>
-                      <div class="p-4 space-y-4 tab-content active" id="add-tag">
-                        <div>
-                          <label class="block text-xs font-medium text-gray-600" for="tag-name">タグ名</label>
-                          <input
-                            class="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                            id="tag-name" type="text" value="movie_1" />
-                        </div>
-                        <div class="flex justify-end space-x-2">
-                          <button
-                            class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">本文中へ挿入</button>
-                          <button
-                            class="px-4 py-2 text-sm font-medium text-red-600 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">削除</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+        <!-- Article Register Content -->
+        <div class="content-section" data-section="article-register">
+          <div class="flex items-center gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">記事登録</h1>
+            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">新しい記事の作成</span>
+          </div>
+          <div class="card">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div class="lg:col-span-2">
+                <div class="mb-6">
+                  <label class="block text-sm font-medium text-gray-700 mb-2">見出し</label>
+                  <input type="text"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="記事のタイトルを入力">
                 </div>
-                <div class="col-span-1 space-y-6">
-                  <div class="bg-white p-6 rounded-lg shadow">
-                    <div class="mb-4">
-                      <p class="text-sm font-medium text-gray-700">フロントの表示状態: <span class="font-normal">非公開</span></p>
-                    </div>
-                    <div class="mb-4">
-                      <p class="text-sm font-medium text-gray-700">記事ステータス: <span class="font-normal">編集中</span></p>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">カテゴリ・タグ</h3>
-                    <div
-                      class="border border-gray-300 rounded-md p-4 h-32 cursor-pointer hover:bg-gray-50 flex items-center justify-center">
-                      <span class="text-gray-500">選択してください</span>
-                    </div>
-                  </div>
-                  <div class="bg-white p-6 rounded-lg shadow">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">メモ</h3>
-                    <textarea
-                      class="w-full h-24 p-4 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                      placeholder="テキストを入力"></textarea>
-                  </div>
-                  <div class="space-y-4">
-                    <div class="grid grid-cols-2 gap-4">
-                      <button
-                        class="w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700">PC
-                        プレビュー</button>
-                      <button
-                        class="w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700">SPプレビュー</button>
-                    </div>
-                    <div class="flex justify-end">
-                      <button
-                        class="w-1/2 px-4 py-2 text-sm font-medium text-white bg-orange-500 border border-transparent rounded-md shadow-sm hover:bg-orange-600">下書き保存</button>
-                    </div>
-                  </div>
-                  <div class="space-y-4 bg-white p-6 rounded-lg shadow">
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700 mb-1" for="publish-start">公開開始日時</label>
-                      <div class="flex items-center space-x-2">
-                        <input
-                          class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                          id="publish-start-date" type="date" />
-                        <input
-                          class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                          id="publish-start-time" type="time" />
-                      </div>
-                    </div>
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700 mb-1" for="publish-end">公開終了日時</label>
-                      <div class="flex items-center space-x-2">
-                        <input
-                          class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                          id="publish-end-date" type="date" />
-                        <input
-                          class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                          id="publish-end-time" type="time" />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="space-y-4 bg-white p-6 rounded-lg shadow">
-                    <div class="grid grid-cols-2 gap-4">
-                      <div class="space-y-2">
-                        <label class="block text-sm font-medium text-gray-700">PCテンプレート設定</label>
-                        <select
-                          class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                          <option>選択してください</option>
-                        </select>
-                      </div>
-                      <div class="space-y-2">
-                        <label class="block text-sm font-medium text-gray-700">SPテンプレート設定</label>
-                        <select
-                          class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                          <option>選択してください</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4 mt-4">
-                      <div class="space-y-2">
-                        <label class="block text-sm font-medium text-gray-700">PCテンプレート設定</label>
-                        <select
-                          class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                          <option>選択してください</option>
-                        </select>
-                      </div>
-                      <div class="space-y-2">
-                        <label class="block text-sm font-medium text-gray-700">SPテンプレート設定</label>
-                        <select
-                          class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                          <option>選択してください</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4 mt-4">
-                      <div class="space-y-2">
-                        <label class="block text-sm font-medium text-gray-700">PC動画テンプレート設定</label>
-                        <select
-                          class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                          <option>選択してください</option>
-                        </select>
-                      </div>
-                      <div class="space-y-2">
-                        <label class="block text-sm font-medium text-gray-700">SP動画テンプレート設定</label>
-                        <select
-                          class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                          <option>選択してください</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="space-y-4 bg-white p-6 rounded-lg shadow">
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700 mb-1" for="article-author">記事作成者</label>
-                      <input
-                        class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                        id="article-author" type="text" />
-                    </div>
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700 mb-1" for="related-articles">関連記事</label>
-                      <a class="text-sm text-blue-600 hover:underline" href="#">記事検索はこちら</a>
-                    </div>
-                  </div>
-                  <div class="bg-white p-6 rounded-lg shadow">
-                    <label class="block text-sm font-medium text-gray-700 mb-1"
-                      for="meta-description">メタdescription設定</label>
-                    <textarea
-                      class="w-full h-24 p-4 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                      id="meta-description"></textarea>
-                  </div>
-                  <div class="bg-white p-6 rounded-lg shadow">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">PDF</label>
-                    <div class="border-2 border-dashed border-gray-300 rounded-md p-6 text-center">
-                      <p class="text-gray-500 mb-2">ファイルを選択・アップロード</p>
-                      <button
-                        class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">ファイルを開く</button>
-                    </div>
-                  </div>
-                  <button
-                    class="w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700">下書き記事の削除</button>
+                <div class="mb-6">
+                  <label class="block text-sm font-medium text-gray-700 mb-2">本文</label>
+                  <textarea rows="10"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="記事の内容を入力"></textarea>
                 </div>
               </div>
-            </div>
-
-            <!-- Tab 2: 申請中・保留 -->
-            <div id="register-tab-pending" class="tab-panel" role="tabpanel" aria-labelledby="register-tab-pending-tab"
-              class="hidden">
-              <h1 class="text-3xl font-bold mb-4">Hello Testing</h1>
-            </div>
-
-            <!-- Tab 3: 公開・非公開 -->
-            <div id="register-tab-published" class="tab-panel" role="tabpanel"
-              aria-labelledby="register-tab-published-tab" class="hidden">
-              <h1 class="text-3xl font-bold mb-4">Hello World</h1>
+              <div class="space-y-6">
+                <div class="bg-gray-50 p-4 rounded-lg">
+                  <h3 class="font-semibold text-gray-800 mb-2">カテゴリ・タグ</h3>
+                  <select class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                    <option>選択してください</option>
+                    <option>コラム</option>
+                    <option>お知らせ</option>
+                    <option>イベント</option>
+                  </select>
+                </div>
+                <button class="w-full btn-primary">下書き保存</button>
+                <button class="w-full bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600">申請</button>
+              </div>
             </div>
           </div>
-          <!-- End Tab Panels -->
         </div>
-        <!--End 記事登録 -->
 
-        <!-- 固定ページ -->
+        <!-- Pages Content -->
         <div class="content-section mt-5" data-section="pages">
           <div class="flex justify-between items-center mb-6">
             <!-- test -->
@@ -2275,370 +1734,707 @@
             </div>
           </div>
         </div>
-        <!-- END 固定ページ -->
 
 
-        <!-- お知らせ -->
-        <div class="content-section mt-5" data-section="notifications">
-          <div class="flex flex-row gap-2 mb-6">
-            <h1 class="text-[var(--text-color)] text-3xl font-bold">お知らせ</h1>
-            <p
-              class="flex items-center px-3 py-1 rounded-full bg-[var(--secondary-color)] border border-[var(--border-color)]">
-              最新のお知らせを管理</p>
+        <!-- Other content sections -->
+        <div class="content-section" data-section="announce-list">
+          <div class="flex justify-between items-center mb-6">
+            <div class="flex items-center gap-4">
+              <h1 class="text-3xl font-bold text-gray-800">お知らせ一覧</h1>
+              <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">お知らせの管理</span>
+            </div>
+            <div class="flex items-center space-x-4">
+              <button class="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 flex items-center">
+                <i class="fa-solid fa-plus mr-2"></i>お知らせ追加
+              </button>
+              <button class="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 flex items-center">
+                <i class="fa-solid fa-arrow-up-arrow-down mr-2"></i>並べ替え
+              </button>
+            </div>
           </div>
           <div class="card">
-            <h2 class="text-xl font-semibold text-gray-800">お知らせ一覧</h2>
-            <p class="text-gray-600 text-sm">View and manage notifications here.</p>
-            <ul class="content-list mt-4">
-              <li class="flex justify-between items-center">
-                <span>New Update Released</span>
-                <span class="text-gray-500 text-sm">2023/10/28</span>
-              </li>
-              <li class="flex justify-between items-center">
-                <span>Maintenance Scheduled</span>
-                <span class="text-gray-500 text-sm">2023/10/27</span>
-              </li>
-            </ul>
-            <button class="bg-blue-600 text-white rounded-lg py-2 px-4 hover:bg-blue-700 self-start mt-4">Add
-              Notification</button>
-          </div>
-        </div>
-        <!-- END お知らせ-->
-
-        <!--  フォーム　-->
-        <div class="content-section mt-5" data-section="forms">
-          <div class="flex flex-row gap-2 mb-6">
-            <h1 class="text-[var(--text-color)] text-3xl font-bold">フォーム</h1>
-            <p
-              class="flex items-center px-3 py-1 rounded-full bg-[var(--secondary-color)] border border-[var(--border-color)]">
-              フォームの作成と管理</p>
-          </div>
-          <div class="card">
-            <h2 class="text-xl font-semibold text-gray-800">フォーム管理</h2>
-            <p class="text-gray-600 text-sm">Create and manage forms for user interaction.</p>
-            <button class="bg-blue-600 text-white rounded-lg py-2 px-4 hover:bg-blue-700 self-start mt-4">Create New
-              Form</button>
-          </div>
-        </div>
-        <!--  END フォーム　-->
-
-        <!-- ファイル  -->
-        <div class="content-section mt-5" data-section="files">
-          <div class="flex flex-row gap-2 mb-6">
-            <h1 class="text-[var(--text-color)] text-3xl font-bold">ファイル</h1>
-            <p
-              class="flex items-center px-3 py-1 rounded-full bg-[var(--secondary-color)] border border-[var(--border-color)]">
-              ファイルのアップロードと管理</p>
-          </div>
-          <div class="card">
-            <h2 class="text-xl font-semibold text-gray-800">ファイル管理</h2>
-            <p class="text-gray-600 text-sm">Upload and organize your files here.</p>
-            <button class="bg-blue-600 text-white rounded-lg py-2 px-4 hover:bg-blue-700 self-start mt-4">Upload
-              File</button>
-          </div>
-        </div>
-        <!-- END ファイル  -->
-
-        <!-- CMS操作管理者ログ -->
-        <div class="content-section mt-5" data-section="logs">
-          <div class="flex flex-row gap-2 mb-6">
-            <h1 class="text-[var(--text-color)] text-3xl font-bold">CMS操作管理者ログ</h1>
-            <p
-              class="flex items-center px-3 py-1 rounded-full bg-[var(--secondary-color)] border border-[var(--border-color)]">
-              管理者操作のログを確認</p>
-          </div>
-          <div class="card">
-            <h2 class="text-xl font-semibold text-gray-800">操作ログ</h2>
-            <p class="text-gray-600 text-sm">View the activity logs of CMS administrators.</p>
-            <ul class="content-list mt-4">
-              <li class="flex justify-between items-center">
-                <span>User John Doe updated page</span>
-                <span class="text-gray-500 text-sm">2023/10/27 15:30</span>
-              </li>
-              <li class="flex justify-between items-center">
-                <span>User Jane Doe created article</span>
-                <span class="text-gray-500 text-sm">2023/10/26 11:00</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <!-- END CMS操作管理者ログ -->
-
-        <!-- カテゴリ・タグ -->
-        <div class="content-section mt-5" data-section="categories">
-          <!-- test -->
-          <div class="flex flex-row gap-2 mb-6">
-            <h1 class="text-[var(--text-color)] text-3xl font-bold">カテゴリ・タグ</h1>
-            <p
-              class="flex items-center px-3 py-1 rounded-full bg-[var(--secondary-color)] border border-[var(--border-color)]">
-              カテゴリとタグの管理</p>
-          </div>
-          <!--  -->
-          <div class="card">
-            <h2 class="text-xl font-semibold text-gray-800">カテゴリ管理</h2>
-            <p class="text-gray-600 text-sm">Manage categories and tags for your content.</p>
-            <button class="bg-blue-600 text-white rounded-lg py-2 px-4 hover:bg-blue-700 self-start mt-4">Add
-              Category</button>
-          </div>
-
-        </div>
-        <!-- END カテゴリ・タグ -->
-
-        <!-- ユーザー -->
-        <div class="content-section mt-5" data-section="users">
-          <div class="flex flex-row gap-2 mb-6">
-            <h1 class="text-[var(--text-color)] text-3xl font-bold">ユーザー</h1>
-            <p
-              class="flex items-center px-3 py-1 rounded-full bg-[var(--secondary-color)] border border-[var(--border-color)]">
-              ユーザーの管理</p>
-          </div>
-          <div class="card">
-            <h2 class="text-xl font-semibold text-gray-800">ユーザー管理</h2>
-            <p class="text-gray-600 text-sm">Manage user accounts and permissions.</p>
-            <button class="bg-blue-600 text-white rounded-lg py-2 px-4 hover:bg-blue-700 self-start mt-4">Add
-              User</button>
-          </div>
-        </div>
-        <!-- END ユーザー -->
-
-        <!-- 設定 -->
-        <div class="content-section mt-5" data-section="settings">
-          <div class="flex flex-row gap-2 mb-6">
-            <h1 class="text-[var(--text-color)] text-3xl font-bold">設定</h1>
-            <p
-              class="flex items-center px-3 py-1 rounded-full bg-[var(--secondary-color)] border border-[var(--border-color)]">
-              システム設定の管理</p>
-          </div>
-          <div class="card">
-            <h2 class="text-xl font-semibold text-gray-800">システム設定</h2>
-            <p class="text-gray-600 text-sm">Configure system settings and preferences.</p>
-            <button class="bg-blue-600 text-white rounded-lg py-2 px-4 hover:bg-blue-700 self-start mt-4">Edit
-              Settings</button>
-          </div>
-        </div>
-        <!-- END 設定 -->
-
-        <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden" id="search-dialog">
-          <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-            <div class="mt-3 text-center">
-              <h3 class="text-lg leading-6 font-medium text-gray-900">検索</h3>
-              <div class="mt-2 px-7 py-3">
-                <input class="w-full px-3 py-2 text-gray-700 bg-gray-200 rounded-md focus:outline-none"
-                  placeholder="検索キーワードを入力" type="text" />
+            <div class="bg-white shadow rounded-lg">
+              <div class="p-4">
+                <div class="grid grid-cols-12 gap-4 text-sm font-semibold text-gray-600 px-4 py-2 border-b">
+                  <div class="col-span-1">ステータス</div>
+                  <div class="col-span-1">お知らせID</div>
+                  <div class="col-span-4">お知らせ文</div>
+                  <div class="col-span-3">URL</div>
+                  <div class="col-span-1">作成者</div>
+                  <div class="col-span-2">公開日</div>
+                </div>
+                <div class="divide-y divide-gray-200">
+                  <div class="grid grid-cols-12 gap-4 items-center p-4 hover:bg-gray-50">
+                    <div class="col-span-1">
+                      <span class="px-2 py-1 text-xs font-semibold text-green-800 bg-green-200 rounded-full">公開</span>
+                    </div>
+                    <div class="col-span-1 text-gray-700">000001</div>
+                    <div class="col-span-4 text-blue-600 hover:underline cursor-pointer">新しい働き方とオフィスの未来</div>
+                    <div class="col-span-3 text-gray-700 truncate">/news/20231025-01/</div>
+                    <div class="col-span-1 text-gray-700">山田 太郎</div>
+                    <div class="col-span-2 text-gray-700">2023/10/25 18:30</div>
+                  </div>
+                  <div class="grid grid-cols-12 gap-4 items-center p-4 hover:bg-gray-50">
+                    <div class="col-span-1">
+                      <span class="px-2 py-1 text-xs font-semibold text-yellow-800 bg-yellow-200 rounded-full">保留</span>
+                    </div>
+                    <div class="col-span-1 text-gray-700">000003</div>
+                    <div class="col-span-4 text-blue-600 hover:underline cursor-pointer">効果的なリモートワーク環境の作り方</div>
+                    <div class="col-span-3 text-gray-700 truncate">/news/20231027-01/</div>
+                    <div class="col-span-1 text-gray-700">鈴木 一郎</div>
+                    <div class="col-span-2 text-gray-700">2023/10/27 11:00</div>
+                  </div>
+                </div>
+                <div class="grid grid-cols-12 gap-4 text-sm font-semibold text-gray-600 px-4 py-2 border-t mt-4">
+                  <div class="col-span-1">ステータス</div>
+                  <div class="col-span-1">お知らせID</div>
+                  <div class="col-span-4">お知らせ文</div>
+                  <div class="col-span-3">URL</div>
+                  <div class="col-span-1">作成者</div>
+                  <div class="col-span-2">公開日</div>
+                </div>
               </div>
-              <div class="items-center px-4 py-3">
-                <button
-                  class="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md w-auto shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300"
-                  id="close-search-dialog">閉じる</button>
+              <div class="flex items-center justify-between p-4 border-t border-gray-200">
+                <div class="flex items-center space-x-2">
+                  <span class="text-sm text-gray-700">表示件数:</span>
+                  <select class="border border-gray-300 rounded-md p-1 text-sm">
+                    <option>25</option>
+                    <option>50</option>
+                    <option>100</option>
+                  </select>
+                </div>
+                <div class="text-sm text-gray-700">
+                  全 <span class="font-semibold">2</span> 件中 <span class="font-semibold">1-2</span> 件を表示
+                </div>
+                <div class="flex items-center space-x-1">
+                  <button
+                    class="px-3 py-1 border border-gray-300 rounded-md bg-white text-gray-500 cursor-not-allowed text-sm">前へ</button>
+                  <button class="px-3 py-1 border border-blue-500 rounded-md bg-blue-500 text-white text-sm">1</button>
+                  <button
+                    class="px-3 py-1 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 text-sm">次へ</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
+        <div class="content-section" data-section="announce-edit">
+          <div class="flex justify-between items-center mb-6">
+            <div class="flex items-center gap-4">
+              <h1 class="text-3xl font-bold text-gray-800">お知らせ編集</h1>
+              <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">お知らせの編集</span>
+            </div>
+            <a class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" href="#">一覧へ</a>
+          </div>
+          <div class="card">
+
+
+<div class="grid grid-cols-3 gap-8">
+  <!-- Main content area - 2/3 width -->
+  <div class="col-span-2 space-y-6">
+    <!-- Announcement text editor -->
+    <div class="bg-white p-6 rounded-lg shadow-sm">
+      <label class="block text-sm font-medium text-gray-700 mb-2">お知らせ文</label>
+      <div class="border border-gray-300 rounded-lg">
+        <div class="p-2 border-b border-gray-300 bg-gray-50">
+          <div class="flex items-center space-x-4">
+            <button class="text-sm font-medium text-blue-600 border-b-2 border-blue-600 pb-1 hover:text-blue-700">
+              フォントサイズ
+            </button>
+          </div>
+        </div>
+        <textarea 
+          class="w-full h-64 p-4 border-0 focus:ring-0 resize-none" 
+          placeholder="お知らせ内容を入力してください"
+        ></textarea>
+      </div>
+    </div>
+
+    <!-- URL input -->
+    <div class="bg-white p-6 rounded-lg shadow-sm">
+      <label class="block text-sm font-medium text-gray-700 mb-2" for="url">URL</label>
+      <input
+        type="text"
+        id="url"
+        placeholder="/news/20231025-01/"
+        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+      />
     </div>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+
+  <!-- Sidebar - 1/3 width -->
+  <div class="col-span-1 space-y-6">
+    <!-- Status -->
+    <div class="bg-white p-6 rounded-lg shadow-sm">
+      <label class="block text-sm font-medium text-gray-700 mb-2" for="status">ステータス</label>
+      <select 
+        id="status"
+        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+      >
+        <option value="draft">下書き</option>
+        <option value="published">公開</option>
+        <option value="private">非公開</option>
+      </select>
+    </div>
+
+    <!-- Remarks -->
+    <div class="bg-white p-6 rounded-lg shadow-sm">
+      <label class="block text-sm font-medium text-gray-700 mb-2" for="remarks">備考</label>
+      <textarea
+        id="remarks"
+        rows="4"
+        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out text-sm resize-none"
+      ></textarea>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="space-y-3">
+      <button class="w-full py-2 px-4 rounded-md text-white bg-orange-500 hover:bg-orange-600 font-semibold transition duration-150 ease-in-out">
+        保存
+      </button>
+      <button class="w-full py-2 px-4 rounded-md text-white bg-blue-600 hover:bg-blue-700 font-semibold transition duration-150 ease-in-out">
+        公開
+      </button>
+    </div>
+
+    <!-- Publication dates -->
+    <div class="bg-white p-6 rounded-lg shadow-sm">
+      <div class="space-y-4">
+        <!-- Start date -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2" for="start-date">
+            公開日時 開始
+          </label>
+          <div class="relative">
+            <input
+              type="datetime-local"
+              id="start-date"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out text-sm pr-10"
+            />
+            <span class="material-icons absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+              calendar_today
+            </span>
+          </div>
+        </div>
+
+        <!-- End date -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2" for="end-date">
+            公開日時 終了
+          </label>
+          <div class="relative">
+            <input
+              type="datetime-local"
+              id="end-date"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out text-sm pr-10"
+            />
+            <span class="material-icons absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+              calendar_today
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete button -->
+    <button class="w-full py-2 px-4 rounded-md text-white bg-red-600 hover:bg-red-700 font-semibold transition duration-150 ease-in-out">
+      削除
+    </button>
+  </div>
+</div>
+          </div>
+        </div>
+
+        <div class="content-section" data-section="announce-register">
+          <div class="flex items-center gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">お知らせ登録</h1>
+          </div>
+          <div class="card">
+            <p>新しいお知らせを登録します。</p>
+          </div>
+        </div>
+
+        <div class="content-section" data-section="forms">
+          <div class="flex items-center gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">フォーム</h1>
+          </div>
+          <div class="card">
+            <p>フォームの管理を行います。</p>
+          </div>
+        </div>
+
+        <div class="content-section" data-section="files">
+          <div class="flex items-center gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">ファイル</h1>
+          </div>
+          <div class="card">
+            <p>ファイルの管理を行います。</p>
+          </div>
+        </div>
+
+        <div class="content-section" data-section="logs">
+          <div class="flex items-center gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">CMS操作管理者ログ</h1>
+          </div>
+          <div class="card">
+            <p>管理者の操作ログを確認します。</p>
+          </div>
+        </div>
+
+        <div class="content-section" data-section="categories">
+          <div class="flex items-center gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">カテゴリ・タグ</h1>
+          </div>
+          <div class="content-section" data-section="categories">
+            <div class="flex items-center gap-4 mb-6">
+              <h1 class="text-3xl font-bold text-gray-800">カテゴリ・タグ</h1>
+            </div>
+            <div class="card">
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-800 mb-4">カテゴリ管理</h3>
+                  <div class="space-y-3">
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                      <span>コラム</span>
+                      <div class="flex gap-2">
+                        <button class="text-blue-600 hover:underline text-sm">編集</button>
+                        <button class="text-red-600 hover:underline text-sm">削除</button>
+                      </div>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                      <span>お知らせ</span>
+                      <div class="flex gap-2">
+                        <button class="text-blue-600 hover:underline text-sm">編集</button>
+                        <button class="text-red-600 hover:underline text-sm">削除</button>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="btn-primary mt-4">
+                    <i class="fa-solid fa-plus mr-2"></i>カテゴリ追加
+                  </button>
+                </div>
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-800 mb-4">タグ管理</h3>
+                  <div class="flex flex-wrap gap-2 mb-4">
+                    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">働き方</span>
+                    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">オフィス</span>
+                    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">生産性</span>
+                  </div>
+                  <button class="btn-primary">
+                    <i class="fa-solid fa-plus mr-2"></i>タグ追加
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-section" data-section="users">
+            <div class="flex items-center gap-4 mb-6">
+              <h1 class="text-3xl font-bold text-gray-800">ユーザー管理</h1>
+            </div>
+            <div class="card">
+              <div class="flex justify-between items-center mb-6">
+                <h2 class="text-lg font-semibold">ユーザー一覧</h2>
+                <button class="btn-primary">
+                  <i class="fa-solid fa-plus mr-2"></i>新規ユーザー
+                </button>
+              </div>
+              <div class="table-container">
+                <table class="w-full text-sm text-left">
+                  <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <tr>
+                      <th class="px-6 py-3">ユーザー名</th>
+                      <th class="px-6 py-3">メールアドレス</th>
+                      <th class="px-6 py-3">権限</th>
+                      <th class="px-6 py-3">最終ログイン</th>
+                      <th class="px-6 py-3">操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="bg-white border-b hover:bg-gray-50">
+                      <td class="px-6 py-4 font-medium">田中 太郎</td>
+                      <td class="px-6 py-4">tanaka@example.com</td>
+                      <td class="px-6 py-4">
+                        <span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">管理者</span>
+                      </td>
+                      <td class="px-6 py-4">2023/10/28 09:00</td>
+                      <td class="px-6 py-4">
+                        <button class="text-blue-600 hover:underline mr-2">編集</button>
+                        <button class="text-red-600 hover:underline">削除</button>
+                      </td>
+                    </tr>
+                    <tr class="bg-white border-b hover:bg-gray-50">
+                      <td class="px-6 py-4 font-medium">佐藤 花子</td>
+                      <td class="px-6 py-4">sato@example.com</td>
+                      <td class="px-6 py-4">
+                        <span
+                          class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">編集者</span>
+                      </td>
+                      <td class="px-6 py-4">2023/10/27 16:30</td>
+                      <td class="px-6 py-4">
+                        <button class="text-blue-600 hover:underline mr-2">編集</button>
+                        <button class="text-red-600 hover:underline">削除</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-section" data-section="settings">
+            <div class="flex items-center gap-4 mb-6">
+              <h1 class="text-3xl font-bold text-gray-800">設定</h1>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div class="card">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">サイト設定</h3>
+                <div class="space-y-4">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">サイト名</label>
+                    <input type="text" value="OUTWARD" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">サイト説明</label>
+                    <textarea rows="3"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-lg">企業の働き方改革をサポート</textarea>
+                  </div>
+                  <button class="btn-primary">保存</button>
+                </div>
+              </div>
+
+              <div class="card">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">システム設定</h3>
+                <div class="space-y-4">
+                  <div class="flex items-center justify-between">
+                    <span class="text-sm font-medium text-gray-700">メンテナンスモード</span>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                      <input type="checkbox" class="sr-only peer">
+                      <div
+                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+                      </div>
+                    </label>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="text-sm font-medium text-gray-700">キャッシュ有効</span>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                      <input type="checkbox" checked class="sr-only peer">
+                      <div
+                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+                      </div>
+                    </label>
+                  </div>
+                  <button class="btn-primary">設定を保存</button>
+                </div>
+              </div>
+            </div>
+          </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Mobile Menu Overlay -->
+  <div id="mobile-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden md:hidden"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    // Initialize sidebar
-    const sidebar = document.querySelector('.sidebar');
-    const toggleSidebarButton = document.getElementById('toggle-sidebar');
-    const searchButton = document.getElementById('search-button');
-    const searchDialog = document.getElementById('search-dialog');
-    const closeSearchDialog = document.getElementById('close-search-dialog');
-    const sidebarItems = document.querySelectorAll('.sidebar-item');
-    const contentSections = document.querySelectorAll('.content-section');
+    // Global variables
+    let currentActiveSection = 'dashboard';
+    let mobileMenuOpen = false;
 
-    // Set default dashboard content
-    document.querySelector('.sidebar-item[data-category="dashboard"]').classList.add('active');
-    document.querySelector('.content-section[data-section="dashboard"]').classList.add('active');
-    sidebar.classList.add('open');
-
-    // Toggle primary sidebar
-    toggleSidebarButton.addEventListener('click', () => {
-      sidebar.classList.toggle('open');
+    // Initialize the application
+    document.addEventListener('DOMContentLoaded', function () {
+      initializeEventListeners();
+      initializeChart();
+      initializeTabs();
     });
 
-    function toggleChildSidebar(element) {
-      const childSidebar = document.getElementById('articles-child-sidebar');
-      const mainSidebar = element.closest('.sidebar');
+    // Initialize event listeners
+    function initializeEventListeners() {
+      // Sidebar navigation
+      document.querySelectorAll('.sidebar-item[data-category]').forEach(item => {
+        item.addEventListener('click', handleSidebarClick);
+      });
 
-      // Toggle child sidebar visibility
-      childSidebar.classList.toggle('hidden');
+      // Mobile menu toggle
+      const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+      const mobileOverlay = document.getElementById('mobile-overlay');
 
-      // If child sidebar is visible, collapse main sidebar to show only icons
-      if (!childSidebar.classList.contains('hidden')) {
-        mainSidebar.classList.remove('open');
-        document.querySelectorAll('.menu-text').forEach(text => text.style.display = 'none');
-      } else {
-        mainSidebar.classList.add('open');
-        document.querySelectorAll('.menu-text').forEach(text => text.style.display = 'block');
+      if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+      }
+
+      if (mobileOverlay) {
+        mobileOverlay.addEventListener('click', closeMobileMenu);
+      }
+
+      // Preview button popups
+      document.querySelectorAll('.preview-button').forEach(button => {
+        button.addEventListener('click', handlePreviewClick);
+      });
+
+      // Close popups when clicking outside
+      document.addEventListener('click', handleDocumentClick);
+    }
+
+    // Handle sidebar item clicks
+    function handleSidebarClick(event) {
+      const item = event.currentTarget;
+      const category = item.getAttribute('data-category');
+
+      // Don't handle clicks for items with child sidebars
+      if (item.hasAttribute('onclick')) {
+        return;
+      }
+
+      if (category) {
+        showContentSection(category);
+        setActiveMenuItem(item);
+
+        // Close mobile menu if open
+        if (mobileMenuOpen) {
+          closeMobileMenu();
+        }
       }
     }
-    // Search dialog
-    searchButton.addEventListener('click', () => {
-      searchDialog.classList.toggle('hidden');
-    });
 
-    closeSearchDialog.addEventListener('click', () => {
-      searchDialog.classList.add('hidden');
-    });
+    // Show content section
+    function showContentSection(category) {
+      // Hide all content sections
+      document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.remove('active');
+      });
 
-    // Sidebar item click handler
-    sidebarItems.forEach(item => {
-      item.addEventListener('click', () => {
-        // Remove active class from all sidebar items
-        sidebarItems.forEach(i => i.classList.remove('active'));
-        // Add active class to clicked item
-        item.classList.add('active');
+      // Show the selected content section
+      const targetSection = document.querySelector(`.content-section[data-section="${category}"]`);
+      if (targetSection) {
+        targetSection.classList.add('active');
+        currentActiveSection = category;
+      }
+    }
 
-        // Hide all content sections
-        contentSections.forEach(section => {
-          section.classList.remove('active');
-        });
+    // Set active menu item
+    function setActiveMenuItem(activeItem) {
+      // Remove active class from all sidebar items
+      document.querySelectorAll('.sidebar-item').forEach(item => {
+        item.classList.remove('active');
+      });
 
-        // Show the corresponding content section
-        const category = item.getAttribute('data-category');
-        const targetSection = document.querySelector(`.content-section[data-section="${category}"]`);
-        if (targetSection) {
-          targetSection.classList.add('active');
+      // Add active class to clicked item
+      activeItem.classList.add('active');
+    }
+
+    // Toggle child sidebar
+    function toggleChildSidebar(element, sidebarId) {
+      const childSidebar = document.getElementById(sidebarId);
+      const caret = element.querySelector('.fa-caret-down');
+
+      if (!childSidebar) return;
+
+      // Hide all other child sidebars
+      document.querySelectorAll('.child-sidebar').forEach(sidebar => {
+        if (sidebar.id !== sidebarId) {
+          sidebar.classList.add('hidden');
         }
       });
-    });
 
+      // Reset all carets
+      document.querySelectorAll('.fa-caret-down').forEach(c => {
+        if (c !== caret) {
+          c.classList.remove('rotate-180');
+        }
+      });
 
-    // Article
+      // Toggle the clicked sidebar
+      childSidebar.classList.toggle('hidden');
 
-    document.querySelectorAll('.content-section').forEach(section => {
-      const tabButtons = section.querySelectorAll('.tab-button');
-      const tabPanels = section.querySelectorAll('[role="tabpanel"]');
+      // Rotate caret
+      if (caret) {
+        caret.classList.toggle('rotate-180');
+      }
+    }
 
-      tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-          const targetId = button.getAttribute('data-tab-target');
+    // Mobile menu functions
+    function toggleMobileMenu() {
+      const sidebar = document.getElementById('main-sidebar');
+      const overlay = document.getElementById('mobile-overlay');
 
-          // Update tab buttons
-          tabButtons.forEach(btn => {
-            btn.classList.remove('border-blue-600', 'text-blue-600', 'font-semibold');
-            btn.classList.add('border-transparent', 'text-gray-500');
-            btn.setAttribute('aria-selected', 'false');
-          });
+      mobileMenuOpen = !mobileMenuOpen;
 
-          // Update tab panels
-          tabPanels.forEach(panel => panel.classList.add('hidden'));
+      if (mobileMenuOpen) {
+        sidebar.classList.add('open');
+        overlay.classList.remove('hidden');
+      } else {
+        sidebar.classList.remove('open');
+        overlay.classList.add('hidden');
+      }
+    }
 
-          // Activate selected tab and panel
-          document.getElementById(targetId).classList.remove('hidden');
-          button.classList.remove('border-transparent', 'text-gray-500');
-          button.classList.add('border-blue-600', 'text-blue-600', 'font-semibold');
-          button.setAttribute('aria-selected', 'true');
+    function closeMobileMenu() {
+      const sidebar = document.getElementById('main-sidebar');
+      const overlay = document.getElementById('mobile-overlay');
+
+      mobileMenuOpen = false;
+      sidebar.classList.remove('open');
+      overlay.classList.add('hidden');
+    }
+
+    // Initialize tabs functionality
+    function initializeTabs() {
+      document.querySelectorAll('.tab-button').forEach(button => {
+        button.addEventListener('click', function () {
+          const tabName = this.getAttribute('data-tab');
+          switchTab(tabName, this);
         });
+      });
+    }
 
-        // Add keyboard support
-        button.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            button.click();
+    // Switch tab content
+    function switchTab(tabName, button) {
+      const tabContainer = button.closest('.content-section');
+
+      // Remove active class from all tab buttons in this container
+      tabContainer.querySelectorAll('.tab-button').forEach(btn => {
+        btn.classList.remove('active', 'border-blue-600', 'text-blue-600');
+        btn.classList.add('border-transparent', 'text-gray-500');
+      });
+
+      // Add active class to clicked button
+      button.classList.add('active', 'border-blue-600', 'text-blue-600');
+      button.classList.remove('border-transparent', 'text-gray-500');
+
+      // Hide all tab content in this container
+      tabContainer.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.add('hidden');
+        content.classList.remove('active');
+      });
+
+      // Show the selected tab content
+      const targetContent = tabContainer.querySelector(`[data-tab-content="${tabName}"]`);
+      if (targetContent) {
+        targetContent.classList.remove('hidden');
+        targetContent.classList.add('active');
+      }
+    }
+
+    // Handle preview button clicks
+    function handlePreviewClick(event) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      const button = event.currentTarget;
+      const popup = button.nextElementSibling;
+
+      if (popup && popup.classList.contains('popup')) {
+        // Hide all other popups
+        document.querySelectorAll('.popup.show').forEach(p => {
+          if (p !== popup) {
+            p.classList.remove('show');
           }
         });
-      });
-    });
 
-    // End Article
+        // Toggle current popup
+        popup.classList.toggle('show');
+      }
+    }
 
-    document.addEventListener('DOMContentLoaded', function () {
-      // Sidebar toggle
-      const sidebar = document.getElementById('sidebar');
-      const mainContent = document.getElementById('main-content');
-      const toggleButton = document.getElementById('toggle-sidebar');
-      toggleButton.addEventListener('click', () => {
-        sidebar.classList.toggle('collapsed');
-        mainContent.classList.toggle('ml-64', !sidebar.classList.contains('collapsed'));
-        mainContent.classList.toggle('ml-20', sidebar.classList.contains('collapsed'));
-      });
-      // Article submenu toggle
-      const articleMenuToggle = document.getElementById('article-menu-toggle');
-      const articleSubmenu = document.getElementById('article-submenu');
-      const articleMenuIcon = articleMenuToggle.querySelector('.material-icons.ml-auto');
-      articleMenuToggle.addEventListener('click', (event) => {
-        event.preventDefault();
-        const isCollapsed = sidebar.classList.contains('collapsed');
-        if (!isCollapsed) {
-          articleSubmenu.classList.toggle('hidden');
-          articleMenuIcon.textContent = articleSubmenu.classList.contains('hidden') ? 'expand_more' : 'expand_less';
-        }
-      });
-      // Main tabs
-      const tabButtons = document.querySelectorAll('.tab-button');
-      const tabPanes = document.querySelectorAll('.tab-pane');
-      tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-          tabButtons.forEach(btn => {
-            btn.classList.remove('border-blue-600', 'text-blue-600', 'active');
-            btn.classList.add('hover:text-gray-600', 'hover:border-gray-300');
-          });
-          button.classList.add('border-blue-600', 'text-blue-600', 'active');
-          button.classList.remove('hover:text-gray-600', 'hover:border-gray-300');
-          const target = button.dataset.target;
-          tabPanes.forEach(pane => {
-            if (pane.id === target) {
-              pane.classList.add('active');
-            } else {
-              pane.classList.remove('active');
+    // Handle document clicks to close popups
+    function handleDocumentClick(event) {
+      if (!event.target.closest('.preview-button') && !event.target.closest('.popup')) {
+        document.querySelectorAll('.popup.show').forEach(popup => {
+          popup.classList.remove('show');
+        });
+      }
+    }
+
+    // Initialize chart
+    function initializeChart() {
+      const ctx = document.getElementById('performance-chart');
+      if (!ctx) return;
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['1月', '2月', '3月', '4月', '5月', '6月'],
+          datasets: [{
+            label: '記事閲覧数',
+            data: [1200, 1900, 3000, 5000, 2300, 3200],
+            borderColor: 'rgb(59, 130, 246)',
+            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+            tension: 0.1,
+            fill: true
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
             }
-          });
-        });
-      });
-      // Video tag tabs
-      const videoTagTabsContainer = document.getElementById('video-tag-tabs-published');
-      if (videoTagTabsContainer) {
-        const videoTagTabs = videoTagTabsContainer.querySelectorAll('.video-tag-tab');
-        const videoTagContents = videoTagTabsContainer.parentElement.querySelectorAll('.tab-content');
-        videoTagTabs.forEach(tab => {
-          tab.addEventListener('click', () => {
-            videoTagTabs.forEach(t => {
-              t.classList.remove('text-blue-600', 'border-b-2', 'border-blue-600');
-            });
-            tab.classList.add('text-blue-600', 'border-b-2', 'border-blue-600');
-            const targetId = tab.dataset.target;
-            videoTagContents.forEach(content => {
-              if (content.id === targetId) {
-                content.classList.add('active');
-              } else {
-                content.classList.remove('active');
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                color: 'rgba(0, 0, 0, 0.1)'
               }
-            })
-          });
-        });
-      }
-    });
-
-    // End Edit article
-
-    // Initialize Chart.js for Article Performance
-    const ctx = document.getElementById('performance-chart').getContext('2d');
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-        datasets: [{
-          label: 'Article Performance',
-          data: [60, 10, 70, 90, 30, 80, 60],
-          backgroundColor: 'rgba(59, 130, 246, 0.5)',
-          borderColor: 'rgba(59, 130, 246, 1)',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          y: {
-            beginAtZero: true
+            },
+            x: {
+              grid: {
+                display: false
+              }
+            }
           }
         }
-      }
-    });
+      });
+    }
+
+    // Utility functions
+    function showNotification(message, type = 'info') {
+      // Create notification element
+      const notification = document.createElement('div');
+      notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 transition-all duration-300 ${type === 'success' ? 'bg-green-500 text-white' :
+        type === 'error' ? 'bg-red-500 text-white' :
+          type === 'warning' ? 'bg-yellow-500 text-black' :
+            'bg-blue-500 text-white'
+        }`;
+      notification.textContent = message;
+
+      document.body.appendChild(notification);
+
+      // Remove notification after 3 seconds
+      setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+          if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+          }
+        }, 300);
+      }, 3000);
+    }
+
+    // Form validation utility
+    function validateForm(formElement) {
+      const requiredFields = formElement.querySelectorAll('[required]');
+      let isValid = true;
+
+      requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+          field.classList.add('border-red-500');
+          isValid = false;
+        } else {
+          field.classList.remove('border-red-500');
+        }
+      });
+
+      return isValid;
+    }
+
+    // Expose functions to global scope for onclick handlers
+    window.toggleChildSidebar = toggleChildSidebar;
+    window.showNotification = showNotification;
+    window.validateForm = validateForm;
   </script>
 </body>
 

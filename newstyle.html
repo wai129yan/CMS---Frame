@@ -1,0 +1,1109 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OUTWARD CMS Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+   <!-- <link rel="stylesheet" href="./output.css"> -->
+
+  <style>
+    :root {
+      --primary-color: #3b82f6;
+      --primary-gradient: linear-gradient(135deg, #3b82f6, #60a5fa);
+      --secondary-color: #f1f5f9;
+      --text-color: #1e293b;
+      --secondary-text: #c5c8cc;
+      --sidebar-bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+      --hover-bg: #f1f5f9;
+      --active-bg: #e2e8f0;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --graph-line: #8aafee;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--secondary-color);
+      color: var(--text-color);
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      background-color: var(--sidebar-bg);
+      min-height: 100vh;
+      transition: all 0.3s ease;
+      border-right: 1px solid var(--border-color);
+    }
+
+    .sidebar-item {
+      cursor: pointer;
+      padding: 12px 16px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+
+    .sidebar-item:hover {
+      background-color: var(--hover-bg);
+      transform: translateX(4px);
+    }
+
+    .sidebar-item.active {
+      background-color: var(--active-bg);
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+
+    /* Child sidebar styling */
+    .child-sidebar {
+      background-color: #e2e8f0;
+      border-right: 1px solid var(--border-color);
+      min-height: 100vh;
+    }
+
+    .child-sidebar .sidebar-item {
+      font-size: 0.875rem;
+      padding: 10px 12px;
+    }
+
+    /* Content section styles */
+    .content-section {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .content-section.active {
+      display: block;
+      opacity: 1;
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Tab styles */
+    .tab-button {
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tab-button.active {
+      border-color: var(--primary-color) !important;
+      color: var(--primary-color) !important;
+    }
+
+    /* Card styles */
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease;
+      margin-bottom: 1.5rem;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Popup styles */
+    .popup {
+      display: none;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .popup.show {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Header styles */
+    header {
+      background-color: var(--card-bg);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 2rem;
+      box-shadow: var(--shadow);
+    }
+
+    /* Button styles */
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: #2563eb;
+    }
+
+    /* Table styles */
+    .table-container {
+      overflow-x: auto;
+      border-radius: 0.5rem;
+      border: 1px solid var(--border-color);
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        position: fixed;
+        z-index: 50;
+        transform: translateX(-100%);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .child-sidebar {
+        position: absolute;
+        top: 0;
+        left: 100%;
+        width: 100%;
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+    }
+
+    /* Hidden by default */
+    .hidden {
+      display: none !important;
+    }
+
+    /* Chart container */
+    .chart-container {
+      height: 200px;
+      background-color: var(--card-bg);
+      border-radius: 0.5rem;
+      padding: 1rem;
+      box-shadow: var(--shadow);
+    }
+
+    /* Rotation utility */
+    .rotate-180 {
+      transform: rotate(180deg);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="flex min-h-screen">
+    <!-- Sidebar Container -->
+    <div class="flex">
+      <!-- Main Sidebar -->
+      <div class="sidebar w-64 flex-shrink-0" id="main-sidebar">
+        <div class="p-4">
+          <!-- Sidebar Header -->
+          <div class="mb-6 text-center">
+            <h2 class="text-2xl font-bold text-gray-800">OUTWARD</h2>
+          </div>
+
+          <!-- Sidebar Items -->
+          <nav class="space-y-1">
+            <div class="sidebar-item active" data-category="dashboard">
+              <i class="fa-solid fa-table-cells text-lg"></i>
+              <span class="menu-text">ダッシュボード</span>
+            </div>
+
+            <div class="sidebar-item" data-category="home">
+              <i class="fa-solid fa-house text-lg"></i>
+              <span class="menu-text">ホーム</span>
+            </div>
+
+            <div class="sidebar-item" data-category="articles" onclick="toggleChildSidebar(this, 'articles-child-sidebar')">
+              <i class="fa-solid fa-newspaper text-lg"></i>
+              <span class="menu-text">記事</span>
+              <i class="fa-solid fa-caret-down ml-auto transition-transform duration-200"></i>
+            </div>
+
+            <div class="sidebar-item" data-category="pages">
+              <i class="fa-solid fa-file-circle-plus text-lg"></i>
+              <span class="menu-text">固定ページ</span>
+            </div>
+
+            <div class="sidebar-item" data-category="announce" onclick="toggleChildSidebar(this, 'announce-child-sidebar')">
+              <i class="fa-solid fa-bell text-lg"></i>
+              <span class="menu-text">お知らせ</span>
+              <i class="fa-solid fa-caret-down ml-auto transition-transform duration-200"></i>
+            </div>
+
+            <div class="sidebar-item" data-category="forms">
+              <i class="fa-solid fa-folder text-lg"></i>
+              <span class="menu-text">フォーム</span>
+            </div>
+
+            <div class="sidebar-item" data-category="files">
+              <i class="fa-solid fa-file text-lg"></i>
+              <span class="menu-text">ファイル</span>
+            </div>
+
+            <div class="sidebar-item" data-category="logs">
+              <i class="fa-solid fa-user-tie text-lg"></i>
+              <span class="menu-text">CMS操作管理者ログ</span>
+            </div>
+
+            <div class="sidebar-item" data-category="categories">
+              <i class="fa-solid fa-layer-group text-lg"></i>
+              <span class="menu-text">カテゴリ・タグ</span>
+            </div>
+
+            <div class="sidebar-item" data-category="users">
+              <i class="fa-solid fa-users text-lg"></i>
+              <span class="menu-text">ユーザー</span>
+            </div>
+
+            <div class="sidebar-item" data-category="settings">
+              <i class="fa-solid fa-gear text-lg"></i>
+              <span class="menu-text">設定</span>
+            </div>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Child Sidebar for Articles -->
+      <div id="articles-child-sidebar" class="child-sidebar w-48 hidden">
+        <div class="p-4">
+          <div class="flex justify-end mb-4">
+            <button onclick="toggleChildSidebar(this, 'articles-child-sidebar')" class="p-2 hover:bg-gray-300 rounded">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <nav class="space-y-1">
+            <div class="sidebar-item" data-category="article-list">
+              <i class="fa-solid fa-list"></i>
+              <span>記事一覧</span>
+            </div>
+            <div class="sidebar-item" data-category="article-edit">
+              <i class="fa-solid fa-pen-to-square"></i>
+              <span>記事編集</span>
+            </div>
+            <div class="sidebar-item" data-category="article-register">
+              <i class="fa-regular fa-address-card"></i>
+              <span>記事登録</span>
+            </div>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Child Sidebar for Announce -->
+      <div id="announce-child-sidebar" class="child-sidebar w-48 hidden">
+        <div class="p-4">
+          <div class="flex justify-end mb-4">
+            <button onclick="toggleChildSidebar(this, 'announce-child-sidebar')" class="p-2 hover:bg-gray-300 rounded">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <nav class="space-y-1">
+            <div class="sidebar-item" data-category="announce-list">
+              <i class="fa-solid fa-list"></i>
+              <span>一覧</span>
+            </div>
+            <div class="sidebar-item" data-category="announce-edit">
+              <i class="fa-solid fa-pen-to-square"></i>
+              <span>編集</span>
+            </div>
+            <div class="sidebar-item" data-category="announce-register">
+              <i class="fa-regular fa-address-card"></i>
+              <span>登録</span>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1">
+      <!-- Header -->
+      <header class="flex justify-between items-center">
+        <div class="flex items-center gap-4">
+          <button id="mobile-menu-toggle" class="md:hidden p-2 hover:bg-gray-100 rounded">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <h1 class="text-2xl font-bold text-gray-800">OUTWARD</h1>
+        </div>
+
+        <div class="flex items-center gap-6">
+          <a href="#" class="flex items-center gap-2 text-gray-600 hover:text-blue-600">
+            <i class="fa-regular fa-bell"></i>
+            <span class="text-sm">お知らせ</span>
+          </a>
+
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-gray-300 rounded-full"></div>
+            <span class="text-sm font-semibold">田中 太郎 (プロ)</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <main class="p-6">
+        <!-- Dashboard Content -->
+        <div class="content-section active" data-section="dashboard">
+          <div class="flex items-center gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">ダッシュボード</h1>
+            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">コンテンツの概要</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <div class="card">
+              <h3 class="text-xl font-semibold text-gray-800 mb-2">総記事件数</h3>
+              <p class="text-3xl font-bold text-blue-600 mb-2">150</p>
+              <p class="text-gray-600 text-sm">全体の記事数</p>
+            </div>
+            <div class="card">
+              <h3 class="text-xl font-semibold text-gray-800 mb-2">公開記事件数</h3>
+              <p class="text-3xl font-bold text-green-600 mb-2">120</p>
+              <p class="text-gray-600 text-sm">公開中の記事数</p>
+            </div>
+            <div class="card">
+              <h3 class="text-xl font-semibold text-gray-800 mb-2">下書き記事件数</h3>
+              <p class="text-3xl font-bold text-orange-600 mb-2">30</p>
+              <p class="text-gray-600 text-sm">下書き状態の記事数</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">記事パフォーマンス</h3>
+            <div class="chart-container">
+              <canvas id="performance-chart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Home Content -->
+        <div class="content-section" data-section="home">
+          <div class="flex items-center gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">ホーム</h1>
+            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">サイトのホーム画面</span>
+          </div>
+          <div class="card">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">ようこそ</h2>
+            <p class="text-gray-600 mb-4">ホームページの管理を行います。</p>
+            <button class="btn-primary">ホームページを編集</button>
+          </div>
+        </div>
+
+        <!-- Article List Content -->
+        <div class="content-section" data-section="article-list">
+          <div class="flex justify-between items-center mb-8">
+            <div class="flex items-center gap-4">
+              <h1 class="text-3xl font-bold text-gray-800">記事一覧</h1>
+              <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">記事の一覧と管理</span>
+            </div>
+            <div class="flex items-center gap-4">
+              <input type="text" placeholder="記事を検索..." class="px-4 py-2 border border-gray-300 rounded-lg">
+              <button class="btn-primary">
+                <i class="fa-solid fa-plus mr-2"></i>記事登録
+              </button>
+            </div>
+          </div>
+
+          <!-- Tabs -->
+          <div class="border-b border-gray-200 mb-6">
+            <nav class="flex gap-8 -mb-px">
+              <button class="tab-button px-1 py-4 border-b-2 border-blue-600 text-blue-600 font-semibold active" data-tab="draft">
+                下書き
+              </button>
+              <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600" data-tab="pending">
+                申請中・保留
+              </button>
+              <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600" data-tab="published">
+                公開・非公開
+              </button>
+            </nav>
+          </div>
+
+          <!-- Tab Content -->
+          <div class="tab-content active" data-tab-content="draft">
+            <div class="card">
+              <div class="table-container">
+                <table class="w-full text-sm text-left">
+                  <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <tr>
+                      <th class="px-6 py-3">状態</th>
+                      <th class="px-6 py-3">記事ID</th>
+                      <th class="px-6 py-3">記事見出し</th>
+                      <th class="px-6 py-3">作成者</th>
+                      <th class="px-6 py-3">作成日時</th>
+                      <th class="px-6 py-3">操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="bg-white border-b hover:bg-gray-50">
+                      <td class="px-6 py-4">
+                        <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full">下書き</span>
+                      </td>
+                      <td class="px-6 py-4">000002</td>
+                      <td class="px-6 py-4 font-medium text-gray-900">
+                        <a href="#" class="text-blue-600 hover:underline">オフィスの生産性を高めるアイデア</a>
+                      </td>
+                      <td class="px-6 py-4">佐藤 花子</td>
+                      <td class="px-6 py-4">2023/10/26 15:00</td>
+                      <td class="px-6 py-4">
+                        <button class="text-blue-600 hover:underline mr-2">編集</button>
+                        <button class="text-red-600 hover:underline">削除</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-content hidden" data-tab-content="pending">
+            <div class="card">
+              <p>申請中・保留の記事一覧</p>
+            </div>
+          </div>
+
+          <div class="tab-content hidden" data-tab-content="published">
+            <div class="card">
+              <p>公開・非公開の記事一覧</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Article Edit Content -->
+        <div class="content-section" data-section="article-edit">
+          <div class="flex items-center gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">記事編集</h1>
+            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">記事の編集と管理</span>
+          </div>
+          <div class="card">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div class="lg:col-span-2">
+                <div class="mb-6">
+                  <label class="block text-sm font-medium text-gray-700 mb-2">見出し</label>
+                  <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div class="mb-6">
+                  <label class="block text-sm font-medium text-gray-700 mb-2">本文</label>
+                  <textarea rows="10" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"></textarea>
+                </div>
+              </div>
+              <div class="space-y-6">
+                <div class="bg-gray-50 p-4 rounded-lg">
+                  <h3 class="font-semibold text-gray-800 mb-2">記事ステータス</h3>
+                  <p class="text-sm text-gray-600">編集中</p>
+                </div>
+                <button class="w-full btn-primary">下書き保存</button>
+                <button class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">公開</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Article Register Content -->
+        <div class="content-section" data-section="article-register">
+          <div class="flex items-center gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">記事登録</h1>
+            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">新しい記事の作成</span>
+          </div>
+          <div class="card">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div class="lg:col-span-2">
+                <div class="mb-6">
+                  <label class="block text-sm font-medium text-gray-700 mb-2">見出し</label>
+                  <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="記事のタイトルを入力">
+                </div>
+                <div class="mb-6">
+                  <label class="block text-sm font-medium text-gray-700 mb-2">本文</label>
+                  <textarea rows="10" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="記事の内容を入力"></textarea>
+                </div>
+              </div>
+              <div class="space-y-6">
+                <div class="bg-gray-50 p-4 rounded-lg">
+                  <h3 class="font-semibold text-gray-800 mb-2">カテゴリ・タグ</h3>
+                  <select class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                    <option>選択してください</option>
+                    <option>コラム</option>
+                    <option>お知らせ</option>
+                    <option>イベント</option>
+                  </select>
+                </div>
+                <button class="w-full btn-primary">下書き保存</button>
+                <button class="w-full bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600">申請</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pages Content -->
+        <div class="content-section" data-section="pages">
+          <div class="flex items-center gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">固定ページ</h1>
+            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">固定ページの管理</span>
+          </div>
+          <div class="card">
+            <div class="flex justify-between items-center mb-4">
+              <h2 class="text-lg font-semibold">ページ一覧</h2>
+              <button class="btn-primary">
+                <i class="fa-solid fa-plus mr-2"></i>新規ページ
+              </button>
+            </div>
+            <div class="table-container">
+              <table class="w-full text-sm text-left">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                  <tr>
+                    <th class="px-6 py-3">ページ名</th>
+                    <th class="px-6 py-3">URL</th>
+                    <th class="px-6 py-3">ステータス</th>
+                    <th class="px-6 py-3">更新日</th>
+                    <th class="px-6 py-3">操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b hover:bg-gray-50">
+                    <td class="px-6 py-4 font-medium">トップページ</td>
+                    <td class="px-6 py-4">/</td>
+                    <td class="px-6 py-4">
+                      <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">公開中</span>
+                    </td>
+                    <td class="px-6 py-4">2023/10/27</td>
+                    <td class="px-6 py-4">
+                      <button class="text-blue-600 hover:underline mr-2">編集</button>
+                      <button class="text-blue-600 hover:underline">プレビュー</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Other content sections -->
+        <div class="content-section" data-section="announce-list">
+          <div class="flex items-center gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">お知らせ一覧</h1>
+          </div>
+          <div class="card">
+            <p>お知らせの一覧を管理します。</p>
+          </div>
+        </div>
+
+        <div class="content-section" data-section="announce-edit">
+          <div class="flex items-center gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">お知らせ編集</h1>
+          </div>
+          <div class="card">
+            <p>お知らせの編集を行います。</p>
+          </div>
+        </div>
+
+        <div class="content-section" data-section="announce-register">
+          <div class="flex items-center gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">お知らせ登録</h1>
+          </div>
+          <div class="card">
+            <p>新しいお知らせを登録します。</p>
+          </div>
+        </div>
+
+        <div class="content-section" data-section="forms">
+          <div class="flex items-center gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">フォーム</h1>
+          </div>
+          <div class="card">
+            <p>フォームの管理を行います。</p>
+          </div>
+        </div>
+
+        <div class="content-section" data-section="files">
+          <div class="flex items-center gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">ファイル</h1>
+          </div>
+          <div class="card">
+            <p>ファイルの管理を行います。</p>
+          </div>
+        </div>
+
+        <div class="content-section" data-section="logs">
+          <div class="flex items-center gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">CMS操作管理者ログ</h1>
+          </div>
+          <div class="card">
+            <p>管理者の操作ログを確認します。</p>
+          </div>
+        </div>
+
+        <div class="content-section" data-section="categories">
+          <div class="flex items-center gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">カテゴリ・タグ</h1>
+          </div>
+                  <div class="content-section" data-section="categories">
+          <div class="flex items-center gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">カテゴリ・タグ</h1>
+          </div>
+          <div class="card">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">カテゴリ管理</h3>
+                <div class="space-y-3">
+                  <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <span>コラム</span>
+                    <div class="flex gap-2">
+                      <button class="text-blue-600 hover:underline text-sm">編集</button>
+                      <button class="text-red-600 hover:underline text-sm">削除</button>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <span>お知らせ</span>
+                    <div class="flex gap-2">
+                      <button class="text-blue-600 hover:underline text-sm">編集</button>
+                      <button class="text-red-600 hover:underline text-sm">削除</button>
+                    </div>
+                  </div>
+                </div>
+                <button class="btn-primary mt-4">
+                  <i class="fa-solid fa-plus mr-2"></i>カテゴリ追加
+                </button>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">タグ管理</h3>
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">働き方</span>
+                  <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">オフィス</span>
+                  <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">生産性</span>
+                </div>
+                <button class="btn-primary">
+                  <i class="fa-solid fa-plus mr-2"></i>タグ追加
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="content-section" data-section="users">
+          <div class="flex items-center gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">ユーザー管理</h1>
+          </div>
+          <div class="card">
+            <div class="flex justify-between items-center mb-6">
+              <h2 class="text-lg font-semibold">ユーザー一覧</h2>
+              <button class="btn-primary">
+                <i class="fa-solid fa-plus mr-2"></i>新規ユーザー
+              </button>
+            </div>
+            <div class="table-container">
+              <table class="w-full text-sm text-left">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                  <tr>
+                    <th class="px-6 py-3">ユーザー名</th>
+                    <th class="px-6 py-3">メールアドレス</th>
+                    <th class="px-6 py-3">権限</th>
+                    <th class="px-6 py-3">最終ログイン</th>
+                    <th class="px-6 py-3">操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b hover:bg-gray-50">
+                    <td class="px-6 py-4 font-medium">田中 太郎</td>
+                    <td class="px-6 py-4">tanaka@example.com</td>
+                    <td class="px-6 py-4">
+                      <span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">管理者</span>
+                    </td>
+                    <td class="px-6 py-4">2023/10/28 09:00</td>
+                    <td class="px-6 py-4">
+                      <button class="text-blue-600 hover:underline mr-2">編集</button>
+                      <button class="text-red-600 hover:underline">削除</button>
+                    </td>
+                  </tr>
+                  <tr class="bg-white border-b hover:bg-gray-50">
+                    <td class="px-6 py-4 font-medium">佐藤 花子</td>
+                    <td class="px-6 py-4">sato@example.com</td>
+                    <td class="px-6 py-4">
+                      <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">編集者</span>
+                    </td>
+                    <td class="px-6 py-4">2023/10/27 16:30</td>
+                    <td class="px-6 py-4">
+                      <button class="text-blue-600 hover:underline mr-2">編集</button>
+                      <button class="text-red-600 hover:underline">削除</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="content-section" data-section="settings">
+          <div class="flex items-center gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">設定</h1>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="card">
+              <h3 class="text-lg font-semibold text-gray-800 mb-4">サイト設定</h3>
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">サイト名</label>
+                  <input type="text" value="OUTWARD" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">サイト説明</label>
+                  <textarea rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg">企業の働き方改革をサポート</textarea>
+                </div>
+                <button class="btn-primary">保存</button>
+              </div>
+            </div>
+            
+            <div class="card">
+              <h3 class="text-lg font-semibold text-gray-800 mb-4">システム設定</h3>
+              <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                  <span class="text-sm font-medium text-gray-700">メンテナンスモード</span>
+                  <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" class="sr-only peer">
+                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                  </label>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-sm font-medium text-gray-700">キャッシュ有効</span>
+                  <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" checked class="sr-only peer">
+                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                  </label>
+                </div>
+                <button class="btn-primary">設定を保存</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Mobile Menu Overlay -->
+  <div id="mobile-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden md:hidden"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Global variables
+    let currentActiveSection = 'dashboard';
+    let mobileMenuOpen = false;
+
+    // Initialize the application
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeEventListeners();
+      initializeChart();
+      initializeTabs();
+    });
+
+    // Initialize event listeners
+    function initializeEventListeners() {
+      // Sidebar navigation
+      document.querySelectorAll('.sidebar-item[data-category]').forEach(item => {
+        item.addEventListener('click', handleSidebarClick);
+      });
+
+      // Mobile menu toggle
+      const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+      const mobileOverlay = document.getElementById('mobile-overlay');
+      
+      if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+      }
+      
+      if (mobileOverlay) {
+        mobileOverlay.addEventListener('click', closeMobileMenu);
+      }
+
+      // Preview button popups
+      document.querySelectorAll('.preview-button').forEach(button => {
+        button.addEventListener('click', handlePreviewClick);
+      });
+
+      // Close popups when clicking outside
+      document.addEventListener('click', handleDocumentClick);
+    }
+
+    // Handle sidebar item clicks
+    function handleSidebarClick(event) {
+      const item = event.currentTarget;
+      const category = item.getAttribute('data-category');
+      
+      // Don't handle clicks for items with child sidebars
+      if (item.hasAttribute('onclick')) {
+        return;
+      }
+      
+      if (category) {
+        showContentSection(category);
+        setActiveMenuItem(item);
+        
+        // Close mobile menu if open
+        if (mobileMenuOpen) {
+          closeMobileMenu();
+        }
+      }
+    }
+
+    // Show content section
+    function showContentSection(category) {
+      // Hide all content sections
+      document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.remove('active');
+      });
+
+      // Show the selected content section
+      const targetSection = document.querySelector(`.content-section[data-section="${category}"]`);
+      if (targetSection) {
+        targetSection.classList.add('active');
+        currentActiveSection = category;
+      }
+    }
+
+    // Set active menu item
+    function setActiveMenuItem(activeItem) {
+      // Remove active class from all sidebar items
+      document.querySelectorAll('.sidebar-item').forEach(item => {
+        item.classList.remove('active');
+      });
+
+      // Add active class to clicked item
+      activeItem.classList.add('active');
+    }
+
+    // Toggle child sidebar
+    function toggleChildSidebar(element, sidebarId) {
+      const childSidebar = document.getElementById(sidebarId);
+      const caret = element.querySelector('.fa-caret-down');
+      
+      if (!childSidebar) return;
+
+      // Hide all other child sidebars
+      document.querySelectorAll('.child-sidebar').forEach(sidebar => {
+        if (sidebar.id !== sidebarId) {
+          sidebar.classList.add('hidden');
+        }
+      });
+
+      // Reset all carets
+      document.querySelectorAll('.fa-caret-down').forEach(c => {
+        if (c !== caret) {
+          c.classList.remove('rotate-180');
+        }
+      });
+
+      // Toggle the clicked sidebar
+      childSidebar.classList.toggle('hidden');
+      
+      // Rotate caret
+      if (caret) {
+        caret.classList.toggle('rotate-180');
+      }
+    }
+
+    // Mobile menu functions
+    function toggleMobileMenu() {
+      const sidebar = document.getElementById('main-sidebar');
+      const overlay = document.getElementById('mobile-overlay');
+      
+      mobileMenuOpen = !mobileMenuOpen;
+      
+      if (mobileMenuOpen) {
+        sidebar.classList.add('open');
+        overlay.classList.remove('hidden');
+      } else {
+        sidebar.classList.remove('open');
+        overlay.classList.add('hidden');
+      }
+    }
+
+    function closeMobileMenu() {
+      const sidebar = document.getElementById('main-sidebar');
+      const overlay = document.getElementById('mobile-overlay');
+      
+      mobileMenuOpen = false;
+      sidebar.classList.remove('open');
+      overlay.classList.add('hidden');
+    }
+
+    // Initialize tabs functionality
+    function initializeTabs() {
+      document.querySelectorAll('.tab-button').forEach(button => {
+        button.addEventListener('click', function() {
+          const tabName = this.getAttribute('data-tab');
+          switchTab(tabName, this);
+        });
+      });
+    }
+
+    // Switch tab content
+    function switchTab(tabName, button) {
+      const tabContainer = button.closest('.content-section');
+      
+      // Remove active class from all tab buttons in this container
+      tabContainer.querySelectorAll('.tab-button').forEach(btn => {
+        btn.classList.remove('active', 'border-blue-600', 'text-blue-600');
+        btn.classList.add('border-transparent', 'text-gray-500');
+      });
+
+      // Add active class to clicked button
+      button.classList.add('active', 'border-blue-600', 'text-blue-600');
+      button.classList.remove('border-transparent', 'text-gray-500');
+
+      // Hide all tab content in this container
+      tabContainer.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.add('hidden');
+        content.classList.remove('active');
+      });
+
+      // Show the selected tab content
+      const targetContent = tabContainer.querySelector(`[data-tab-content="${tabName}"]`);
+      if (targetContent) {
+        targetContent.classList.remove('hidden');
+        targetContent.classList.add('active');
+      }
+    }
+
+    // Handle preview button clicks
+    function handlePreviewClick(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      
+      const button = event.currentTarget;
+      const popup = button.nextElementSibling;
+      
+      if (popup && popup.classList.contains('popup')) {
+        // Hide all other popups
+        document.querySelectorAll('.popup.show').forEach(p => {
+          if (p !== popup) {
+            p.classList.remove('show');
+          }
+        });
+        
+        // Toggle current popup
+        popup.classList.toggle('show');
+      }
+    }
+
+    // Handle document clicks to close popups
+    function handleDocumentClick(event) {
+      if (!event.target.closest('.preview-button') && !event.target.closest('.popup')) {
+        document.querySelectorAll('.popup.show').forEach(popup => {
+          popup.classList.remove('show');
+        });
+      }
+    }
+
+    // Initialize chart
+    function initializeChart() {
+      const ctx = document.getElementById('performance-chart');
+      if (!ctx) return;
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['1月', '2月', '3月', '4月', '5月', '6月'],
+          datasets: [{
+            label: '記事閲覧数',
+            data: [1200, 1900, 3000, 5000, 2300, 3200],
+            borderColor: 'rgb(59, 130, 246)',
+            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+            tension: 0.1,
+            fill: true
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                color: 'rgba(0, 0, 0, 0.1)'
+              }
+            },
+            x: {
+              grid: {
+                display: false
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // Utility functions
+    function showNotification(message, type = 'info') {
+      // Create notification element
+      const notification = document.createElement('div');
+      notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 transition-all duration-300 ${
+        type === 'success' ? 'bg-green-500 text-white' :
+        type === 'error' ? 'bg-red-500 text-white' :
+        type === 'warning' ? 'bg-yellow-500 text-black' :
+        'bg-blue-500 text-white'
+      }`;
+      notification.textContent = message;
+      
+      document.body.appendChild(notification);
+      
+      // Remove notification after 3 seconds
+      setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+          if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+          }
+        }, 300);
+      }, 3000);
+    }
+
+    // Form validation utility
+    function validateForm(formElement) {
+      const requiredFields = formElement.querySelectorAll('[required]');
+      let isValid = true;
+      
+      requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+          field.classList.add('border-red-500');
+          isValid = false;
+        } else {
+          field.classList.remove('border-red-500');
+        }
+      });
+      
+      return isValid;
+    }
+
+    // Expose functions to global scope for onclick handlers
+    window.toggleChildSidebar = toggleChildSidebar;
+    window.showNotification = showNotification;
+    window.validateForm = validateForm;
+  </script>
+</body>
+</html>
