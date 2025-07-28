@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
-   <!-- <link rel="stylesheet" href="./output.css"> -->
+  <!-- <link rel="stylesheet" href="./output.css"> -->
 
   <style>
     :root {
@@ -40,6 +41,7 @@
       min-height: 100vh;
       transition: all 0.3s ease;
       border-right: 1px solid var(--border-color);
+      transform: translateX(0); /* Default state */
     }
 
     .sidebar-item {
@@ -69,6 +71,15 @@
       background-color: #e2e8f0;
       border-right: 1px solid var(--border-color);
       min-height: 100vh;
+      position: absolute; /* Allows it to be positioned next to the main sidebar */
+      left: 100%; /* Initially hidden to the right */
+      transition: transform 0.3s ease;
+      transform: translateX(0); /* Default state */
+      z-index: 30; /* Below the main header but above content */
+    }
+
+    .child-sidebar.hidden {
+      transform: translateX(-100%); /* Hide by sliding left */
     }
 
     .child-sidebar .sidebar-item {
@@ -94,6 +105,7 @@
         opacity: 0;
         transform: translateY(10px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -143,19 +155,23 @@
     header {
       background-color: var(--card-bg);
       border-bottom: 1px solid var(--border-color);
-      padding: 1rem 2rem;
       box-shadow: var(--shadow);
+      position: fixed; /* Keep header fixed */
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50; /* Ensure header is above other elements */
     }
 
     /* Button styles */
     .btn-primary {
       background-color: var(--primary-color);
       color: white;
-      padding: 0.5rem 1rem;
       border-radius: 0.5rem;
       border: none;
       cursor: pointer;
       transition: background-color 0.2s ease;
+      padding: 0.5rem 1rem; /* Added padding for better button size */
     }
 
     .btn-primary:hover {
@@ -172,25 +188,55 @@
     /* Responsive styles */
     @media (max-width: 768px) {
       .sidebar {
-        width: 100%;
         position: fixed;
-        z-index: 50;
-        transform: translateX(-100%);
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 64%; /* Adjust width for better mobile experience */
+        max-width: 280px; /* Maximum width */
+        transform: translateX(-100%); /* Hidden by default */
+        z-index: 60; /* Above overlay */
+        box-shadow: var(--shadow); /* Add shadow for better visibility */
+        border-right: none; /* Remove border as overlay will cover */
       }
 
       .sidebar.open {
-        transform: translateX(0);
+        transform: translateX(0); /* Show sidebar */
       }
 
       .child-sidebar {
-        position: absolute;
+        position: absolute; /* Keep it as absolute */
         top: 0;
-        left: 100%;
-        width: 100%;
+        left: 0; /* Align with sidebar start */
+        width: 100%; /* Take full width of the parent container */
+        height: 100vh; /* Full viewport height */
+        transform: translateX(100%); /* Initially hidden to the right of the main sidebar */
+        z-index: 70; /* Above main sidebar */
+        box-shadow: var(--shadow);
+      }
+
+      .child-sidebar.hidden {
+        transform: translateX(0); /* Show child sidebar */
       }
 
       .main-content {
-        margin-left: 0;
+        margin-left: 0; /* Remove margin for mobile */
+        transition: margin-left 0.3s ease;
+      }
+
+      /* Overlay styling */
+      #mobile-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 55; /* Below sidebar, above content */
+      }
+
+      #mobile-overlay.hidden {
+        display: none;
       }
     }
 
@@ -218,15 +264,10 @@
 <body>
   <div class="flex min-h-screen">
     <!-- Sidebar Container -->
-    <div class="flex">
+    <div class="relative flex"> <!-- Added relative positioning for child sidebar -->
       <!-- Main Sidebar -->
       <div class="sidebar w-64 flex-shrink-0" id="main-sidebar">
         <div class="p-4">
-          <!-- Sidebar Header -->
-          <div class="mb-6 text-center">
-            <h2 class="text-2xl font-bold text-gray-800">OUTWARD</h2>
-          </div>
-
           <!-- Sidebar Items -->
           <nav class="space-y-1">
             <div class="sidebar-item active" data-category="dashboard">
@@ -239,7 +280,8 @@
               <span class="menu-text">ホーム</span>
             </div>
 
-            <div class="sidebar-item" data-category="articles" onclick="toggleChildSidebar(this, 'articles-child-sidebar')">
+            <div class="sidebar-item" data-category="articles"
+              onclick="toggleChildSidebar(this, 'articles-child-sidebar')">
               <i class="fa-solid fa-newspaper text-lg"></i>
               <span class="menu-text">記事</span>
               <i class="fa-solid fa-caret-down ml-auto transition-transform duration-200"></i>
@@ -250,7 +292,8 @@
               <span class="menu-text">固定ページ</span>
             </div>
 
-            <div class="sidebar-item" data-category="announce" onclick="toggleChildSidebar(this, 'announce-child-sidebar')">
+            <div class="sidebar-item" data-category="announce"
+              onclick="toggleChildSidebar(this, 'announce-child-sidebar')">
               <i class="fa-solid fa-bell text-lg"></i>
               <span class="menu-text">お知らせ</span>
               <i class="fa-solid fa-caret-down ml-auto transition-transform duration-200"></i>
@@ -290,7 +333,7 @@
       </div>
 
       <!-- Child Sidebar for Articles -->
-      <div id="articles-child-sidebar" class="child-sidebar w-48 hidden">
+      <div id="articles-child-sidebar" class="child-sidebar hidden">
         <div class="p-4">
           <div class="flex justify-end mb-4">
             <button onclick="toggleChildSidebar(this, 'articles-child-sidebar')" class="p-2 hover:bg-gray-300 rounded">
@@ -315,7 +358,7 @@
       </div>
 
       <!-- Child Sidebar for Announce -->
-      <div id="announce-child-sidebar" class="child-sidebar w-48 hidden">
+      <div id="announce-child-sidebar" class="child-sidebar hidden">
         <div class="p-4">
           <div class="flex justify-end mb-4">
             <button onclick="toggleChildSidebar(this, 'announce-child-sidebar')" class="p-2 hover:bg-gray-300 rounded">
@@ -341,28 +384,35 @@
     </div>
 
     <!-- Main Content -->
-    <div class="flex-1">
+    <div class="flex-1 main-content">
       <!-- Header -->
-      <header class="flex justify-between items-center">
-        <div class="flex items-center gap-4">
-          <button id="mobile-menu-toggle" class="md:hidden p-2 hover:bg-gray-100 rounded">
-            <i class="fa-solid fa-bars"></i>
+      <header>
+        <nav class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+          <button id="mobile-menu-toggle" class="md:hidden p-2 text-gray-700 hover:bg-gray-100 rounded">
+            <i class="fa-solid fa-bars text-lg"></i>
           </button>
-          <h1 class="text-2xl font-bold text-gray-800">OUTWARD</h1>
-        </div>
-
-        <div class="flex items-center gap-6">
-          <a href="#" class="flex items-center gap-2 text-gray-600 hover:text-blue-600">
-            <i class="fa-regular fa-bell"></i>
-            <span class="text-sm">お知らせ</span>
-          </a>
-
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-gray-300 rounded-full"></div>
-            <span class="text-sm font-semibold">田中 太郎 (プロ)</span>
+          <div class="flex items-center space-x-3">
+            <a href="#" class="flex items-center space-x-3">
+              <h1 class="text-2xl font-bold text-[var(--text-color)]">OUTWARD</h1>
+            </a>
           </div>
-        </div>
+          <div class="flex items-center md:order-2 space-x-3 md:space-x-0">
+            <a href="#" class="flex items-center gap-2 text-[var(--text-color)] hover:text-[var(--primary-color)] transition-colors duration-200 mr-4">
+              <i class="fa-regular fa-bell text-lg"></i>
+              <span class="text-sm font-medium">お知らせ</span>
+            </a>
+            <div class="flex items-center gap-3 mr-4">
+              <div class="w-10 h-10 bg-[var(--border-color)] rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-user text-[var(--text-color)]"></i>
+              </div>
+              <span class="text-sm font-semibold text-[var(--text-color)]">田中 太郎 (プロ)</span>
+            </div>
+          </div>
+        </nav>
       </header>
+
+      <!-- Add margin-top to offset fixed header -->
+      <div class="mt-20"></div>
 
       <!-- Content Area -->
       <main class="p-6">
@@ -399,6 +449,56 @@
           </div>
         </div>
 
+        <!-- Pages Content -->
+        <div class="content-section" data-section="pages">
+          <div class="flex items-center gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">固定ページ</h1>
+            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">固定ページの管理</span>
+          </div>
+          <div class="card">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">固定ページ一覧</h2>
+            <div class="table-container">
+              <table class="w-full text-sm text-left">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                  <tr>
+                    <th class="px-6 py-3">ページID</th>
+                    <th class="px-6 py-3">タイトル</th>
+                    <th class="px-6 py-3">状態</th>
+                    <th class="px-6 py-3">最終更新日</th>
+                    <th class="px-6 py-3">操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b hover:bg-gray-50">
+                    <td class="px-6 py-4">P001</td>
+                    <td class="px-6 py-4 font-medium text-gray-900">
+                      <a href="#" class="text-blue-600 hover:underline">会社概要</a>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span
+                        class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">公開中</span>
+                    </td>
+                    <td class="px-6 py-4">2023/10/28</td>
+                    <td class="px-6 py-4">
+                      <div class="flex space-x-2">
+                        <button
+                          class="inline-flex items-center px-3 py-1.5 bg-blue-50 text-blue-600 rounded-md hover:bg-blue-100 transition-colors duration-150">
+                          <i class="fa-solid fa-pen-to-square text-xs mr-1.5"></i>
+                          <span class="text-sm font-medium">編集</span>
+                        </button>
+                        <button
+                          class="inline-flex items-center px-3 py-1.5 bg-red-50 text-red-600 rounded-md hover:bg-red-100 transition-colors duration-150">
+                          <i class="fa-solid fa-trash text-xs mr-1.5"></i>
+                          <span class="text-sm font-medium">削除</span>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
         <!-- Home Content -->
         <div class="content-section" data-section="home">
           <div class="flex items-center gap-4 mb-6">
@@ -430,13 +530,16 @@
           <!-- Tabs -->
           <div class="border-b border-gray-200 mb-6">
             <nav class="flex gap-8 -mb-px">
-              <button class="tab-button px-1 py-4 border-b-2 border-blue-600 text-blue-600 font-semibold active" data-tab="draft">
+              <button class="tab-button px-1 py-4 border-b-2 border-blue-600 text-blue-600 font-semibold active"
+                data-tab="draft">
                 下書き
               </button>
-              <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600" data-tab="pending">
+              <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600"
+                data-tab="pending">
                 申請中・保留
               </button>
-              <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600" data-tab="published">
+              <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600"
+                data-tab="published">
                 公開・非公開
               </button>
             </nav>
@@ -460,7 +563,17 @@
                   <tbody>
                     <tr class="bg-white border-b hover:bg-gray-50">
                       <td class="px-6 py-4">
-                        <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full">下書き</span>
+                        <span
+                          class="inline-flex items-center px-3 py-1 text-sm font-medium rounded-full bg-gradient-to-r from-yellow-200 to-yellow-100 text-yellow-800 shadow-sm border border-yellow-200">
+                          <svg class="w-3 h-3 mr-1.5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+                            <path fill-rule="evenodd"
+                              d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                              clip-rule="evenodd" />
+                          </svg>
+                          下書き
+                        </span>
                       </td>
                       <td class="px-6 py-4">000002</td>
                       <td class="px-6 py-4 font-medium text-gray-900">
@@ -469,8 +582,18 @@
                       <td class="px-6 py-4">佐藤 花子</td>
                       <td class="px-6 py-4">2023/10/26 15:00</td>
                       <td class="px-6 py-4">
-                        <button class="text-blue-600 hover:underline mr-2">編集</button>
-                        <button class="text-red-600 hover:underline">削除</button>
+                        <div class="flex space-x-2">
+                          <button
+                            class="inline-flex items-center px-3 py-1.5 bg-blue-50 text-blue-600 rounded-md hover:bg-blue-100 transition-colors duration-150">
+                            <i class="fa-solid fa-pen-to-square text-xs mr-1.5"></i>
+                            <span class="text-sm font-medium">編集</span>
+                          </button>
+                          <button
+                            class="inline-flex items-center px-3 py-1.5 bg-red-50 text-red-600 rounded-md hover:bg-red-100 transition-colors duration-150">
+                            <i class="fa-solid fa-trash text-xs mr-1.5"></i>
+                            <span class="text-sm font-medium">削除</span>
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   </tbody>
@@ -482,62 +605,402 @@
           <div class="tab-content hidden" data-tab-content="pending">
             <div class="card">
               <p>申請中・保留の記事一覧</p>
+              <div class="p-4 border border-gray-100 rounded-lg bg-white shadow">
+                <div class="bg-white shadow rounded-lg flex-grow overflow-y-auto">
+                  <div class="overflow-x-auto">
+                    <table class="w-full text-left text-gray-500 text-xs @container">
+                      <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                        <tr>
+                          <th class="px-2 py-3 @[40rem]:px-4"></th>
+                          <th class="px-2 py-3 @[40rem]:px-4">状態</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">記事ID</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">記事見出し</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">メディア</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">プレビュー</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">カテゴリ・タグ</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">記事作成者</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">記事作成日時</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                          <td class="px-2 py-4 @[40rem]:px-4">
+                            <div class="flex space-x-2"><button
+                                class="text-white bg-blue-600 hover:bg-blue-700 px-2 py-1 rounded text-xs">公開</button><button
+                                class="text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 px-2 py-1 rounded text-xs">保留</button>
+                            </div>
+                          </td>
+                          <td class="px-2 py-4 @[40rem]:px-4"><span
+                              class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">申請中</span>
+                          </td>
+                          <td class="px-2 py-4 @[40rem]:px-4">000001</td>
+                          <td class="px-2 py-4 @[40rem]:px-4 font-medium text-gray-900 whitespace-nowrap"><a
+                              class="text-blue-600 hover:underline" href="#">新しい働き方とオフィスの未来</a></td>
+                          <td class="px-2 py-4 @[40rem]:px-4">
+                            <div class="flex space-x-1"><span class="material-icons text-gray-400">image</span><span
+                                class="material-icons text-gray-400">videocam</span></div>
+                          </td>
+                          <td class="px-2 py-4 @[40rem]:px-4 relative">
+                                                        <button class="preview-button text-blue-600 hover:underline">表示</button>
+                            <div
+                              class="popup absolute -top-20 left-0 bg-white border rounded-md shadow-lg p-2 z-20 hidden">
+                              <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                                href="#"><span class="material-icons text-sm mr-1">computer</span>PC</a>
+                              <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                                href="#"><span class="material-icons text-sm mr-1">smartphone</span>SP</a>
+                            </div>
+                          </td>
+                          <td class="px-2 py-4 @[40rem]:px-4">コラム</td>
+                          <td class="px-2 py-4 @[40rem]:px-4">山田 太郎</td>
+                          <td class="px-2 py-4 @[40rem]:px-4">2023/10/25 18:30</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                          <td class="px-2 py-4 @[40rem]:px-4">
+                            <div class="flex space-x-2"><button
+                                class="text-white bg-blue-600 hover:bg-blue-700 px-2 py-1 rounded text-xs">公開</button><button
+                                class="text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 px-2 py-1 rounded text-xs">保留</button>
+                            </div>
+                          </td>
+                          <td class="px-2 py-4 @[40rem]:px-4"><span
+                              class="bg-orange-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">保留</span>
+                          </td>
+                          <td class="px-2 py-4 @[40rem]:px-4">000003</td>
+                          <td class="px-2 py-4 @[40rem]:px-4 font-medium text-gray-900 whitespace-nowrap"><a
+                              class="text-blue-600 hover:underline" href="#">効果的なリモートワーク環境の作り方</a></td>
+                          <td class="px-2 py-4 @[40rem]:px-4">
+                            <div class="flex space-x-1"></div>
+                          </td>
+                          <td class="px-2 py-4 @[40rem]:px-4 relative">
+                            <button class="preview-button text-blue-600 hover:underline">表示</button>
+                            <div
+                              class="popup absolute -top-20 left-0 bg-white border rounded-md shadow-lg p-2 z-20 hidden">
+                              <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                                href="#"><span class="material-icons text-sm mr-1">computer</span>PC</a>
+                              <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                                href="#"><span class="material-icons text-sm mr-1">smartphone</span>SP</a>
+                            </div>
+                          </td>
+                          <td class="px-2 py-4 @[40rem]:px-4">お知らせ</td>
+                          <td class="px-2 py-4 @[40rem]:px-4">鈴木 一郎</td>
+                          <td class="px-2 py-4 @[40rem]:px-4">2023/10/27 11:00</td>
+                        </tr>
+                      </tbody>
+                      <tfoot class="sticky-footer-header text-xs text-gray-700 uppercase bg-gray-50">
+                        <tr>
+                          <th class="px-2 py-3 @[40rem]:px-4"></th>
+                          <th class="px-2 py-3 @[40rem]:px-4">状態</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">記事ID</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">記事見出し</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">メディア</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">プレビュー</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">カテゴリ・タグ</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">記事作成者</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">記事作成日時</th>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+                <div class="flex items-center justify-between p-4 border-t border-gray-200 mt-auto">
+                  <div class="flex items-center space-x-2 text-sm text-gray-700">
+                    <span>表示件数:</span>
+                    <select class="border border-gray-300 rounded-md p-1">
+                      <option value="25">25</option>
+                      <option value="50">50</option>
+                      <option value="100">100</option>
+                    </select>
+                  </div>
+                  <span class="text-sm text-gray-700">
+                    全 <span class="font-semibold text-gray-900">2</span> 件中 <span
+                      class="font-semibold text-gray-900">1-2</span> 件を表示
+                  </span>
+                  <div class="inline-flex -space-x-px rounded-md shadow-sm">
+                    <button
+                      class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">前へ</button>
+                    <button
+                      class="px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300">1</button>
+                    <button
+                      class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">次へ</button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-
+          
           <div class="tab-content hidden" data-tab-content="published">
             <div class="card">
               <p>公開・非公開の記事一覧</p>
+              <div class="p-4 border border-gray-100 rounded-lg bg-white shadow">
+                <div class="bg-white shadow rounded-lg flex-grow overflow-y-auto">
+                  <div class="overflow-x-auto">
+                    <table class="w-full text-left text-gray-500 text-xs @container">
+                      <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                        <tr>
+                          <th class="px-2 py-3 @[40rem]:px-4">状態</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">記事ID</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">記事見出し</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">メディア</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">プレビュー</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">カテゴリ・タグ</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">記事作成者</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">記事作成日時</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">記事公開日時</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                          <td class="px-2 py-4 @[40rem]:px-4"><span
+                              class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">公開中</span>
+                          </td>
+                          <td class="px-2 py-4 @[40rem]:px-4">000001</td>
+                          <td class="px-2 py-4 @[40rem]:px-4 font-medium text-gray-900 whitespace-nowrap"><a
+                              class="text-blue-600 hover:underline" href="#">新しい働き方の提案</a></td>
+                          <td class="px-2 py-4 @[40rem]:px-4">
+                            <div class="flex space-x-1"><span class="material-icons text-gray-400">image</span><span
+                                class="material-icons text-gray-400">videocam</span><span
+                                class="material-icons text-gray-400">picture_as_pdf</span></div>
+                          </td>
+                          <td class="px-2 py-4 @[40rem]:px-4 relative">
+                            <button class="preview-button text-blue-600 hover:underline">表示</button>
+                            <div
+                              class="popup absolute -top-20 left-0 bg-white border rounded-md shadow-lg p-2 z-20 hidden">
+                              <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                                href="#"><span class="material-icons text-sm mr-1">computer</span>PC</a>
+                              <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                                href="#"><span class="material-icons text-sm mr-1">smartphone</span>SP</a>
+                            </div>
+                          </td>
+                          <td class="px-2 py-4 @[40rem]:px-4">コラム</td>
+                          <td class="px-2 py-4 @[40rem]:px-4">山田 太郎</td>
+                          <td class="px-2 py-4 @[40rem]:px-4">2023/10/27 10:00</td>
+                          <td class="px-2 py-4 @[40rem]:px-4">2023/10/27 10:00</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                          <td class="px-2 py-4 @[40rem]:px-4"><span
+                              class="bg-gray-100 text-gray-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">非公開</span>
+                          </td>
+                          <td class="px-2 py-4 @[40rem]:px-4">000003</td>
+                          <td class="px-2 py-4 @[40rem]:px-4 font-medium text-gray-900 whitespace-nowrap"><a
+                              class="text-blue-600 hover:underline" href="#">過去のイベントレポート</a></td>
+                          <td class="px-2 py-4 @[40rem]:px-4">
+                            <div class="flex space-x-1"><span class="material-icons text-gray-400">image</span><span
+                                class="material-icons text-gray-400">videocam</span></div>
+                          </td>
+                          <td class="px-2 py-4 @[40rem]:px-4 relative">
+                            <button class="preview-button text-blue-600 hover:underline">表示</button>
+                            <div
+                              class="popup absolute -top-20 left-0 bg-white border rounded-md shadow-lg p-2 z-20 hidden">
+                              <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                                href="#"><span class="material-icons text-sm mr-1">computer</span>PC</a>
+                              <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                                href="#"><span class="material-icons text-sm mr-1">smartphone</span>SP</a>
+                            </div>
+                          </td>
+                          <td class="px-2 py-4 @[40rem]:px-4">イベント</td>
+                          <td class="px-2 py-4 @[40rem]:px-4">鈴木 一郎</td>
+                          <td class="px-2 py-4 @[40rem]:px-4">2023/09/15 18:00</td>
+                          <td class="px-2 py-4 @[40rem]:px-4">2023/09/15 18:00</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                          <td class="px-2 py-4 @[40rem]:px-4"><span
+                              class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">公開中</span>
+                          </td>
+                          <td class="px-2 py-4 @[40rem]:px-4">000004</td>
+                          <td class="px-2 py-4 @[40rem]:px-4 font-medium text-gray-900 whitespace-nowrap"><a
+                              class="text-blue-600 hover:underline" href="#">記事タイトル4</a></td>
+                          <td class="px-2 py-4 @[40rem]:px-4">
+                            <div class="flex space-x-1"><span class="material-icons text-gray-400">image</span></div>
+                          </td>
+                          <td class="px-2 py-4 @[40rem]:px-4 relative">
+                            <button class="preview-button text-blue-600 hover:underline">表示</button>
+                            <div
+                              class="popup absolute -top-20 left-0 bg-white border rounded-md shadow-lg p-2 z-20 hidden">
+                              <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                                href="#"><span class="material-icons text-sm mr-1">computer</span>PC</a>
+                              <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                                href="#"><span class="material-icons text-sm mr-1">smartphone</span>SP</a>
+                            </div>
+                          </td>
+                          <td class="px-2 py-4 @[40rem]:px-4">カテゴリA</td>
+                          <td class="px-2 py-4 @[40rem]:px-4">山田 太郎</td>
+                          <td class="px-2 py-4 @[40rem]:px-4">2023/10/27 11:00</td>
+                          <td class="px-2 py-4 @[40rem]:px-4">2023/10/27 11:00</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                          <td class="px-2 py-4 @[40rem]:px-4"><span
+                              class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">公開中</span>
+                          </td>
+                          <td class="px-2 py-4 @[40rem]:px-4">000005</td>
+                          <td class="px-2 py-4 @[40rem]:px-4 font-medium text-gray-900 whitespace-nowrap"><a
+                              class="text-blue-600 hover:underline" href="#">記事タイトル5</a></td>
+                          <td class="px-2 py-4 @[40rem]:px-4">
+                            <div class="flex space-x-1"><span class="material-icons text-gray-400">videocam</span>
+                            </div>
+                          </td>
+                          <td class="px-2 py-4 @[40rem]:px-4 relative">
+                            <button class="preview-button text-blue-600 hover:underline">表示</button>
+                            <div
+                              class="popup absolute -top-20 left-0 bg-white border rounded-md shadow-lg p-2 z-20 hidden">
+                              <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                                href="#"><span class="material-icons text-sm mr-1">computer</span>PC</a>
+                              <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                                href="#"><span class="material-icons text-sm mr-1">smartphone</span>SP</a>
+                            </div>
+                          </td>
+                          <td class="px-2 py-4 @[40rem]:px-4">カテゴリB</td>
+                          <td class="px-2 py-4 @[40rem]:px-4">佐藤 花子</td>
+                          <td class="px-2 py-4 @[40rem]:px-4">2023/10/27 12:00</td>
+                          <td class="px-2 py-4 @[40rem]:px-4">2023/10/27 12:00</td>
+                        </tr>
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                          <td class="px-2 py-4 @[40rem]:px-4"><span
+                              class="bg-gray-100 text-gray-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">非公開</span>
+                          </td>
+                          <td class="px-2 py-4 @[40rem]:px-4">000025</td>
+                          <td class="px-2 py-4 @[40rem]:px-4 font-medium text-gray-900 whitespace-nowrap"><a
+                              class="text-blue-600 hover:underline" href="#">記事タイトル25</a></td>
+                          <td class="px-2 py-4 @[40rem]:px-4">
+                            <div class="flex space-x-1"><span class="material-icons text-gray-400">image</span><span
+                                class="material-icons text-gray-400">picture_as_pdf</span></div>
+                          </td>
+                          <td class="px-2 py-4 @[40rem]:px-4 relative">
+                            <button class="preview-button text-blue-600 hover:underline">表示</button>
+                            <div
+                              class="popup absolute -top-20 left-0 bg-white border rounded-md shadow-lg p-2 z-20 hidden">
+                              <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                                href="#"><span class="material-icons text-sm mr-1">computer</span>PC</a>
+                              <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                                href="#"><span class="material-icons text-sm mr-1">smartphone</span>SP</a>
+                            </div>
+                          </td>
+                          <td class="px-2 py-4 @[40rem]:px-4">カテゴリC</td>
+                          <td class="px-2 py-4 @[40rem]:px-4">鈴木 一郎</td>
+                          <td class="px-2 py-4 @[40rem]:px-4">2023/11/01 10:00</td>
+                          <td class="px-2 py-4 @[40rem]:px-4">2023/11/01 10:00</td>
+                        </tr>
+                      </tbody>
+                      <tfoot class="sticky-footer-header text-xs text-gray-700 uppercase bg-gray-50">
+                        <tr>
+                          <th class="px-2 py-3 @[40rem]:px-4">状態</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">記事ID</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">記事見出し</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">メディア</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">プレビュー</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">カテゴリ・タグ</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">記事作成者</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">記事作成日時</th>
+                          <th class="px-2 py-3 @[40rem]:px-4">記事公開日時</th>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+                <div class="flex items-center justify-between p-4 border-t border-gray-200 mt-auto">
+                  <div class="flex items-center space-x-2 text-sm text-gray-700">
+                    <span>表示件数:</span>
+                    <select class="border border-gray-300 rounded-md p-1">
+                      <option value="25">25</option>
+                      <option value="50">50</option>
+                      <option value="100">100</option>
+                    </select>
+                  </div>
+                  <span class="text-sm text-gray-700">
+                    全 <span class="font-semibold text-gray-900">25</span> 件中 <span
+                      class="font-semibold text-gray-900">1-25</span> 件を表示
+                  </span>
+                  <div class="inline-flex -space-x-px rounded-md shadow-sm">
+                    <button
+                      class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">前へ</button>
+                    <button
+                      class="px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300">1</button>
+                    <button
+                      class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">2</button>
+                    <button
+                      class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">次へ</button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Article Edit Content -->
         <div class="content-section" data-section="article-edit">
-          <div class="flex items-center gap-4 mb-6">
-            <h1 class="text-3xl font-bold text-gray-800">記事編集</h1>
-            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">記事の編集と管理</span>
+          <div class="flex justify-between items-center mb-8">
+            <div class="flex items-center gap-4">
+              <h1 class="text-3xl font-bold text-gray-800">記事編集一覧</h1>
+              <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">編集一覧管理</span>
+            </div>
+            <div class="flex items-center space-x-4">
+              <div class="text-sm">
+                <span class="font-bold">記事 URL:</span>
+                <a class="text-blue-600 hover:underline"
+                  href="https://outward.co.jp/aaa/bbb/">https://outward.co.jp/aaa/bbb/</a>
+              </div>
+              <button
+                class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">一覧</button>
+            </div>
+          </div>
+          <div class="border-b border-gray-200 mb-6">
+            <nav class="flex gap-8 -mb-px">
+              <button class="tab-button px-1 py-4 border-b-2 border-blue-600 text-blue-600 font-semibold active"
+                data-tab="draft">
+                下書き
+              </button>
+              <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600"
+                data-tab="pending">
+                申請中・保留
+              </button>
+              <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600"
+                data-tab="published">
+                公開・非公開
+              </button>
+            </nav>
           </div>
           <div class="card">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <div class="lg:col-span-2">
-                <div class="mb-6">
-                  <label class="block text-sm font-medium text-gray-700 mb-2">見出し</label>
-                  <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
-                </div>
-                <div class="mb-6">
-                  <label class="block text-sm font-medium text-gray-700 mb-2">本文</label>
-                  <textarea rows="10" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"></textarea>
-                </div>
-              </div>
-              <div class="space-y-6">
-                <div class="bg-gray-50 p-4 rounded-lg">
-                  <h3 class="font-semibold text-gray-800 mb-2">記事ステータス</h3>
-                  <p class="text-sm text-gray-600">編集中</p>
-                </div>
-                <button class="w-full btn-primary">下書き保存</button>
-                <button class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">公開</button>
-              </div>
-            </div>
+            <p>記事編集の詳細な内容がここに表示されます。</p>
           </div>
         </div>
 
         <!-- Article Register Content -->
         <div class="content-section" data-section="article-register">
-          <div class="flex items-center gap-4 mb-6">
-            <h1 class="text-3xl font-bold text-gray-800">記事登録</h1>
-            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">新しい記事の作成</span>
+          <div class="flex justify-between items-center mb-6">
+            <div class="flex items-center gap-4 mb-6">
+              <h2 class="text-2xl font-bold text-gray-800">記事登録</h2>
+              <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">記事の新規登録</span>
+            </div>
+            <div class="flex items-center space-x-4">
+              <button
+                class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md shadow-sm hover:bg-blue-700 flex items-center">
+                <span class="material-icons mr-2">add</span>
+                記事登録
+              </button>
+              <button
+                class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">一覧</button>
+            </div>
+          </div>
+          <div class="border-b border-gray-200 mb-6">
+            <nav class="flex gap-8 -mb-px">
+              <button class="tab-button px-1 py-4 border-b-2 border-blue-600 text-blue-600 font-semibold active"
+                data-tab="draft">
+                下書き
+              </button>
+            </nav>
           </div>
           <div class="card">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div class="lg:col-span-2">
                 <div class="mb-6">
                   <label class="block text-sm font-medium text-gray-700 mb-2">見出し</label>
-                  <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="記事のタイトルを入力">
+                  <input type="text"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="記事のタイトルを入力">
                 </div>
                 <div class="mb-6">
                   <label class="block text-sm font-medium text-gray-700 mb-2">本文</label>
-                  <textarea rows="10" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="記事の内容を入力"></textarea>
+                  <textarea rows="10"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="記事の内容を入力"></textarea>
                 </div>
               </div>
               <div class="space-y-6">
@@ -551,71 +1014,195 @@
                   </select>
                 </div>
                 <button class="w-full btn-primary">下書き保存</button>
-                <button class="w-full bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600">申請</button>
+                               <button class="w-full bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600">申請</button>
               </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Pages Content -->
-        <div class="content-section" data-section="pages">
-          <div class="flex items-center gap-4 mb-6">
-            <h1 class="text-3xl font-bold text-gray-800">固定ページ</h1>
-            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">固定ページの管理</span>
-          </div>
-          <div class="card">
-            <div class="flex justify-between items-center mb-4">
-              <h2 class="text-lg font-semibold">ページ一覧</h2>
-              <button class="btn-primary">
-                <i class="fa-solid fa-plus mr-2"></i>新規ページ
-              </button>
-            </div>
-            <div class="table-container">
-              <table class="w-full text-sm text-left">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                  <tr>
-                    <th class="px-6 py-3">ページ名</th>
-                    <th class="px-6 py-3">URL</th>
-                    <th class="px-6 py-3">ステータス</th>
-                    <th class="px-6 py-3">更新日</th>
-                    <th class="px-6 py-3">操作</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="bg-white border-b hover:bg-gray-50">
-                    <td class="px-6 py-4 font-medium">トップページ</td>
-                    <td class="px-6 py-4">/</td>
-                    <td class="px-6 py-4">
-                      <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">公開中</span>
-                    </td>
-                    <td class="px-6 py-4">2023/10/27</td>
-                    <td class="px-6 py-4">
-                      <button class="text-blue-600 hover:underline mr-2">編集</button>
-                      <button class="text-blue-600 hover:underline">プレビュー</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
           </div>
         </div>
 
         <!-- Other content sections -->
         <div class="content-section" data-section="announce-list">
-          <div class="flex items-center gap-4 mb-6">
-            <h1 class="text-3xl font-bold text-gray-800">お知らせ一覧</h1>
+          <div class="flex justify-between items-center mb-6">
+            <div class="flex items-center gap-4">
+              <h1 class="text-3xl font-bold text-gray-800">お知らせ一覧</h1>
+              <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">お知らせの管理</span>
+            </div>
+            <div class="flex items-center space-x-4">
+              <button class="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 flex items-center">
+                <i class="fa-solid fa-plus mr-2"></i>お知らせ追加
+              </button>
+              <button class="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 flex items-center">
+                <i class="fa-solid fa-arrow-up-arrow-down mr-2"></i>並べ替え
+              </button>
+            </div>
           </div>
           <div class="card">
-            <p>お知らせの一覧を管理します。</p>
+            <div class="bg-white shadow rounded-lg">
+              <div class="p-4">
+                <div class="grid grid-cols-12 gap-4 text-sm font-semibold text-gray-600 px-4 py-2 border-b">
+                  <div class="col-span-1">ステータス</div>
+                  <div class="col-span-1">お知らせID</div>
+                  <div class="col-span-4">お知らせ文</div>
+                  <div class="col-span-3">URL</div>
+                  <div class="col-span-1">作成者</div>
+                  <div class="col-span-2">公開日</div>
+                </div>
+                <div class="divide-y divide-gray-200">
+                  <div class="grid grid-cols-12 gap-4 items-center p-4 hover:bg-gray-50">
+                    <div class="col-span-1">
+                      <span class="px-2 py-1 text-xs font-semibold text-green-800 bg-green-200 rounded-full">公開</span>
+                    </div>
+                    <div class="col-span-1 text-gray-700">000001</div>
+                    <div class="col-span-4 text-blue-600 hover:underline cursor-pointer">新しい働き方とオフィスの未来</div>
+                    <div class="col-span-3 text-gray-700 truncate">/news/20231025-01/</div>
+                    <div class="col-span-1 text-gray-700">山田 太郎</div>
+                    <div class="col-span-2 text-gray-700">2023/10/25 18:30</div>
+                  </div>
+                  <div class="grid grid-cols-12 gap-4 items-center p-4 hover:bg-gray-50">
+                    <div class="col-span-1">
+                      <span class="px-2 py-1 text-xs font-semibold text-yellow-800 bg-yellow-200 rounded-full">保留</span>
+                    </div>
+                    <div class="col-span-1 text-gray-700">000003</div>
+                    <div class="col-span-4 text-blue-600 hover:underline cursor-pointer">効果的なリモートワーク環境の作り方</div>
+                    <div class="col-span-3 text-gray-700 truncate">/news/20231027-01/</div>
+                    <div class="col-span-1 text-gray-700">鈴木 一郎</div>
+                    <div class="col-span-2 text-gray-700">2023/10/27 11:00</div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between p-4 border-t border-gray-200">
+                <div class="flex items-center space-x-2">
+                  <span class="text-sm text-gray-700">表示件数:</span>
+                  <select class="border border-gray-300 rounded-md p-1 text-sm">
+                    <option>25</option>
+                    <option>50</option>
+                    <option>100</option>
+                  </select>
+                </div>
+                <div class="text-sm text-gray-700">
+                  全 <span class="font-semibold">2</span> 件中 <span class="font-semibold">1-2</span> 件を表示
+                </div>
+                <div class="flex items-center space-x-1">
+                  <button
+                    class="px-3 py-1 border border-gray-300 rounded-md bg-white text-gray-500 cursor-not-allowed text-sm">前へ</button>
+                  <button class="px-3 py-1 border border-blue-500 rounded-md bg-blue-500 text-white text-sm">1</button>
+                  <button
+                    class="px-3 py-1 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50 text-sm">次へ</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="content-section" data-section="announce-edit">
-          <div class="flex items-center gap-4 mb-6">
-            <h1 class="text-3xl font-bold text-gray-800">お知らせ編集</h1>
+          <div class="flex justify-between items-center mb-6">
+            <div class="flex items-center gap-4">
+              <h1 class="text-3xl font-bold text-gray-800">お知らせ編集</h1>
+              <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">お知らせの編集</span>
+            </div>
+            <a class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" href="#">一覧へ</a>
           </div>
           <div class="card">
-            <p>お知らせの編集を行います。</p>
+            <div class="grid grid-cols-3 gap-8">
+              <!-- Main content area - 2/3 width -->
+              <div class="col-span-2 space-y-6">
+                <!-- Announcement text editor -->
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                  <label class="block text-sm font-medium text-gray-700 mb-2">お知らせ文</label>
+                  <div class="border border-gray-300 rounded-lg">
+                    <div class="p-2 border-b border-gray-300 bg-gray-50">
+                      <div class="flex items-center space-x-4">
+                        <button
+                          class="text-sm font-medium text-blue-600 border-b-2 border-blue-600 pb-1 hover:text-blue-700">
+                          フォントサイズ
+                        </button>
+                      </div>
+                    </div>
+                    <textarea class="w-full h-64 p-4 border-0 focus:ring-0 resize-none"
+                      placeholder="お知らせ内容を入力してください"></textarea>
+                  </div>
+                </div>
+
+                <!-- URL input -->
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                  <label class="block text-sm font-medium text-gray-700 mb-2" for="url">URL</label>
+                  <input type="text" id="url" placeholder="/news/20231025-01/"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out text-sm" />
+                </div>
+              </div>
+
+              <!-- Sidebar - 1/3 width -->
+              <div class="col-span-1 space-y-6">
+                <!-- Status -->
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                  <label class="block text-sm font-medium text-gray-700 mb-2" for="status">ステータス</label>
+                  <select id="status"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out text-sm">
+                    <option value="draft">下書き</option>
+                    <option value="published">公開</option>
+                    <option value="private">非公開</option>
+                  </select>
+                </div>
+
+                <!-- Remarks -->
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                  <label class="block text-sm font-medium text-gray-700 mb-2" for="remarks">備考</label>
+                  <textarea id="remarks" rows="4"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out text-sm resize-none"></textarea>
+                </div>
+
+                <!-- Action buttons -->
+                <div class="space-y-3">
+                  <button
+                    class="w-full py-2 px-4 rounded-md text-white bg-orange-500 hover:bg-orange-600 font-semibold transition duration-150 ease-in-out">
+                    保存
+                  </button>
+                  <button
+                    class="w-full py-2 px-4 rounded-md text-white bg-blue-600 hover:bg-blue-700 font-semibold transition duration-150 ease-in-out">
+                    公開
+                  </button>
+                </div>
+
+                <!-- Publication dates -->
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                  <div class="space-y-4">
+                    <!-- Start date -->
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-2" for="start-date">
+                        公開日時 開始
+                      </label>
+                      <div class="relative">
+                        <input type="datetime-local" id="start-date"
+                          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out text-sm pr-10" />
+                        <span class="material-icons absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                          calendar_today
+                        </span>
+                      </div>
+                    </div>
+
+                    <!-- End date -->
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-2" for="end-date">
+                        公開日時 終了
+                      </label>
+                      <div class="relative">
+                        <input type="datetime-local" id="end-date"
+                          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out text-sm pr-10" />
+                        <span class="material-icons absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                          calendar_today
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Delete button -->
+                <button
+                  class="w-full py-2 px-4 rounded-md text-white bg-red-600 hover:bg-red-700 font-semibold transition duration-150 ease-in-out">
+                  削除
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -656,10 +1243,6 @@
         </div>
 
         <div class="content-section" data-section="categories">
-          <div class="flex items-center gap-4 mb-6">
-            <h1 class="text-3xl font-bold text-gray-800">カテゴリ・タグ</h1>
-          </div>
-                  <div class="content-section" data-section="categories">
           <div class="flex items-center gap-4 mb-6">
             <h1 class="text-3xl font-bold text-gray-800">カテゴリ・タグ</h1>
           </div>
@@ -741,7 +1324,8 @@
                     <td class="px-6 py-4 font-medium">佐藤 花子</td>
                     <td class="px-6 py-4">sato@example.com</td>
                     <td class="px-6 py-4">
-                      <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">編集者</span>
+                      <span
+                        class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">編集者</span>
                     </td>
                     <td class="px-6 py-4">2023/10/27 16:30</td>
                     <td class="px-6 py-4">
@@ -769,12 +1353,13 @@
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-2">サイト説明</label>
-                  <textarea rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg">企業の働き方改革をサポート</textarea>
+                  <textarea rows="3"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg">企業の働き方改革をサポート</textarea>
                 </div>
                 <button class="btn-primary">保存</button>
               </div>
             </div>
-            
+
             <div class="card">
               <h3 class="text-lg font-semibold text-gray-800 mb-4">システム設定</h3>
               <div class="space-y-4">
@@ -782,14 +1367,18 @@
                   <span class="text-sm font-medium text-gray-700">メンテナンスモード</span>
                   <label class="relative inline-flex items-center cursor-pointer">
                     <input type="checkbox" class="sr-only peer">
-                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                    <div
+                      class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+                    </div>
                   </label>
                 </div>
                 <div class="flex items-center justify-between">
                   <span class="text-sm font-medium text-gray-700">キャッシュ有効</span>
                   <label class="relative inline-flex items-center cursor-pointer">
                     <input type="checkbox" checked class="sr-only peer">
-                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                    <div
+                      class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+                    </div>
                   </label>
                 </div>
                 <button class="btn-primary">設定を保存</button>
@@ -802,7 +1391,7 @@
   </div>
 
   <!-- Mobile Menu Overlay -->
-  <div id="mobile-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden md:hidden"></div>
+  <div id="mobile-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
@@ -811,7 +1400,7 @@
     let mobileMenuOpen = false;
 
     // Initialize the application
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       initializeEventListeners();
       initializeChart();
       initializeTabs();
@@ -827,11 +1416,11 @@
       // Mobile menu toggle
       const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
       const mobileOverlay = document.getElementById('mobile-overlay');
-      
+
       if (mobileMenuToggle) {
         mobileMenuToggle.addEventListener('click', toggleMobileMenu);
       }
-      
+
       if (mobileOverlay) {
         mobileOverlay.addEventListener('click', closeMobileMenu);
       }
@@ -849,16 +1438,16 @@
     function handleSidebarClick(event) {
       const item = event.currentTarget;
       const category = item.getAttribute('data-category');
-      
+
       // Don't handle clicks for items with child sidebars
       if (item.hasAttribute('onclick')) {
         return;
       }
-      
+
       if (category) {
         showContentSection(category);
         setActiveMenuItem(item);
-        
+
         // Close mobile menu if open
         if (mobileMenuOpen) {
           closeMobileMenu();
@@ -896,7 +1485,7 @@
     function toggleChildSidebar(element, sidebarId) {
       const childSidebar = document.getElementById(sidebarId);
       const caret = element.querySelector('.fa-caret-down');
-      
+
       if (!childSidebar) return;
 
       // Hide all other child sidebars
@@ -915,7 +1504,7 @@
 
       // Toggle the clicked sidebar
       childSidebar.classList.toggle('hidden');
-      
+
       // Rotate caret
       if (caret) {
         caret.classList.toggle('rotate-180');
@@ -926,31 +1515,34 @@
     function toggleMobileMenu() {
       const sidebar = document.getElementById('main-sidebar');
       const overlay = document.getElementById('mobile-overlay');
-      
+
       mobileMenuOpen = !mobileMenuOpen;
-      
+
       if (mobileMenuOpen) {
         sidebar.classList.add('open');
         overlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; // Prevent body scroll
       } else {
         sidebar.classList.remove('open');
         overlay.classList.add('hidden');
+        document.body.style.overflow = ''; // Restore body scroll
       }
     }
 
     function closeMobileMenu() {
       const sidebar = document.getElementById('main-sidebar');
       const overlay = document.getElementById('mobile-overlay');
-      
+
       mobileMenuOpen = false;
       sidebar.classList.remove('open');
       overlay.classList.add('hidden');
+      document.body.style.overflow = ''; // Restore body scroll
     }
 
     // Initialize tabs functionality
     function initializeTabs() {
       document.querySelectorAll('.tab-button').forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
           const tabName = this.getAttribute('data-tab');
           switchTab(tabName, this);
         });
@@ -960,7 +1552,7 @@
     // Switch tab content
     function switchTab(tabName, button) {
       const tabContainer = button.closest('.content-section');
-      
+
       // Remove active class from all tab buttons in this container
       tabContainer.querySelectorAll('.tab-button').forEach(btn => {
         btn.classList.remove('active', 'border-blue-600', 'text-blue-600');
@@ -989,10 +1581,10 @@
     function handlePreviewClick(event) {
       event.preventDefault();
       event.stopPropagation();
-      
+
       const button = event.currentTarget;
       const popup = button.nextElementSibling;
-      
+
       if (popup && popup.classList.contains('popup')) {
         // Hide all other popups
         document.querySelectorAll('.popup.show').forEach(p => {
@@ -1000,7 +1592,7 @@
             p.classList.remove('show');
           }
         });
-        
+
         // Toggle current popup
         popup.classList.toggle('show');
       }
@@ -1016,7 +1608,7 @@
     }
 
     // Initialize chart
-    function initializeChart() {
+ function initializeChart() {
       const ctx = document.getElementById('performance-chart');
       if (!ctx) return;
 
@@ -1062,16 +1654,15 @@
     function showNotification(message, type = 'info') {
       // Create notification element
       const notification = document.createElement('div');
-      notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 transition-all duration-300 ${
-        type === 'success' ? 'bg-green-500 text-white' :
+      notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 transition-all duration-300 ${type === 'success' ? 'bg-green-500 text-white' :
         type === 'error' ? 'bg-red-500 text-white' :
-        type === 'warning' ? 'bg-yellow-500 text-black' :
-        'bg-blue-500 text-white'
-      }`;
+          type === 'warning' ? 'bg-yellow-500 text-black' :
+            'bg-blue-500 text-white'
+        }`;
       notification.textContent = message;
-      
+
       document.body.appendChild(notification);
-      
+
       // Remove notification after 3 seconds
       setTimeout(() => {
         notification.style.transform = 'translateX(100%)';
@@ -1082,12 +1673,11 @@
         }, 300);
       }, 3000);
     }
-
     // Form validation utility
     function validateForm(formElement) {
       const requiredFields = formElement.querySelectorAll('[required]');
       let isValid = true;
-      
+
       requiredFields.forEach(field => {
         if (!field.value.trim()) {
           field.classList.add('border-red-500');
@@ -1096,7 +1686,7 @@
           field.classList.remove('border-red-500');
         }
       });
-      
+
       return isValid;
     }
 
@@ -1106,4 +1696,5 @@
     window.validateForm = validateForm;
   </script>
 </body>
+
 </html>

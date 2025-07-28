@@ -349,7 +349,7 @@
         <nav class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <!-- Logo/Title -->
           <div class="flex items-center space-x-3">
-           
+
             <a href="#" class="flex items-center space-x-3">
               <h1 class="text-2xl font-bold text-[var(--text-color)]">OUTWARD</h1>
             </a>
@@ -438,16 +438,19 @@
                       <a href="#" class="text-blue-600 hover:underline">会社概要</a>
                     </td>
                     <td class="px-6 py-4">
-                      <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">公開中</span>
+                      <span
+                        class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">公開中</span>
                     </td>
                     <td class="px-6 py-4">2023/10/28</td>
                     <td class="px-6 py-4">
                       <div class="flex space-x-2">
-                        <button class="inline-flex items-center px-3 py-1.5 bg-blue-50 text-blue-600 rounded-md hover:bg-blue-100 transition-colors duration-150">
+                        <button
+                          class="inline-flex items-center px-3 py-1.5 bg-blue-50 text-blue-600 rounded-md hover:bg-blue-100 transition-colors duration-150">
                           <i class="fa-solid fa-pen-to-square text-xs mr-1.5"></i>
                           <span class="text-sm font-medium">編集</span>
                         </button>
-                        <button class="inline-flex items-center px-3 py-1.5 bg-red-50 text-red-600 rounded-md hover:bg-red-100 transition-colors duration-150">
+                        <button
+                          class="inline-flex items-center px-3 py-1.5 bg-red-50 text-red-600 rounded-md hover:bg-red-100 transition-colors duration-150">
                           <i class="fa-solid fa-trash text-xs mr-1.5"></i>
                           <span class="text-sm font-medium">削除</span>
                         </button>
@@ -2038,6 +2041,7 @@
         <div class="content-section" data-section="forms">
           <div class="flex items-center gap-4 mb-6">
             <h1 class="text-3xl font-bold text-gray-800">フォーム</h1>
+            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">フォームの管理</span>
           </div>
           <div class="card">
             <p>フォームの管理を行います。</p>
@@ -2047,6 +2051,7 @@
         <div class="content-section" data-section="files">
           <div class="flex items-center gap-4 mb-6">
             <h1 class="text-3xl font-bold text-gray-800">ファイル</h1>
+            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">ファイルの管理</span>
           </div>
           <div class="card">
             <p>ファイルの管理を行います。</p>
@@ -2056,160 +2061,152 @@
         <div class="content-section" data-section="logs">
           <div class="flex items-center gap-4 mb-6">
             <h1 class="text-3xl font-bold text-gray-800">CMS操作管理者ログ</h1>
+            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">CMSの管理</span>
           </div>
           <div class="card">
             <p>管理者の操作ログを確認します。</p>
           </div>
         </div>
 
+
         <div class="content-section" data-section="categories">
           <div class="flex items-center gap-4 mb-6">
             <h1 class="text-3xl font-bold text-gray-800">カテゴリ・タグ</h1>
+            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">カテゴリ・タグ管理</span>
           </div>
-          <div class="content-section" data-section="categories">
-            <div class="flex items-center gap-4 mb-6">
-              <h1 class="text-3xl font-bold text-gray-800">カテゴリ・タグ</h1>
-            </div>
-            <div class="card">
-              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div>
-                  <h3 class="text-lg font-semibold text-gray-800 mb-4">カテゴリ管理</h3>
-                  <div class="space-y-3">
-                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                      <span>コラム</span>
-                      <div class="flex gap-2">
-                        <button class="text-blue-600 hover:underline text-sm">編集</button>
-                        <button class="text-red-600 hover:underline text-sm">削除</button>
-                      </div>
-                    </div>
-                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                      <span>お知らせ</span>
-                      <div class="flex gap-2">
-                        <button class="text-blue-600 hover:underline text-sm">編集</button>
-                        <button class="text-red-600 hover:underline text-sm">削除</button>
-                      </div>
-                    </div>
-                  </div>
-                  <button class="btn-primary mt-4">
-                    <i class="fa-solid fa-plus mr-2"></i>カテゴリ追加
-                  </button>
-                </div>
-                <div>
-                  <h3 class="text-lg font-semibold text-gray-800 mb-4">タグ管理</h3>
-                  <div class="flex flex-wrap gap-2 mb-4">
-                    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">働き方</span>
-                    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">オフィス</span>
-                    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">生産性</span>
-                  </div>
-                  <button class="btn-primary">
-                    <i class="fa-solid fa-plus mr-2"></i>タグ追加
-                  </button>
-                </div>
-              </div>
-            </div>
+          <div class="card">
+            <p>カテゴリ・タグ管理者の操作ログを確認します。</p>
           </div>
+        </div>
 
-          <div class="content-section" data-section="users">
-            <div class="flex items-center gap-4 mb-6">
-              <h1 class="text-3xl font-bold text-gray-800">ユーザー管理</h1>
+        <div class="content-section" data-section="users">
+          <div class="flex items-center gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">ユーザー管理</h1>
+            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">ユーザー管理</span>
+          </div>
+          <div class="card">
+            <div class="flex justify-between items-center mb-6">
+             
+              <button class="btn-primary px-4 py-2 flex items-center ml-auto">
+                <i class="fa-solid fa-plus mr-2"></i>新規ユーザーを追加
+              </button>
             </div>
+            <div class="table-container">
+              <table class="w-full text-sm text-left">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                  <tr>
+                    <th class="px-6 py-3">ユーザー名</th>
+                    <th class="px-6 py-3">メールアドレス</th>
+                    <th class="px-6 py-3">権限</th>
+                    <th class="px-6 py-3">最終ログイン</th>
+                    <th class="px-6 py-3">操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b hover:bg-gray-50">
+                    <td class="px-6 py-4 font-medium">田中 太郎</td>
+                    <td class="px-6 py-4">tanaka@example.com</td>
+                    <td class="px-6 py-4">
+                      <span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">管理者</span>
+                    </td>
+                    <td class="px-6 py-4">2023/10/28 09:00</td>
+                    <td class="px-6 py-4">
+                      <div class="flex space-x-2">
+                        <button
+                          class="inline-flex items-center px-3 py-1.5 bg-blue-50 text-blue-600 rounded-md hover:bg-blue-100 transition-colors duration-150">
+                          <i class="fa-solid fa-pen-to-square text-xs mr-1.5"></i>
+                          <span class="text-sm font-medium">編集</span>
+                        </button>
+                        <button
+                          class="inline-flex items-center px-3 py-1.5 bg-red-50 text-red-600 rounded-md hover:bg-red-100 transition-colors duration-150">
+                          <i class="fa-solid fa-trash text-xs mr-1.5"></i>
+                          <span class="text-sm font-medium">削除</span>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="bg-white border-b hover:bg-gray-50">
+                    <td class="px-6 py-4 font-medium">佐藤 花子</td>
+                    <td class="px-6 py-4">sato@example.com</td>
+                    <td class="px-6 py-4">
+                      <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">編集者</span>
+                    </td>
+                    <td class="px-6 py-4">2023/10/27 16:30</td>
+                    <td class="px-6 py-4">
+                      <div class="flex space-x-2">
+                        <button
+                          class="inline-flex items-center px-3 py-1.5 bg-blue-50 text-blue-600 rounded-md hover:bg-blue-100 transition-colors duration-150">
+                          <i class="fa-solid fa-pen-to-square text-xs mr-1.5"></i>
+                          <span class="text-sm font-medium">編集</span>
+                        </button>
+                        <button
+                          class="inline-flex items-center px-3 py-1.5 bg-red-50 text-red-600 rounded-md hover:bg-red-100 transition-colors duration-150">
+                          <i class="fa-solid fa-trash text-xs mr-1.5"></i>
+                          <span class="text-sm font-medium">削除</span>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="content-section" data-section="settings">
+          <div class="flex items-center gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">設定</h1>
+            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">設定管理</span>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div class="card">
-              <div class="flex justify-between items-center mb-6">
-                <h2 class="text-lg font-semibold">ユーザー一覧</h2>
-                <button class="btn-primary">
-                  <i class="fa-solid fa-plus mr-2"></i>新規ユーザー
+              <h3 class="text-lg font-semibold text-gray-800 mb-4">サイト設定</h3>
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">サイト名</label>
+                  <input type="text" value="OUTWARD" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">サイト説明</label>
+                  <textarea rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg">企業の働き方改革をサポート</textarea>
+                </div>
+                <button
+                  class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white text-sm font-semibold rounded-lg shadow-lg hover:from-blue-700 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transform transition-all duration-200 ease-in-out hover:scale-105">
+                  保存
                 </button>
               </div>
-              <div class="table-container">
-                <table class="w-full text-sm text-left">
-                  <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                    <tr>
-                      <th class="px-6 py-3">ユーザー名</th>
-                      <th class="px-6 py-3">メールアドレス</th>
-                      <th class="px-6 py-3">権限</th>
-                      <th class="px-6 py-3">最終ログイン</th>
-                      <th class="px-6 py-3">操作</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="bg-white border-b hover:bg-gray-50">
-                      <td class="px-6 py-4 font-medium">田中 太郎</td>
-                      <td class="px-6 py-4">tanaka@example.com</td>
-                      <td class="px-6 py-4">
-                        <span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">管理者</span>
-                      </td>
-                      <td class="px-6 py-4">2023/10/28 09:00</td>
-                      <td class="px-6 py-4">
-                        <button class="text-blue-600 hover:underline mr-2">編集</button>
-                        <button class="text-red-600 hover:underline">削除</button>
-                      </td>
-                    </tr>
-                    <tr class="bg-white border-b hover:bg-gray-50">
-                      <td class="px-6 py-4 font-medium">佐藤 花子</td>
-                      <td class="px-6 py-4">sato@example.com</td>
-                      <td class="px-6 py-4">
-                        <span
-                          class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">編集者</span>
-                      </td>
-                      <td class="px-6 py-4">2023/10/27 16:30</td>
-                      <td class="px-6 py-4">
-                        <button class="text-blue-600 hover:underline mr-2">編集</button>
-                        <button class="text-red-600 hover:underline">削除</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+            </div>
+
+            <div class="card">
+              <h3 class="text-lg font-semibold text-gray-800 mb-4">システム設定</h3>
+              <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                  <span class="text-sm font-medium text-gray-700">メンテナンスモード</span>
+                  <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" class="sr-only peer">
+                    <div
+                      class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+                    </div>
+                  </label>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-sm font-medium text-gray-700">キャッシュ有効</span>
+                  <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" checked class="sr-only peer">
+                    <div
+                      class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
+                    </div>
+                  </label>
+                </div>
+
+                <button
+                  class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white text-sm font-semibold rounded-lg shadow-lg hover:from-blue-700 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transform transition-all duration-200 ease-in-out hover:scale-105">
+                  設定を保存
+                </button>
               </div>
             </div>
           </div>
-
-          <div class="content-section" data-section="settings">
-            <div class="flex items-center gap-4 mb-6">
-              <h1 class="text-3xl font-bold text-gray-800">設定</h1>
-            </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div class="card">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">サイト設定</h3>
-                <div class="space-y-4">
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">サイト名</label>
-                    <input type="text" value="OUTWARD" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">サイト説明</label>
-                    <textarea rows="3"
-                      class="w-full px-3 py-2 border border-gray-300 rounded-lg">企業の働き方改革をサポート</textarea>
-                  </div>
-                  <button class="btn-primary">保存</button>
-                </div>
-              </div>
-
-              <div class="card">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">システム設定</h3>
-                <div class="space-y-4">
-                  <div class="flex items-center justify-between">
-                    <span class="text-sm font-medium text-gray-700">メンテナンスモード</span>
-                    <label class="relative inline-flex items-center cursor-pointer">
-                      <input type="checkbox" class="sr-only peer">
-                      <div
-                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
-                      </div>
-                    </label>
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <span class="text-sm font-medium text-gray-700">キャッシュ有効</span>
-                    <label class="relative inline-flex items-center cursor-pointer">
-                      <input type="checkbox" checked class="sr-only peer">
-                      <div
-                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
-                      </div>
-                    </label>
-                  </div>
-                  <button class="btn-primary">設定を保存</button>
-                </div>
-              </div>
-            </div>
-          </div>
+        </div>
       </main>
     </div>
   </div>
