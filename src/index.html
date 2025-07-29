@@ -250,6 +250,12 @@
               <span class="menu-text">固定ページ</span>
             </div>
 
+            <div class="sidebar-item" data-category="design" onclick="toggleChildSidebar(this, 'design-child-sidebar')">
+              <i class="fa-solid fa-chart-area"></i>
+              <span class="menu-text">デザイン管理</span>
+              <i class="fa-solid fa-caret-down ml-auto transition-transform duration-200"></i>
+            </div>
+
             <div class="sidebar-item" data-category="announce"
               onclick="toggleChildSidebar(this, 'announce-child-sidebar')">
               <i class="fa-solid fa-bell text-lg"></i>
@@ -336,6 +342,28 @@
               <i class="fa-regular fa-address-card"></i>
               <span>登録</span>
             </div>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Child Sidebar for Design -->
+      <div id="design-child-sidebar" class="child-sidebar w-48 hidden pt-[70px]">
+        <div class="p-4">
+          <div class="flex justify-end mb-4">
+            <button onclick="toggleChildSidebar(this, 'design-child-sidebar')" class="p-2 hover:bg-gray-300 rounded">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <nav class="space-y-1">
+            <div class="sidebar-item" data-category="design-list">
+              <i class="fa-solid fa-list"></i>
+              <span>Design</span>
+            </div>
+            <div class="sidebar-item" data-category="design-edit">
+              <i class="fa-solid fa-pen-to-square"></i>
+              <span>Themes</span>
+            </div>
+
           </nav>
         </div>
       </div>
@@ -471,7 +499,11 @@
           <div class="card">
             <h2 class="text-xl font-semibold text-gray-800 mb-4">ようこそ</h2>
             <p class="text-gray-600 mb-4">ホームページの管理を行います。</p>
-            <button class="btn-primary">ホームページを編集</button>
+            <button
+              class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-medium rounded-lg hover:from-blue-700 hover:to-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+              <i class="fa-solid fa-pen-to-square mr-2"></i>
+              <span>ホームページを編集</span>
+            </button>
           </div>
         </div>
 
@@ -484,8 +516,10 @@
             </div>
             <div class="flex items-center gap-4">
               <input type="text" placeholder="記事を検索..." class="px-4 py-2 border border-gray-300 rounded-lg">
-              <button class="btn-primary">
-                <i class="fa-solid fa-plus mr-2"></i>記事登録
+              <button
+                class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-medium rounded-lg hover:from-blue-700 hover:to-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                <i class="fa-solid fa-plus mr-2 text-white"></i>
+                <span>記事登録</span>
               </button>
             </div>
           </div>
@@ -885,9 +919,6 @@
             </div>
           </div>
         </div>
-
-
-
 
         <!-- Article Edit Content -->
         <div class="content-section" data-section="article-edit">
@@ -1832,6 +1863,618 @@
           </div>
         </div>
 
+        <!-- Design sections -->
+        <div class="content-section" data-section="design-list">
+          <div class="flex justify-between items-center mb-8">
+            <div class="flex items-center gap-4">
+              <h1 class="text-3xl font-bold text-gray-800">テーマ一覧</h1>
+              <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">テーマの一覧と管理</span>
+            </div>
+            <div class="flex items-center gap-4">
+              <button
+                class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-medium rounded-lg hover:from-blue-700 hover:to-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                <i class="fa-solid fa-plus mr-2"></i>
+                <span>新しいテーマを追加</span>
+              </button>
+              <button
+                class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-600 to-green-700 text-white text-sm font-medium rounded-lg hover:from-green-700 hover:to-green-800 focus:ring-4 focus:ring-green-300 focus:outline-none transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                <i class="fa-solid fa-code-branch mr-2"></i>
+                <span>ステージングへ</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Tabs -->
+          <div class="border-b border-gray-200 mb-6">
+            <nav class="flex gap-8 -mb-px">
+              <button class="tab-button px-1 py-4 border-b-2 border-blue-600 text-blue-600 font-semibold active"
+                data-tab="myTheme">
+                マイテーマ
+              </button>
+              <button class="tab-button px-1 py-4 border-b-2 border-blue-600 text-blue-600 font-semibold active"
+                data-tab="recommendTheme">
+                推奨
+              </button>
+              <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600"
+                data-tab="allTheme">
+                すべて
+              </button>
+              <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600"
+                data-tab="blockTheme">
+                ブログ
+              </button>
+              <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600"
+                data-tab="businessTheme">
+                ビジネス
+              </button>
+              <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600"
+                data-tab="storeTheme">
+                ストア
+              </button>
+
+            </nav>
+          </div>
+
+          <!-- Tab Content -->
+          <div class="tab-content hidden" data-tab-content="myTheme">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div class="rounded-xl overflow-hidden shadow-lg bg-white hover:shadow-xl transition-shadow duration-300">
+                <div class="relative">
+                  <img class="w-full h-48 object-cover" src="https://picsum.photos/seed/picsum/200/300"
+                    alt="Theme preview">
+                  <div class="absolute top-3 right-3">
+                    <span class="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">マイテーマ</span>
+                  </div>
+                </div>
+                <div class="px-6 py-4">
+                  <div class="font-bold text-xl mb-2 text-gray-800">ビジネステーマ</div>
+                  <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                    ビジネス向けに最適化された、プロフェッショナルなデザインのテーマです。
+                  </p>
+                  <div class="flex items-center gap-4 mb-4">
+                    <div class="flex items-center">
+                      <i class="fa-solid fa-calendar text-blue-500 mr-2"></i>
+                      <span class="text-sm text-gray-600">2023/10/25 作成</span>
+                    </div>
+                    <div class="flex items-center">
+                      <i class="fa-solid fa-check-circle text-green-500 mr-2"></i>
+                      <span class="text-sm text-gray-600">使用中</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="px-6 py-4 bg-gray-50 flex items-center justify-between">
+                  <button class="text-blue-600 hover:text-blue-700 font-medium">
+                    <i class="fa-solid fa-pen-to-square mr-2"></i>編集
+                  </button>
+                  <button
+                    class="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 transition-colors duration-200 flex items-center gap-2">
+                    <i class="fa-solid fa-check text-sm"></i>
+                    <span>適用する</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="rounded-xl overflow-hidden shadow-lg bg-white hover:shadow-xl transition-shadow duration-300">
+                <div class="relative">
+                  <img class="w-full h-48 object-cover" src="https://picsum.photos/seed/two/300/300/"
+                    alt="Theme preview">
+                  <div class="absolute top-3 right-3">
+                    <span class="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">マイテーマ</span>
+                  </div>
+                </div>
+                <div class="px-6 py-4">
+                  <div class="font-bold text-xl mb-2 text-gray-800">モダンテーマ</div>
+                  <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                    最新のトレンドを取り入れた、モダンでスタイリッシュなデザインのテーマです。
+                  </p>
+                  <div class="flex items-center gap-4 mb-4">
+                    <div class="flex items-center">
+                      <i class="fa-solid fa-calendar text-blue-500 mr-2"></i>
+                      <span class="text-sm text-gray-600">2023/10/20 作成</span>
+                    </div>
+                    <div class="flex items-center">
+                      <i class="fa-regular fa-circle text-gray-400 mr-2"></i>
+                      <span class="text-sm text-gray-600">未使用</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="px-6 py-4 bg-gray-50 flex items-center justify-between">
+                  <button class="text-blue-600 hover:text-blue-700 font-medium">
+                    <i class="fa-solid fa-pen-to-square mr-2"></i>編集
+                  </button>
+                  <button
+                    class="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 transition-colors duration-200 flex items-center gap-2">
+                    <i class="fa-solid fa-check text-sm"></i>
+                    <span>適用する</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-content active" data-tab-content="recommendTheme">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="p-4 bg-gray-50 border-b flex justify-between items-center">
+                  <h3 class="text-lg font-semibold text-gray-800">テーマ名1</h3>
+                  <div class="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">適用中</div>
+                </div>
+                <div class="relative">
+                  <img alt="Theme 1" class="w-full h-48 object-cover"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMh8kBvlYYmePg7h2wMUyZ9ugvCTIPU_868Uh4_ri2n4UlT_LePEDiyEm6HKyXSZLT_V0FYdlXJe9nYBvkOSR4n32TsMg3UJX2oP4ePf1wZdD-QJvIseOuRKFkZBEU2M2EHzi-HGlFOLwkX8xYQfXOvYKDd3TDEZp-95l-XVXKa5QluMenm1qCfW67mIvtWNs03TUeF5_9oh6eh3Lt5590_3wMmDz42sehLfXAqx8fqIEtIrofHsyBh-hd9H5b_ehgXL63bio2ZvY" />
+                </div>
+              </div>
+              <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="p-4 bg-gray-50 border-b">
+                  <h3 class="text-lg font-semibold text-gray-800">テーマ名2</h3>
+                </div>
+                <img alt="Theme 2" class="w-full h-48 object-cover"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCY4GLbR2j9xKUMCsX10SnysAB48GkRcQEJUGBtbZ8qDD-Mgc5ORm0unktvLa0QvUGM3D6_U0trLfAdtxoYfHCCQ5ioq7n9wlMCiew8ZYNzmJx72N0J2XdWvC8nGHNYd-Z_f95_MfRKejW7mDVQkk-845e7HQAaeaJcTNEf2h9C_7op_KuP1nGQi-exxVQXkmk_3noeSOJuFtY5YyKDglduUmoDVa4-BaLA7Y7ijpezdoazJtre9uP9LWDipeNsDGS-BAUv2o_OTH8" />
+              </div>
+              <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="p-4 bg-gray-50 border-b">
+                  <h3 class="text-lg font-semibold text-gray-800">テーマ名3</h3>
+                </div>
+                <img alt="Theme 3" class="w-full h-48 object-cover"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWpaHYQBUYr_ju1Cy3eV6v0MJPP26g8H4JsljV3gmb8xtTMLlOnEEJaq0o9dgm3iS_of5FYM3OdZfv1Tqb20fkJ3IY0S4ACZPRrq7X_78bl1IqqGY7apY7CJmTTCVhI7iXFq27yyWrCpZemLbS3ZWiIJG7kwS_WOg1VByWQQojFIfDEM8s3TKiKxdzXzHozFXiAp8mO2-KI8CFrLgFXJF-D0AP96F6TRM9y0stmQ1tUXVYu0ULiBu2rtvTYF_-ygbQoMi9F7Aoguo" />
+              </div>
+              <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="p-4 bg-gray-50 border-b">
+                  <h3 class="text-lg font-semibold text-gray-800">テーマ名4</h3>
+                </div>
+                <img alt="Theme 4" class="w-full h-48 object-cover"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDADjfb5KHflFJBttJ1bErkrzb6MDIqRzzEx_o36OO3eiQcTQxypoVmVzPsrZtv2SceZAiUEr0Bb7GQ5nvpjPLp5s3Ni6TlpTDy01ecrkJpnyXXipP4XEzHX0_q7CHzhnImru_-nySczTep-07tg-7lXz5bX0_bhnRqLp_mBZPqOcLRF0u3J72IuzjpTPngnZNFIVgLhgYPRCMpRXkJjI9EwVERLQJ3AqJYndqbySlUx1euYcdPtsUttCu4CFIKUdZM9zdnepdD2Gc" />
+              </div>
+              <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="p-4 bg-gray-50 border-b">
+                  <h3 class="text-lg font-semibold text-gray-800">テーマ名5</h3>
+                </div>
+                <img alt="Theme 5" class="w-full h-48 object-cover"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuChlSxAYh1NScuO4kpXL5y53qsZq-P7zembrDmAiiUIZ8FHCMd-gTrHY4lyBNxShGoW3SIpRqRvA_VL7fC4p2KfdhS9G2JB5z8zPZnhJ9u4UKrxgDXb602exDc-gfRI5BK0vX2ZpM3j-ANMfvmovVwdTFZVlD_BsTk2aUHdKPZ72l8CD5pW6UuWCBVrcTe5AvzyDwl_LiwLTjbwIZk9Q4gb45QmbOpirIWKM5pOX4FVVoMFLslNtbvHSvMDSyxcy6S_UVTI9lLV-nY" />
+              </div>
+              <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="p-4 bg-gray-50 border-b">
+                  <h3 class="text-lg font-semibold text-gray-800">テーマ名6</h3>
+                </div>
+                <img alt="Theme 6" class="w-full h-48 object-cover"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5bmUTZYGgBPJf_Lf3FcVQKf-gP_7eBDfhm_8lNyP9y2KvD01WX21uT3zQG0YHpVtS9C_oMggW6H3LXm1HjOPTX5nBEPvql5OwvnSTypTbouf4Qe10GzuMRAStLaQ0NYpyv7BCU4ooOtoDkKw2oUK79zhPt7KcWhIEHRJRtyxw0tzHpccmRzpeGBkwFkYL4dulLE1OUus6ZN_TSckarYZIH0Uv4DIOzVq4Bf7JrN1EDMzKfTfyylwR6vLdyGj2o5B3wEYPvz9J9So" />
+              </div>
+              <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="p-4 bg-gray-50 border-b">
+                  <h3 class="text-lg font-semibold text-gray-800">テーマ名7</h3>
+                </div>
+                <img alt="Theme 7" class="w-full h-48 object-cover"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaeD4PIeUWV93UJW95gLpF3iUpkuG5BlIDiLoigdicEbi6H5yMVYUt0_VEk71lZHD5Vi1R1HWweXgUcpFY09f9qliwx2ciwnq4r2SsZ7eJSUGrCtOYJhZqubTsBA9LFvIgBTOIjZ2cGx8dTkCd-Sowm185xWQdLLVSaC9F02VEFKgzzz8iifbSS7XpurPyMyc6GHAF9hKhSRMYihqLiqMJP0fkWPp7_dIi7XCMmoTTB4Q_4Ob4kkdHgWx3B2sXSEnIsNEJKU75czk" />
+              </div>
+              <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="p-4 bg-gray-50 border-b">
+                  <h3 class="text-lg font-semibold text-gray-800">テーマ名8</h3>
+                </div>
+                <img alt="Theme 8" class="w-full h-48 object-cover"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwCWrU3th8LAwLfc8_21zWWdtI6_oSfWEfOYP_UR3-bQcPzGV3GJPd7cTb1IR8fVYlFznuPZufknn4ya6hQKFH_i3p8-F5x60RHLzJmp4IxvEzwMKLEtkmq8Nwb6pGsH9dFUXW_nrOD9ntF83opLAKQY3vC1m_VdoxUWs5tL2IHGuHDdaUR1RTRrTk08PR1J1IbR_KJxPz1cSEiXfip2V5q_ets_D-q9-sMKwSnHXLMSoJxwopFyf3WuZ7Ysu1Ox4cp21EW-Y9BjA" />
+              </div>
+              <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="p-4 bg-gray-50 border-b">
+                  <h3 class="text-lg font-semibold text-gray-800">テーマ名9</h3>
+                </div>
+                <img alt="Theme 9" class="w-full h-48 object-cover"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRTitnt7_rlUryw8LRnsE85MH4PU_n_ZYadzOyxZFRdfYIqps1lnnwWW4xgJ052WJaIp3kA7810zKaqHJKpFaePHfTJnr5UZWCIcDSGA88ftpalZ23uUPTU6duyHZiNULsFeA7lndjqSW-agq38ByUXFxhE0MnnQK1sZ9CCC5hmcgiQBO7bTfvzzgRYXMH5Jamx_IEUXx4ebsbq6fh419SI9ly9vNYYfX2S65KSkcoYHNYAtLYf4OdfqM6JfyoUdqDhvaJE7F5jsU" />
+              </div>
+            </div>
+          </div>
+
+
+          <div class="tab-content hidden" data-tab-content="allTheme">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <!-- Theme Card 1 -->
+              <div class="card hover:shadow-lg transition-shadow duration-300">
+                <div class="relative">
+                  <img src="https://picsum.photos/seed/five/200/300" alt="Corporate Theme"
+                    class="w-full h-48 object-cover rounded-t-lg">
+                  <div class="absolute top-2 right-2">
+                    <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-1 rounded-full">Active</span>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <h3 class="text-lg font-semibold mb-2">Corporate Theme</h3>
+                  <p class="text-gray-600 text-sm mb-4">Professional business theme with modern design</p>
+                  <div class="flex justify-between items-center">
+                    <button class="text-blue-600 hover:text-blue-800 font-medium text-sm">
+                      Preview
+                    </button>
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700">
+                      Activate
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Theme Card 2 -->
+              <div class="card hover:shadow-lg transition-shadow duration-300">
+                <div class="relative">
+                  <img src="https://picsum.photos/seed/six/200/300" alt="Creative Theme"
+                    class="w-full h-48 object-cover rounded-t-lg">
+                  <div class="absolute top-2 right-2">
+                    <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-1 rounded-full">Inactive</span>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <h3 class="text-lg font-semibold mb-2">Creative Theme</h3>
+                  <p class="text-gray-600 text-sm mb-4">Bold and artistic design for creative agencies</p>
+                  <div class="flex justify-between items-center">
+                    <button class="text-blue-600 hover:text-blue-800 font-medium text-sm">
+                      Preview
+                    </button>
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700">
+                      Activate
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Theme Card 3 -->
+              <div class="card hover:shadow-lg transition-shadow duration-300">
+                <div class="relative">
+                  <img src="https://picsum.photos/seed/nine/200/300" alt="Minimal Theme"
+                    class="w-full h-48 object-cover rounded-t-lg">
+                  <div class="absolute top-2 right-2">
+                    <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-1 rounded-full">Inactive</span>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <h3 class="text-lg font-semibold mb-2">Minimal Theme</h3>
+                  <p class="text-gray-600 text-sm mb-4">Clean and minimalist design approach</p>
+                  <div class="flex justify-between items-center">
+                    <button class="text-blue-600 hover:text-blue-800 font-medium text-sm">
+                      Preview
+                    </button>
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700">
+                      Activate
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="tab-content hidden" data-tab-content="blockTheme">
+            <div class="card hover:shadow-lg transition-shadow duration-300">
+              <div class="relative">
+                <img src="https://picsum.photos/seed/nine/200/300" alt="Minimal Theme"
+                  class="w-full h-48 object-cover rounded-t-lg">
+                <div class="absolute top-2 right-2">
+                  <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-1 rounded-full">Inactive</span>
+                </div>
+              </div>
+              <div class="p-4">
+                <h3 class="text-lg font-semibold mb-2">Minimal Theme</h3>
+                <p class="text-gray-600 text-sm mb-4">Clean and minimalist design approach</p>
+                <div class="flex justify-between items-center">
+                  <button class="text-blue-600 hover:text-blue-800 font-medium text-sm">
+                    Preview
+                  </button>
+                  <button class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700">
+                    Activate
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="content-section" data-section="design-edit">
+          <div class="flex justify-between items-center mb-8">
+            <div class="flex items-center gap-4">
+              <h1 class="text-3xl font-bold text-gray-800">テーマ編集</h1>
+              <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">テーマ編集と管理</span>
+            </div>
+            <div class="flex items-center gap-4">
+              <button
+                class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-medium rounded-lg hover:from-blue-700 hover:to-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                <i class="fa-solid fa-plus mr-2"></i>
+                <span>テーマ編集</span>
+              </button>
+              <!-- <button
+                class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-600 to-green-700 text-white text-sm font-medium rounded-lg hover:from-green-700 hover:to-green-800 focus:ring-4 focus:ring-green-300 focus:outline-none transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                <i class="fa-solid fa-code-branch mr-2"></i>
+                <span>ステージングへ</span>
+              </button> -->
+            </div>
+          </div>
+
+          <!-- Tabs -->
+          <div class="border-b border-gray-200 mb-6">
+            <nav class="flex gap-8 -mb-px">
+              <button class="tab-button px-1 py-4 border-b-2 border-blue-600 text-blue-600 font-semibold active"
+                data-tab="myTheme">
+                マイテーマ
+              </button>
+              <button class="tab-button px-1 py-4 border-b-2 border-blue-600 text-blue-600 font-semibold active"
+                data-tab="recommendTheme">
+                推奨
+              </button>
+              <!-- <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600"
+                data-tab="allTheme">
+                すべて
+              </button>
+              <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600"
+                data-tab="blockTheme">
+                ブログ
+              </button>
+              <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600"
+                data-tab="businessTheme">
+                ビジネス
+              </button>
+              <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600"
+                data-tab="storeTheme">
+                ストア
+              </button> -->
+            </nav>
+          </div>
+
+          <!-- Tab Content -->
+          <div class="tab-content hidden" data-tab-content="myTheme">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div class="rounded-xl overflow-hidden shadow-lg bg-white hover:shadow-xl transition-shadow duration-300">
+                <div class="relative">
+                  <img class="w-full h-48 object-cover" src="https://picsum.photos/seed/picsum/200/300"
+                    alt="Theme preview">
+                  <div class="absolute top-3 right-3">
+                    <span class="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">マイテーマ</span>
+                  </div>
+                </div>
+                <div class="px-6 py-4">
+                  <div class="font-bold text-xl mb-2 text-gray-800">ビジネステーマ</div>
+                  <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                    ビジネス向けに最適化された、プロフェッショナルなデザインのテーマです。
+                  </p>
+                  <div class="flex items-center gap-4 mb-4">
+                    <div class="flex items-center">
+                      <i class="fa-solid fa-calendar text-blue-500 mr-2"></i>
+                      <span class="text-sm text-gray-600">2023/10/25 作成</span>
+                    </div>
+                    <div class="flex items-center">
+                      <i class="fa-solid fa-check-circle text-green-500 mr-2"></i>
+                      <span class="text-sm text-gray-600">使用中</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="px-6 py-4 bg-gray-50 flex items-center justify-between">
+                  <button class="text-blue-600 hover:text-blue-700 font-medium">
+                    <i class="fa-solid fa-pen-to-square mr-2"></i>編集
+                  </button>
+                  <button
+                    class="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 transition-colors duration-200 flex items-center gap-2">
+                    <i class="fa-solid fa-check text-sm"></i>
+                    <span>適用する</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="rounded-xl overflow-hidden shadow-lg bg-white hover:shadow-xl transition-shadow duration-300">
+                <div class="relative">
+                  <img class="w-full h-48 object-cover" src="https://picsum.photos/seed/two/300/300/"
+                    alt="Theme preview">
+                  <div class="absolute top-3 right-3">
+                    <span class="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">マイテーマ</span>
+                  </div>
+                </div>
+                <div class="px-6 py-4">
+                  <div class="font-bold text-xl mb-2 text-gray-800">モダンテーマ</div>
+                  <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                    最新のトレンドを取り入れた、モダンでスタイリッシュなデザインのテーマです。
+                  </p>
+                  <div class="flex items-center gap-4 mb-4">
+                    <div class="flex items-center">
+                      <i class="fa-solid fa-calendar text-blue-500 mr-2"></i>
+                      <span class="text-sm text-gray-600">2023/10/20 作成</span>
+                    </div>
+                    <div class="flex items-center">
+                      <i class="fa-regular fa-circle text-gray-400 mr-2"></i>
+                      <span class="text-sm text-gray-600">未使用</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="px-6 py-4 bg-gray-50 flex items-center justify-between">
+                  <button class="text-blue-600 hover:text-blue-700 font-medium">
+                    <i class="fa-solid fa-pen-to-square mr-2"></i>編集
+                  </button>
+                  <button
+                    class="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 transition-colors duration-200 flex items-center gap-2">
+                    <i class="fa-solid fa-check text-sm"></i>
+                    <span>適用する</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-content active" data-tab-content="recommendTheme">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="p-4 bg-gray-50 border-b flex justify-between items-center">
+                  <h3 class="text-lg font-semibold text-gray-800">テーマ名1</h3>
+                  <div class="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">適用中</div>
+                </div>
+                <div class="relative">
+                  <img alt="Theme 1" class="w-full h-48 object-cover"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMh8kBvlYYmePg7h2wMUyZ9ugvCTIPU_868Uh4_ri2n4UlT_LePEDiyEm6HKyXSZLT_V0FYdlXJe9nYBvkOSR4n32TsMg3UJX2oP4ePf1wZdD-QJvIseOuRKFkZBEU2M2EHzi-HGlFOLwkX8xYQfXOvYKDd3TDEZp-95l-XVXKa5QluMenm1qCfW67mIvtWNs03TUeF5_9oh6eh3Lt5590_3wMmDz42sehLfXAqx8fqIEtIrofHsyBh-hd9H5b_ehgXL63bio2ZvY" />
+                </div>
+              </div>
+              <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="p-4 bg-gray-50 border-b">
+                  <h3 class="text-lg font-semibold text-gray-800">テーマ名2</h3>
+                </div>
+                <img alt="Theme 2" class="w-full h-48 object-cover"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCY4GLbR2j9xKUMCsX10SnysAB48GkRcQEJUGBtbZ8qDD-Mgc5ORm0unktvLa0QvUGM3D6_U0trLfAdtxoYfHCCQ5ioq7n9wlMCiew8ZYNzmJx72N0J2XdWvC8nGHNYd-Z_f95_MfRKejW7mDVQkk-845e7HQAaeaJcTNEf2h9C_7op_KuP1nGQi-exxVQXkmk_3noeSOJuFtY5YyKDglduUmoDVa4-BaLA7Y7ijpezdoazJtre9uP9LWDipeNsDGS-BAUv2o_OTH8" />
+              </div>
+              <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="p-4 bg-gray-50 border-b">
+                  <h3 class="text-lg font-semibold text-gray-800">テーマ名3</h3>
+                </div>
+                <img alt="Theme 3" class="w-full h-48 object-cover"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWpaHYQBUYr_ju1Cy3eV6v0MJPP26g8H4JsljV3gmb8xtTMLlOnEEJaq0o9dgm3iS_of5FYM3OdZfv1Tqb20fkJ3IY0S4ACZPRrq7X_78bl1IqqGY7apY7CJmTTCVhI7iXFq27yyWrCpZemLbS3ZWiIJG7kwS_WOg1VByWQQojFIfDEM8s3TKiKxdzXzHozFXiAp8mO2-KI8CFrLgFXJF-D0AP96F6TRM9y0stmQ1tUXVYu0ULiBu2rtvTYF_-ygbQoMi9F7Aoguo" />
+              </div>
+              <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="p-4 bg-gray-50 border-b">
+                  <h3 class="text-lg font-semibold text-gray-800">テーマ名4</h3>
+                </div>
+                <img alt="Theme 4" class="w-full h-48 object-cover"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDADjfb5KHflFJBttJ1bErkrzb6MDIqRzzEx_o36OO3eiQcTQxypoVmVzPsrZtv2SceZAiUEr0Bb7GQ5nvpjPLp5s3Ni6TlpTDy01ecrkJpnyXXipP4XEzHX0_q7CHzhnImru_-nySczTep-07tg-7lXz5bX0_bhnRqLp_mBZPqOcLRF0u3J72IuzjpTPngnZNFIVgLhgYPRCMpRXkJjI9EwVERLQJ3AqJYndqbySlUx1euYcdPtsUttCu4CFIKUdZM9zdnepdD2Gc" />
+              </div>
+              <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="p-4 bg-gray-50 border-b">
+                  <h3 class="text-lg font-semibold text-gray-800">テーマ名5</h3>
+                </div>
+                <img alt="Theme 5" class="w-full h-48 object-cover"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuChlSxAYh1NScuO4kpXL5y53qsZq-P7zembrDmAiiUIZ8FHCMd-gTrHY4lyBNxShGoW3SIpRqRvA_VL7fC4p2KfdhS9G2JB5z8zPZnhJ9u4UKrxgDXb602exDc-gfRI5BK0vX2ZpM3j-ANMfvmovVwdTFZVlD_BsTk2aUHdKPZ72l8CD5pW6UuWCBVrcTe5AvzyDwl_LiwLTjbwIZk9Q4gb45QmbOpirIWKM5pOX4FVVoMFLslNtbvHSvMDSyxcy6S_UVTI9lLV-nY" />
+              </div>
+              <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="p-4 bg-gray-50 border-b">
+                  <h3 class="text-lg font-semibold text-gray-800">テーマ名6</h3>
+                </div>
+                <img alt="Theme 6" class="w-full h-48 object-cover"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5bmUTZYGgBPJf_Lf3FcVQKf-gP_7eBDfhm_8lNyP9y2KvD01WX21uT3zQG0YHpVtS9C_oMggW6H3LXm1HjOPTX5nBEPvql5OwvnSTypTbouf4Qe10GzuMRAStLaQ0NYpyv7BCU4ooOtoDkKw2oUK79zhPt7KcWhIEHRJRtyxw0tzHpccmRzpeGBkwFkYL4dulLE1OUus6ZN_TSckarYZIH0Uv4DIOzVq4Bf7JrN1EDMzKfTfyylwR6vLdyGj2o5B3wEYPvz9J9So" />
+              </div>
+              <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="p-4 bg-gray-50 border-b">
+                  <h3 class="text-lg font-semibold text-gray-800">テーマ名7</h3>
+                </div>
+                <img alt="Theme 7" class="w-full h-48 object-cover"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaeD4PIeUWV93UJW95gLpF3iUpkuG5BlIDiLoigdicEbi6H5yMVYUt0_VEk71lZHD5Vi1R1HWweXgUcpFY09f9qliwx2ciwnq4r2SsZ7eJSUGrCtOYJhZqubTsBA9LFvIgBTOIjZ2cGx8dTkCd-Sowm185xWQdLLVSaC9F02VEFKgzzz8iifbSS7XpurPyMyc6GHAF9hKhSRMYihqLiqMJP0fkWPp7_dIi7XCMmoTTB4Q_4Ob4kkdHgWx3B2sXSEnIsNEJKU75czk" />
+              </div>
+              <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="p-4 bg-gray-50 border-b">
+                  <h3 class="text-lg font-semibold text-gray-800">テーマ名8</h3>
+                </div>
+                <img alt="Theme 8" class="w-full h-48 object-cover"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwCWrU3th8LAwLfc8_21zWWdtI6_oSfWEfOYP_UR3-bQcPzGV3GJPd7cTb1IR8fVYlFznuPZufknn4ya6hQKFH_i3p8-F5x60RHLzJmp4IxvEzwMKLEtkmq8Nwb6pGsH9dFUXW_nrOD9ntF83opLAKQY3vC1m_VdoxUWs5tL2IHGuHDdaUR1RTRrTk08PR1J1IbR_KJxPz1cSEiXfip2V5q_ets_D-q9-sMKwSnHXLMSoJxwopFyf3WuZ7Ysu1Ox4cp21EW-Y9BjA" />
+              </div>
+              <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="p-4 bg-gray-50 border-b">
+                  <h3 class="text-lg font-semibold text-gray-800">テーマ名9</h3>
+                </div>
+                <img alt="Theme 9" class="w-full h-48 object-cover"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRTitnt7_rlUryw8LRnsE85MH4PU_n_ZYadzOyxZFRdfYIqps1lnnwWW4xgJ052WJaIp3kA7810zKaqHJKpFaePHfTJnr5UZWCIcDSGA88ftpalZ23uUPTU6duyHZiNULsFeA7lndjqSW-agq38ByUXFxhE0MnnQK1sZ9CCC5hmcgiQBO7bTfvzzgRYXMH5Jamx_IEUXx4ebsbq6fh419SI9ly9vNYYfX2S65KSkcoYHNYAtLYf4OdfqM6JfyoUdqDhvaJE7F5jsU" />
+              </div>
+            </div>
+          </div>
+
+
+          <div class="tab-content hidden" data-tab-content="allTheme">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <!-- Theme Card 1 -->
+              <div class="card hover:shadow-lg transition-shadow duration-300">
+                <div class="relative">
+                  <img src="https://picsum.photos/seed/five/200/300" alt="Corporate Theme"
+                    class="w-full h-48 object-cover rounded-t-lg">
+                  <div class="absolute top-2 right-2">
+                    <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-1 rounded-full">Active</span>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <h3 class="text-lg font-semibold mb-2">Corporate Theme</h3>
+                  <p class="text-gray-600 text-sm mb-4">Professional business theme with modern design</p>
+                  <div class="flex justify-between items-center">
+                    <button class="text-blue-600 hover:text-blue-800 font-medium text-sm">
+                      Preview
+                    </button>
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700">
+                      Activate
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Theme Card 2 -->
+              <div class="card hover:shadow-lg transition-shadow duration-300">
+                <div class="relative">
+                  <img src="https://picsum.photos/seed/six/200/300" alt="Creative Theme"
+                    class="w-full h-48 object-cover rounded-t-lg">
+                  <div class="absolute top-2 right-2">
+                    <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-1 rounded-full">Inactive</span>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <h3 class="text-lg font-semibold mb-2">Creative Theme</h3>
+                  <p class="text-gray-600 text-sm mb-4">Bold and artistic design for creative agencies</p>
+                  <div class="flex justify-between items-center">
+                    <button class="text-blue-600 hover:text-blue-800 font-medium text-sm">
+                      Preview
+                    </button>
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700">
+                      Activate
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Theme Card 3 -->
+              <div class="card hover:shadow-lg transition-shadow duration-300">
+                <div class="relative">
+                  <img src="https://picsum.photos/seed/nine/200/300" alt="Minimal Theme"
+                    class="w-full h-48 object-cover rounded-t-lg">
+                  <div class="absolute top-2 right-2">
+                    <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-1 rounded-full">Inactive</span>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <h3 class="text-lg font-semibold mb-2">Minimal Theme</h3>
+                  <p class="text-gray-600 text-sm mb-4">Clean and minimalist design approach</p>
+                  <div class="flex justify-between items-center">
+                    <button class="text-blue-600 hover:text-blue-800 font-medium text-sm">
+                      Preview
+                    </button>
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700">
+                      Activate
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="tab-content hidden" data-tab-content="blockTheme">
+            <div class="card hover:shadow-lg transition-shadow duration-300">
+              <div class="relative">
+                <img src="https://picsum.photos/seed/nine/200/300" alt="Minimal Theme"
+                  class="w-full h-48 object-cover rounded-t-lg">
+                <div class="absolute top-2 right-2">
+                  <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-1 rounded-full">Inactive</span>
+                </div>
+              </div>
+              <div class="p-4">
+                <h3 class="text-lg font-semibold mb-2">Minimal Theme</h3>
+                <p class="text-gray-600 text-sm mb-4">Clean and minimalist design approach</p>
+                <div class="flex justify-between items-center">
+                  <button class="text-blue-600 hover:text-blue-800 font-medium text-sm">
+                    Preview
+                  </button>
+                  <button class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700">
+                    Activate
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <!-- Other content sections -->
         <div class="content-section" data-section="announce-list">
@@ -2086,7 +2729,7 @@
           </div>
           <div class="card">
             <div class="flex justify-between items-center mb-6">
-             
+
               <button class="btn-primary px-4 py-2 flex items-center ml-auto">
                 <i class="fa-solid fa-plus mr-2"></i>新規ユーザーを追加
               </button>
