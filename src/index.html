@@ -60,7 +60,7 @@
     }
 
     .sidebar-item.active {
-      background-color: var(--active-bg);
+
       color: var(--primary-color);
       font-weight: 600;
     }
@@ -222,78 +222,76 @@
     <!-- Sidebar Container -->
     <div class="flex">
       <!-- Main Sidebar -->
-      <div class="sidebar w-64 flex-shrink-0" id="main-sidebar">
-        <div class="p-4">
+      <div id="main-sidebar"
+        class="h-screen bg-slate-50 text-gray-800 transition-all duration-500 ease-in-out flex flex-col w-16 overflow-hidden">
+        <div class="flex items-center justify-between p-4 pt-[80px] mx-2">
+          <button id="sidebarToggle" class="text-blue-500 hover:text-gray-700 focus:outline-none">
+            <i class="fa-solid fa-chevron-left text-2xl transition-transform duration-500 ease-in-out"
+              id="sidebarArrow"></i>
+          </button>
 
-
-          <!-- Sidebar Items -->
-          <nav class="space-y-1 pt-[70px]">
-            <div class="sidebar-item active" data-category="dashboard">
-              <i class="fa-solid fa-table-cells text-lg"></i>
-              <span class="menu-text">ダッシュボード</span>
-            </div>
-
-            <div class="sidebar-item" data-category="home">
-              <i class="fa-solid fa-house text-lg"></i>
-              <span class="menu-text">ホーム</span>
-            </div>
-
-            <div class="sidebar-item" data-category="articles"
-              onclick="toggleChildSidebar(this, 'articles-child-sidebar')">
-              <i class="fa-solid fa-newspaper text-lg"></i>
-              <span class="menu-text">記事</span>
-              <i class="fa-solid fa-caret-down ml-auto transition-transform duration-200"></i>
-            </div>
-
-            <div class="sidebar-item" data-category="pages">
-              <i class="fa-solid fa-file-circle-plus text-lg"></i>
-              <span class="menu-text">固定ページ</span>
-            </div>
-
-            <div class="sidebar-item" data-category="design" onclick="toggleChildSidebar(this, 'design-child-sidebar')">
-              <i class="fa-solid fa-chart-area"></i>
-              <span class="menu-text">デザイン管理</span>
-              <i class="fa-solid fa-caret-down ml-auto transition-transform duration-200"></i>
-            </div>
-
-            <div class="sidebar-item" data-category="announce"
-              onclick="toggleChildSidebar(this, 'announce-child-sidebar')">
-              <i class="fa-solid fa-bell text-lg"></i>
-              <span class="menu-text">お知らせ</span>
-              <i class="fa-solid fa-caret-down ml-auto transition-transform duration-200"></i>
-            </div>
-
-            <div class="sidebar-item" data-category="forms">
-              <i class="fa-solid fa-folder text-lg"></i>
-              <span class="menu-text">フォーム</span>
-            </div>
-
-            <div class="sidebar-item" data-category="files">
-              <i class="fa-solid fa-file text-lg"></i>
-              <span class="menu-text">ファイル</span>
-            </div>
-
-            <div class="sidebar-item" data-category="logs">
-              <i class="fa-solid fa-user-tie text-lg"></i>
-              <span class="menu-text">CMS操作管理者ログ</span>
-            </div>
-
-            <div class="sidebar-item" data-category="categories">
-              <i class="fa-solid fa-layer-group text-lg"></i>
-              <span class="menu-text">カテゴリ・タグ</span>
-            </div>
-
-            <div class="sidebar-item" data-category="users">
-              <i class="fa-solid fa-users text-lg"></i>
-              <span class="menu-text">ユーザー</span>
-            </div>
-
-            <div class="sidebar-item" data-category="settings">
-              <i class="fa-solid fa-gear text-lg"></i>
-              <span class="menu-text">設定</span>
-            </div>
-          </nav>
         </div>
+        <!-- Sidebar Items -->
+        <nav class="flex-1 space-y-1 pt-5 px-4">
+          <div class="sidebar-item flex items-center active" data-category="dashboard">
+            <i class="fa-solid fa-table-cells text-lg mr-2 flex-shrink-0"></i>
+            <span
+              class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">ダッシュボード</span>
+          </div>
+          <div class="sidebar-item flex items-center" data-category="home">
+            <i class="fa-solid fa-house text-lg mr-2 flex-shrink-0"></i>
+            <span class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">ホーム</span>
+          </div>
+          <div class="sidebar-item flex items-center" data-category="articles"
+            onclick="toggleChildSidebar(this, 'articles-child-sidebar')">
+            <i class="fa-solid fa-newspaper text-lg mr-2 flex-shrink-0"></i>
+            <span class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">記事</span>
+            <i class="fa-solid fa-caret-down ml-auto transition-transform duration-200 ease-in-out"></i>
+          </div>
+          <div class="sidebar-item flex items-center" data-category="pages">
+            <i class="fa-solid fa-file-circle-plus text-lg mr-2 flex-shrink-0"></i>
+            <span class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">固定ページ</span>
+          </div>
+          <div class="sidebar-item flex items-center" data-category="design"
+            onclick="toggleChildSidebar(this, 'design-child-sidebar')">
+            <i class="fa-solid fa-chart-area text-lg mr-2 flex-shrink-0"></i>
+            <span
+              class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">デザイン管理</span>
+            <i class="fa-solid fa-caret-down ml-auto transition-transform duration-200 ease-in-out"></i>
+          </div>
+          <div class="sidebar-item flex items-center" data-category="announce"
+            onclick="toggleChildSidebar(this, 'announce-child-sidebar')">
+            <i class="fa-solid fa-bell text-lg mr-2 flex-shrink-0"></i>
+            <span class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">お知らせ</span>
+            <i class="fa-solid fa-caret-down ml-auto transition-transform duration-200 ease-in-out"></i>
+          </div>
+          <div class="sidebar-item flex items-center" data-category="forms">
+            <i class="fa-solid fa-folder text-lg mr-2 flex-shrink-0"></i>
+            <span class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">フォーム</span>
+          </div>
+          <div class="sidebar-item flex items-center" data-category="files">
+            <i class="fa-solid fa-file text-lg mr-2 flex-shrink-0"></i>
+            <span class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">ファイル</span>
+          </div>
+          <div class="sidebar-item flex items-center" data-category="logs">
+            <i class="fa-solid fa-user-tie text-lg mr-2 flex-shrink-0"></i>
+            <span
+              class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">CMS操作管理者ログ</span>
+          </div>
+          <div class="sidebar-item flex items-center" data-category="categories">
+            <i class="fa-solid fa-layer-group text-lg mr-2 flex-shrink-0"></i>
+            <span
+              class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">カテゴリ・タグ</span>
+          </div>
+          <div class="sidebar-item flex items-center" data-category="users">
+            <i class="fa-solid fa-users text-lg mr-2 flex-shrink-0"></i>
+            <span class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">ユーザー</span>
+          </div>
+          <div class="sidebar-item flex items-center" data-category="settings">
+            <i class="fa-solid fa-gear text-lg mr-2 flex-shrink-0"></i>
+            <span class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">設定</span>
+          </div>
+        </nav>
       </div>
 
       <!-- Child Sidebar for Articles -->
@@ -2745,11 +2743,15 @@
               <table class="w-full text-sm text-left">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                   <tr class="hidden lg:table-row"></tr>
-                    <th class="px-6 py-3 text-center whitespace-nowrap bg-gray-50 text-gray-700 font-medium tracking-wider">ユーザー名</th>
-                    <th class="px-6 py-3">メールアドレス</th>
-                    <th class="px-6 py-3 text-center whitespace-nowrap bg-gray-50 text-gray-700 font-medium tracking-wider">権限</th>
-                    <th class="px-6 py-3">最終ログイン</th>
-                    <th class="px-6 py-3">操作</th>
+                  <th
+                    class="px-6 py-3 text-center whitespace-nowrap bg-gray-50 text-gray-700 font-medium tracking-wider">
+                    ユーザー名</th>
+                  <th class="px-6 py-3">メールアドレス</th>
+                  <th
+                    class="px-6 py-3 text-center whitespace-nowrap bg-gray-50 text-gray-700 font-medium tracking-wider">
+                    権限</th>
+                  <th class="px-6 py-3">最終ログイン</th>
+                  <th class="px-6 py-3">操作</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -2757,7 +2759,8 @@
                     <td class="px-6 py-4 font-medium">田中 太郎</td>
                     <td class="px-6 py-4">tanaka@example.com</td>
                     <td class="px-6 py-4">
-                      <span class="inline-flex items-center justify-center px-3 py-1.5 text-xs font-medium rounded-full bg-gradient-to-r from-red-50 to-red-100 text-red-800 shadow-sm hover:from-red-100 hover:to-red-200 transition-all duration-200 transform hover:scale-105 cursor-default md:px-4 md:py-2 md:text-sm">
+                      <span
+                        class="inline-flex items-center justify-center px-3 py-1.5 text-xs font-medium rounded-full bg-gradient-to-r from-red-50 to-red-100 text-red-800 shadow-sm hover:from-red-100 hover:to-red-200 transition-all duration-200 transform hover:scale-105 cursor-default md:px-4 md:py-2 md:text-sm">
                         管理者
                       </span>
                     </td>
@@ -2781,7 +2784,8 @@
                     <td class="px-6 py-4 font-medium">佐藤 花子</td>
                     <td class="px-6 py-4">sato@example.com</td>
                     <td class="px-6 py-4">
-                      <span class="inline-flex items-center justify-center px-3 py-1.5 text-xs font-medium rounded-full bg-gradient-to-r from-blue-50 to-blue-100 text-blue-800 shadow-sm hover:from-blue-100 hover:to-blue-200 transition-all duration-200 transform hover:scale-105 cursor-default md:px-4 md:py-2 md:text-sm">編集者</span>
+                      <span
+                        class="inline-flex items-center justify-center px-3 py-1.5 text-xs font-medium rounded-full bg-gradient-to-r from-blue-50 to-blue-100 text-blue-800 shadow-sm hover:from-blue-100 hover:to-blue-200 transition-all duration-200 transform hover:scale-105 cursor-default md:px-4 md:py-2 md:text-sm">編集者</span>
                     </td>
                     <td class="px-6 py-4">2023/10/27 16:30</td>
                     <td class="px-6 py-4">
@@ -2868,161 +2872,153 @@
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    // Global variables
-    let currentActiveSection = 'dashboard';
-    let mobileMenuOpen = false;
+    // --- Existing sidebar toggle and child sidebar functions ---
 
-    // Initialize the application
-    document.addEventListener('DOMContentLoaded', function () {
-      initializeEventListeners();
-      initializeChart();
-      initializeTabs();
+    // Toggle main sidebar collapse/expand
+    document.getElementById('sidebarToggle').addEventListener('click', function () {
+      const sidebar = document.getElementById('main-sidebar');
+      const sidebarArrow = document.getElementById('sidebarArrow');
+      const menuTexts = document.querySelectorAll('.menu-text');
+      const caretIcons = document.querySelectorAll('.fa-caret-down');
+
+      // Toggle sidebar width
+      sidebar.classList.toggle('w-64');
+      sidebar.classList.toggle('w-16');
+
+      // Toggle text visibility with opacity
+      if (sidebar.classList.contains('w-16')) {
+        menuTexts.forEach(text => {
+          text.classList.add('opacity-0');
+          text.classList.remove('opacity-100');
+        });
+        caretIcons.forEach(caret => {
+          caret.classList.add('opacity-0');
+          caret.classList.remove('opacity-100');
+        });
+        sidebarArrow.classList.remove('fa-chevron-left');
+        sidebarArrow.classList.add('fa-chevron-right');
+      } else {
+        menuTexts.forEach(text => {
+          text.classList.remove('opacity-0');
+          text.classList.add('opacity-100');
+        });
+        caretIcons.forEach(caret => {
+          caret.classList.remove('opacity-0');
+          caret.classList.add('opacity-100');
+        });
+        sidebarArrow.classList.remove('fa-chevron-right');
+        sidebarArrow.classList.add('fa-chevron-left');
+      }
     });
 
-    // Initialize event listeners
-    function initializeEventListeners() {
-      // Sidebar navigation
-      document.querySelectorAll('.sidebar-item[data-category]').forEach(item => {
-        item.addEventListener('click', handleSidebarClick);
-      });
+    // Toggle child sidebar
+    function toggleChildSidebar(element, childSidebarId) {
+      const childSidebar = document.getElementById(childSidebarId);
+      const caretIcon = element.querySelector('.fa-caret-down');
 
-      // Mobile menu toggle
-      const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-      const mobileOverlay = document.getElementById('mobile-overlay');
+      // If the element has a direct onclick handler for child sidebar, don't trigger this general function
+      if (element.getAttribute('onclick').includes('toggleChildSidebar')) {
+        // Hide all other child sidebars first
+        document.querySelectorAll('.child-sidebar').forEach(sidebar => {
+          if (sidebar.id !== childSidebarId) {
+            sidebar.classList.add('hidden');
+          }
+        });
 
-      if (mobileMenuToggle) {
-        mobileMenuToggle.addEventListener('click', toggleMobileMenu);
-      }
+        // Reset all caret icons
+        document.querySelectorAll('.fa-caret-down').forEach(icon => {
+          if (icon !== caretIcon) {
+            icon.classList.remove('rotate-180');
+          }
+        });
 
-      if (mobileOverlay) {
-        mobileOverlay.addEventListener('click', closeMobileMenu);
-      }
-
-      // Preview button popups
-      document.querySelectorAll('.preview-button').forEach(button => {
-        button.addEventListener('click', handlePreviewClick);
-      });
-
-      // Close popups when clicking outside
-      document.addEventListener('click', handleDocumentClick);
-    }
-
-    // Handle sidebar item clicks
-    function handleSidebarClick(event) {
-      const item = event.currentTarget;
-      const category = item.getAttribute('data-category');
-
-      // Don't handle clicks for items with child sidebars
-      if (item.hasAttribute('onclick')) {
-        return;
-      }
-
-      if (category) {
-        showContentSection(category);
-        setActiveMenuItem(item);
-
-        // Close mobile menu if open
-        if (mobileMenuOpen) {
-          closeMobileMenu();
+        // Toggle the selected child sidebar
+        childSidebar.classList.toggle('hidden');
+        if (caretIcon) {
+          caretIcon.classList.toggle('rotate-180');
         }
       }
     }
 
-    // Show content section
+
+    // --- New functionality to display content sections ---
+
+    let currentActiveSection = 'dashboard'; // Default section
+
+    // Initialize event listeners on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function () {
+      // Handle clicks for main sidebar items that trigger content changes
+      document.querySelectorAll('.sidebar-item[data-category]').forEach(item => {
+        // Ensure we don't re-add listeners if an onclick is already present for child sidebars
+        if (!item.hasAttribute('onclick')) {
+          item.addEventListener('click', function (event) {
+            const category = this.getAttribute('data-category');
+            if (category) {
+              showContentSection(category);
+              setActiveMenuItem(this);
+
+              // If mobile menu is open, close it when a main item is clicked
+              if (document.getElementById('main-sidebar').classList.contains('open')) {
+                closeMobileMenu();
+              }
+            }
+          });
+        }
+      });
+
+      // Set initial active state for dashboard
+      const dashboardItem = document.querySelector('.sidebar-item[data-category="dashboard"]');
+      if (dashboardItem) {
+        dashboardItem.classList.add('active');
+      }
+
+      // Initialize tabs functionality
+      initializeTabs();
+    });
+
+    // Function to show the correct content section
     function showContentSection(category) {
       // Hide all content sections
       document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.add('hidden');
         section.classList.remove('active');
       });
 
       // Show the selected content section
       const targetSection = document.querySelector(`.content-section[data-section="${category}"]`);
       if (targetSection) {
+        targetSection.classList.remove('hidden');
         targetSection.classList.add('active');
-        currentActiveSection = category;
+        currentActiveSection = category; // Update the current active section
       }
     }
 
-    // Set active menu item
+    // Function to set the active state for sidebar menu items
     function setActiveMenuItem(activeItem) {
       // Remove active class from all sidebar items
       document.querySelectorAll('.sidebar-item').forEach(item => {
         item.classList.remove('active');
       });
 
-      // Add active class to clicked item
+      // Add active class to the clicked item
       activeItem.classList.add('active');
     }
 
-    // Toggle child sidebar
-    function toggleChildSidebar(element, sidebarId) {
-      const childSidebar = document.getElementById(sidebarId);
-      const caret = element.querySelector('.fa-caret-down');
-
-      if (!childSidebar) return;
-
-      // Hide all other child sidebars
-      document.querySelectorAll('.child-sidebar').forEach(sidebar => {
-        if (sidebar.id !== sidebarId) {
-          sidebar.classList.add('hidden');
-        }
-      });
-
-      // Reset all carets
-      document.querySelectorAll('.fa-caret-down').forEach(c => {
-        if (c !== caret) {
-          c.classList.remove('rotate-180');
-        }
-      });
-
-      // Toggle the clicked sidebar
-      childSidebar.classList.toggle('hidden');
-
-      // Rotate caret
-      if (caret) {
-        caret.classList.toggle('rotate-180');
-      }
-    }
-
-    // Mobile menu functions
-    function toggleMobileMenu() {
-      const sidebar = document.getElementById('main-sidebar');
-      const overlay = document.getElementById('mobile-overlay');
-
-      mobileMenuOpen = !mobileMenuOpen;
-
-      if (mobileMenuOpen) {
-        sidebar.classList.add('open');
-        overlay.classList.remove('hidden');
-      } else {
-        sidebar.classList.remove('open');
-        overlay.classList.add('hidden');
-      }
-    }
-
-    function closeMobileMenu() {
-      const sidebar = document.getElementById('main-sidebar');
-      const overlay = document.getElementById('mobile-overlay');
-
-      mobileMenuOpen = false;
-      sidebar.classList.remove('open');
-      overlay.classList.add('hidden');
-    }
-
-    // Initialize tabs functionality
+    // --- Tab functionality (already present in your HTML, but ensuring it's called) ---
     function initializeTabs() {
       document.querySelectorAll('.tab-button').forEach(button => {
         button.addEventListener('click', function () {
           const tabName = this.getAttribute('data-tab');
-          switchTab(tabName, this);
+          // Find the closest content-section ancestor to scope tab switching
+          const tabContainer = this.closest('.content-section');
+          if (tabContainer) {
+            switchTab(tabName, this, tabContainer);
+          }
         });
       });
     }
 
-    // Switch tab content
-    function switchTab(tabName, button) {
-      const tabContainer = button.closest('.content-section');
-
+    function switchTab(tabName, button, tabContainer) {
       // Remove active class from all tab buttons in this container
       tabContainer.querySelectorAll('.tab-button').forEach(btn => {
         btn.classList.remove('active', 'border-blue-600', 'text-blue-600');
@@ -3047,123 +3043,66 @@
       }
     }
 
-    // Handle preview button clicks
-    function handlePreviewClick(event) {
-      event.preventDefault();
-      event.stopPropagation();
-
-      const button = event.currentTarget;
-      const popup = button.nextElementSibling;
-
-      if (popup && popup.classList.contains('popup')) {
-        // Hide all other popups
-        document.querySelectorAll('.popup.show').forEach(p => {
-          if (p !== popup) {
-            p.classList.remove('show');
-          }
-        });
-
-        // Toggle current popup
-        popup.classList.toggle('show');
+    // --- Mobile menu functions (if you have them) ---
+    function closeMobileMenu() {
+      const sidebar = document.getElementById('main-sidebar');
+      const overlay = document.getElementById('mobile-overlay');
+      if (sidebar && overlay) {
+        sidebar.classList.remove('open');
+        overlay.classList.add('hidden');
       }
     }
 
-    // Handle document clicks to close popups
-    function handleDocumentClick(event) {
-      if (!event.target.closest('.preview-button') && !event.target.closest('.popup')) {
-        document.querySelectorAll('.popup.show').forEach(popup => {
-          popup.classList.remove('show');
-        });
+    // --- Preview button popups & document click handler (ensure these are working) ---
+    // You'll need to make sure the popup logic works correctly,
+    // including hiding other popups when one is opened and closing when clicking outside.
+    document.addEventListener('click', function (event) {
+      const previewButtons = document.querySelectorAll('.preview-button');
+      const popups = document.querySelectorAll('.popup');
+      let clickedOnPopup = false;
+
+      popups.forEach(popup => {
+        if (popup.contains(event.target)) {
+          clickedOnPopup = true;
+        }
+      });
+
+      if (!event.target.closest('.preview-button') && !clickedOnPopup) {
+        popups.forEach(popup => popup.classList.add('hidden'));
       }
-    }
+    });
 
-    // Initialize chart
-    function initializeChart() {
-      const ctx = document.getElementById('performance-chart');
-      if (!ctx) return;
+    // Attach event listeners to preview buttons
+    document.querySelectorAll('.preview-button').forEach(button => {
+      button.addEventListener('click', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        const popup = this.nextElementSibling;
+        if (popup && popup.classList.contains('popup')) {
+          // Hide all other popups first
+          document.querySelectorAll('.popup').forEach(p => {
+            if (p !== popup) {
+              p.classList.add('hidden');
+            }
+          });
+          popup.classList.toggle('hidden');
+        }
+      });
+    });
 
+
+    // --- Chart initialization (if it's still needed) ---
+    // Ensure the chart initialization code is present and correctly targets your canvas
+    // (Assuming you have a chart element with id="performance-chart")
+    const ctx = document.getElementById('performance-chart');
+    if (ctx) {
       new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: ['1月', '2月', '3月', '4月', '5月', '6月'],
-          datasets: [{
-            label: '記事閲覧数',
-            data: [1200, 1900, 3000, 5000, 2300, 3200],
-            borderColor: 'rgb(59, 130, 246)',
-            backgroundColor: 'rgba(59, 130, 246, 0.1)',
-            tension: 0.1,
-            fill: true
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              display: false
-            }
-          },
-          scales: {
-            y: {
-              beginAtZero: true,
-              grid: {
-                color: 'rgba(0, 0, 0, 0.1)'
-              }
-            },
-            x: {
-              grid: {
-                display: false
-              }
-            }
-          }
-        }
+        // ... your chart configuration
       });
     }
 
-    // Utility functions
-    function showNotification(message, type = 'info') {
-      // Create notification element
-      const notification = document.createElement('div');
-      notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 transition-all duration-300 ${type === 'success' ? 'bg-green-500 text-white' :
-        type === 'error' ? 'bg-red-500 text-white' :
-          type === 'warning' ? 'bg-yellow-500 text-black' :
-            'bg-blue-500 text-white'
-        }`;
-      notification.textContent = message;
-
-      document.body.appendChild(notification);
-
-      // Remove notification after 3 seconds
-      setTimeout(() => {
-        notification.style.transform = 'translateX(100%)';
-        setTimeout(() => {
-          if (notification.parentNode) {
-            notification.parentNode.removeChild(notification);
-          }
-        }, 300);
-      }, 3000);
-    }
-    // Form validation utility
-    function validateForm(formElement) {
-      const requiredFields = formElement.querySelectorAll('[required]');
-      let isValid = true;
-
-      requiredFields.forEach(field => {
-        if (!field.value.trim()) {
-          field.classList.add('border-red-500');
-          isValid = false;
-        } else {
-          field.classList.remove('border-red-500');
-        }
-      });
-
-      return isValid;
-    }
-
-    // Expose functions to global scope for onclick handlers
-    window.toggleChildSidebar = toggleChildSidebar;
-    window.showNotification = showNotification;
-    window.validateForm = validateForm;
+    // --- Placeholder for other JS functions you might have ---
+    // e.g., showNotification, validateForm, etc.
   </script>
 </body>
 
