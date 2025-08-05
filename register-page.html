@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body class="min-h-screen bg-gray-100 flex items-center justify-center py-6 sm:py-12 px-4 sm:px-6 lg:px-8">
+  <div class="w-full max-w-md sm:max-w-2xl space-y-6 bg-white p-6 sm:p-8 rounded-xl shadow-lg">
+    <div>
+      <h2 class="text-center text-2xl sm:text-3xl font-extrabold text-gray-900">Create your account</h2>
+      <p class="mt-2 text-center text-sm text-gray-600">
+        Already have an account? 
+        <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Log in to your account</a>
+      </p>
+    </div>
+    <div class="mt-6 space-y-6">
+      <button id="google-signup" class="group relative w-full flex justify-center py-2 px-4 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/>
+        </svg>
+        Sign up with Google
+      </button>
+      <div class="relative">
+        <div class="absolute inset-0 flex items-center">
+          <div class="w-full border-t border-gray-300"></div>
+        </div>
+        <div class="relative flex justify-center text-sm">
+          <span class="px-2 bg-white text-gray-500">Or continue with</span>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+        <div class="space-y-4">
+          <div>
+            <label for="full-name" class="block text-sm font-medium text-gray-700">Full Name</label>
+            <input
+              id="full-name"
+              name="full-name"
+              type="text"
+              required
+              class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              placeholder="Full Name"
+            />
+          </div>
+          <div>
+            <label for="company-name" class="block text-sm font-medium text-gray-700">Company Name (Optional)</label>
+            <input
+              id="company-name"
+              name="company-name"
+              type="text"
+              class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              placeholder="Company Name"
+            />
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700">Work Email</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              placeholder="Work Email"
+            />
+          </div>
+          <div>
+            <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number (Optional)</label>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              placeholder="Phone Number"
+            />
+          </div>
+        </div>
+        <div class="space-y-4">
+          <div>
+            <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
+            <select
+              id="country"
+              name="country"
+              required
+              class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            >
+              <option value="" disabled selected>Select your country</option>
+              <option value="US">United States</option>
+              <option value="CA">Canada</option>
+              <option value="GB">United Kingdom</option>
+              <option value="AU">Australia</option>
+              <option value="IN">India</option>
+              <option value="JP">Japan</option>
+            </select>
+          </div>
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              required
+              class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              placeholder="Password"
+            />
+          </div>
+          <div>
+            <label for="repeat-password" class="block text-sm font-medium text-gray-700">Repeat Password</label>
+            <input
+              id="repeat-password"
+              name="repeat-password"
+              type="password"
+              required
+              class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              placeholder="Repeat Password"
+            />
+          </div>
+          <div class="flex items-center">
+            <input
+              id="business-account"
+              name="business-account"
+              type="checkbox"
+              class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+            />
+            <label for="business-account" class="ml-2 block text-sm text-gray-900">
+              Register as a Business Account
+            </label>
+          </div>
+          <div class="flex items-center space-x-2">
+            <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center">
+        <input
+          id="terms"
+          name="terms"
+          type="checkbox"
+          class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+        />
+        <label for="terms" class="ml-2 block text-sm text-gray-900">
+          I agree to the 
+          <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Terms of Service</a> 
+          and 
+          <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Privacy Policy</a>
+        </label>
+      </div>
+      <div class="flex justify-between items-center">
+        <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Forgot Password?</a>
+      </div>
+      <div>
+        <button
+          id="submit-btn"
+          class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          Create Account
+        </button>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.getElementById('google-signup').addEventListener('click', () => {
+      alert('Google Sign-Up clicked!'); // Placeholder for Google OAuth
+    });
+
+    document.getElementById('submit-btn').addEventListener('click', (e) => {
+      e.preventDefault();
+      const fullName = document.getElementById('full-name').value;
+      const companyName = document.getElementById('company-name').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const country = document.getElementById('country').value;
+      const password = document.getElementById('password').value;
+      const repeatPassword = document.getElementById('repeat-password').value;
+      const terms = document.getElementById('terms').checked;
+      const isBusinessAccount = document.getElementById('business-account').checked;
+      const recaptchaResponse = grecaptcha.getResponse();
+
+      if (!fullName || !email || !password || !repeatPassword || !country) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+
+      if (!terms) {
+        alert('You must agree to the Terms of Service and Privacy Policy.');
+        return;
+      }
+
+      if (!recaptchaResponse) {
+        alert('Please complete the reCAPTCHA verification.');
+        return;
+      }
+
+      // Basic email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+
+      // Password match validation
+      if (password !== repeatPassword) {
+        alert('Passwords do not match.');
+        return;
+      }
+
+      // Basic phone number validation (if provided)
+      if (phone) {
+        const phoneRegex = /^\+?[\d\s-]{8,}$/;
+        if (!phoneRegex.test(phone)) {
+          alert('Please enter a valid phone number.');
+          return;
+        }
+      }
+
+      // Placeholder for form submission logic
+      alert(`Registration submitted successfully! ${isBusinessAccount ? 'Business Account' : 'Personal Account'}${companyName ? ' for ' + companyName : ''} from ${country}`);
+    });
+  </script>
+</body>
+</html>

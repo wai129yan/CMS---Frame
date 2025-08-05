@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Subscription payment page for business services">
+    <title>Enhanced Subscription Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    
+</head>
+
+<body class="bg-gradient-to-br from-gray-700 to-gray-500 text-white flex items-center justify-center min-h-screen p-4">
+    <main class="flex flex-col md:flex-row w-full max-w-6xl p-6 space-y-8 md:space-y-0 md:space-x-8">
+        <!-- Left Section: Subscription Details -->
+        <section
+            class="bg-gray-800 bg-opacity-90 p-8 rounded-xl shadow-2xl w-full md:w-1/2 ">
+            <p class="text-purple-400 text-sm font-medium mb-4">
+                Get support: <a href="tel:+08001114306" class="hover:text-purple-300 transition"
+                    aria-label="Contact support">0800-111-4306</a>
+            </p>
+            <h1 class="text-3xl md:text-4xl font-bold text-white mb-6">Get Back to Business for ¥150/mo</h1>
+            <ul class="space-y-4 text-white font-semibold">
+                <li class="flex items-center  border-purple-400/20 pb-3">
+                    <span class="w-3 h-3 bg-purple-400 rounded-full mr-3 shadow-lg shadow-purple-400/50 "></span>
+                    Aug 3, 2025 - Free trial ended
+                </li>
+                <li class="flex items-center border-b border-purple-400/20 pb-3">
+                    <span class="text-green-400 font-medium animate-pulse">Good news</span>
+                    <span class="ml-2">— we saved your progress!</span>
+                </li>
+                <li class="flex items-center border-purple-400/20 pb-3">
+                    <span class="w-3 h-3 bg-purple-400 rounded-full mr-3 shadow-lg shadow-purple-400/50"></span>
+                    Today - <span class="line-through text-gray-500">¥4,850</span>
+                    <span class="ml-2 font-bold text-white">¥150/mo</span>
+                    <span class="ml-2">for 6 months</span>
+                </li>
+                <li class="flex items-center border-b border-purple-400/20 pb-3">
+                    That's <span class="text-green-400 font-bold ml-2 animate-pulse">96% off</span>
+                </li>
+                <li class="flex items-center">
+                    <span class="w-3 h-3 bg-purple-400 rounded-full mr-3 shadow-lg shadow-purple-400/50"></span>
+                    No commitment, cancel anytime
+                </li>
+            </ul>
+        </section>
+
+        <!-- Right Section: Payment Form -->
+        <section
+            class="bg-white bg-opacity-95 p-8 rounded-xl shadow-2xl w-full md:w-1/2 text-gray-800">
+            <div class="flex justify-between items-center mb-6">
+                <p class="text-blue-600 font-semibold">💰 $20 USD Domain Discount</p>
+            </div>
+            <form class="space-y-6" id="payment-form" novalidate>
+                <!-- Payment Method Selection -->
+                <fieldset>
+                    <legend class="sr-only">Payment Method</legend>
+                    <label class="flex items-center cursor-pointer">
+                        <input type="radio" name="payment-method" value="card"
+                            class="mr-3 text-blue-600 focus:ring-2 focus:ring-blue-500" checked
+                            aria-label="Credit or debit card">
+                        <span class="font-medium">Credit or debit card</span>
+                        <div class="ml-4 flex space-x-2">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa"
+                                class="h-6 card-icon" loading="lazy">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
+                                alt="Mastercard" class="h-6 card-icon" loading="lazy">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg"
+                                alt="American Express" class="h-6 card-icon" loading="lazy">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/40/JCB_logo.svg" alt="JCB"
+                                class="h-6 card-icon" loading="lazy">
+                        </div>
+                    </label>
+                </fieldset>
+
+                <!-- Form Inputs -->
+                <div class="flex space-x-4">
+                    <input type="text" placeholder="First name" required
+                        class="border border-gray-300 rounded-lg p-3 w-1/2 focus:outline-none focus:ring-2 focus:ring-purple-500 input-focus"
+                        aria-label="First name">
+                    <input type="text" placeholder="Last name" required
+                        class="border border-gray-300 rounded-lg p-3 w-1/2 focus:outline-none focus:ring-2 focus:ring-purple-500 input-focus"
+                        aria-label="Last name">
+                </div>
+                <input type="text" placeholder="Card number" required pattern="[0-9]{13,19}"
+                    class="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-purple-500 input-focus"
+                    aria-label="Card number">
+                <div class="flex space-x-4">
+                    <input type="text" placeholder="MM/YY" required pattern="(0[1-9]|1[0-2])\/([0-9]{2})"
+                        class="border border-gray-300 rounded-lg p-3 w-1/3 focus:outline-none focus:ring-2 focus:ring-purple-500 input-focus"
+                        aria-label="Expiration date">
+                    <input type="text" placeholder="CVV" required pattern="[0-9]{3,4}"
+                        class="border border-gray-300 rounded-lg p-3 w-1/3 focus:outline-none focus:ring-2 focus:ring-purple-500 input-focus"
+                        aria-label="CVV code">
+                    <input type="text" placeholder="Postal Code" required pattern="[0-9]{3}-?[0-9]{4}"
+                        class="border border-gray-300 rounded-lg p-3 w-1/3 focus:outline-none focus:ring-2 focus:ring-purple-500 input-focus"
+                        aria-label="Postal code">
+                </div>
+                <select required
+                    class="border border-gray-300 rounded-lg p-3 w-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 input-focus"
+                    aria-label="Country">
+                    <option value="" disabled selected>Select country</option>
+                    <option value="JP">Japan</option>
+                    <option value="other">Other</option>
+                </select>
+                <input type="text" placeholder="Address" required
+                    class="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-purple-500 input-focus"
+                    aria-label="Address">
+                <input type="text" placeholder="Apartment, suite, etc (optional)"
+                    class="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-purple-500 input-focus"
+                    id="apartment-input" aria-label="Apartment or suite">
+
+                <!-- Additional Payment Methods -->
+                <button type="button" onclick="toggleBankOptions()"
+                    class="text-blue-600 mt-2 inline-block font-medium hover:text-blue-700 transition focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    aria-expanded="false" aria-controls="bankOptions">
+                    Add Payment Method
+                </button>
+                <div id="bankOptions" class="hidden mt-4">
+                    <div class="flex justify-between items-center">
+                        <!-- PayPal Option -->
+                        <div class="flex items-center p-3">
+                            <input type="radio" name="payment-method" value="paypal"
+                                class="mr-2 text-blue-600 focus:ring-2 focus:ring-blue-500" aria-label="PayPal">
+                            <span class="font-medium">PayPal</span>
+                            <span class="bg-blue-100 text-sm px-3 py-1.5 ml-2 rounded-full">
+                                Bill in USD
+                            </span>
+                        </div>
+
+                        <!-- Japanese Banks Group -->
+                        <div class="flex items-center space-x-2">
+                            <img src="https://cdn.shopify.com/shopifycloud/admin-ui-foundations/payment-icons/a9ff3.svg"
+                                alt="Sumitomo Mitsui Banking Corporation" class="payment-icon border-base size-base">
+                            <img src="https://cdn.shopify.com/shopifycloud/admin-ui-foundations/payment-icons/022bd.svg"
+                                alt="Mitsubishi UFJ Financial Group" class="payment-icon border-base size-base">
+                            <img src="https://cdn.shopify.com/shopifycloud/admin-ui-foundations/payment-icons/94b0f.svg"
+                                alt="Mizuho Bank" class="payment-icon border-base size-base">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit"
+                    class="bg-gradient-to-r from-purple-600 to-blue-600 text-white w-full py-3 rounded-lg font-bold hover:from-purple-700 hover:to-blue-700 gradient-button transition duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    aria-label="Subscribe">
+                    Subscribe for ¥150 JPY
+                </button>
+                <p class="text-sm text-gray-500 mt-4">Plus applicable taxes. Renews Jan 31, 2026 on Basic plan ¥4,850/mo
+                </p>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        // Toggle additional payment options
+        function toggleBankOptions() {
+            const bankOptions = document.getElementById('bankOptions');
+            const button = document.querySelector('button[onclick="toggleBankOptions()"]');
+            bankOptions.classList.toggle('hidden');
+            button.setAttribute('aria-expanded', !bankOptions.classList.contains('hidden'));
+        }
+
+        // Basic form validation
+        document.getElementById('payment-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const form = event.target;
+            if (form.checkValidity()) {
+                alert('Form submitted successfully!'); // Replace with actual submission logic
+            } else {
+                form.reportValidity();
+            }
+        });
+    </script>
+</body>
+
+</html>
