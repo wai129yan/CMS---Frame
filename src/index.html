@@ -214,6 +214,14 @@
     .rotate-180 {
       transform: rotate(180deg);
     }
+
+    .modal {
+      display: none;
+    }
+
+    .modal.hidden {
+      display: none;
+    }
   </style>
 </head>
 
@@ -375,7 +383,6 @@
         <nav class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <!-- Logo/Title -->
           <div class="flex items-center space-x-3">
-
             <a href="#" class="flex items-center space-x-3">
               <h1 class="text-2xl font-bold text-[var(--text-color)]">OUTWARD</h1>
             </a>
@@ -390,14 +397,23 @@
               <span class="text-sm font-medium">お知らせ</span>
             </a>
             <!-- User Profile -->
-            <div class="flex items-center gap-3 mr-4">
-              <div class="w-10 h-10 bg-[var(--border-color)] rounded-full flex items-center justify-center">
-                <i class="fa-solid fa-user text-[var(--text-color)]"></i>
+            <div id="user-section" class="relative">
+              <div id="profile-dropdown" class="flex items-center gap-3 cursor-pointer">
+                <div class="w-10 h-10 bg-[var(--border-color)] rounded-full flex items-center justify-center">
+                  <i class="fa-solid fa-user text-[var(--text-color)]"></i>
+                </div>
+                <span class="text-sm font-semibold text-[var(--text-color)]">田中 太郎 (プロ)</span>
+                <i class="fa-solid fa-chevron-down ml-2 text-gray-500"></i>
               </div>
-              <span class="text-sm font-semibold text-[var(--text-color)]">田中 太郎 (プロ)</span>
+              <!-- Dropdown Menu -->
+              <div id="dropdown-menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                <a href="#" id="profile-link"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">プロフィール設定</a>
+                <a id="logout-btn" href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">ログアウト</a>
+              </div>
             </div>
-            <!-- Get Started Button -->
           </div>
+        </nav>
       </header>
 
       <!-- Add margin-top to offset fixed header -->
@@ -2870,6 +2886,280 @@
   <!-- Mobile Menu Overlay -->
   <div id="mobile-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden md:hidden"></div>
 
+  <!-- CMS User Profile Settings Modal -->
+  <div id="profile-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between p-6 border-b">
+        <h2 class="text-2xl font-bold text-gray-800">CMS ユーザープロフィール設定</h2>
+        <button id="close-profile-modal" class="text-gray-400 hover:text-gray-600">
+          <i class="fa-solid fa-times text-xl"></i>
+        </button>
+      </div>
+
+      <div class="p-6">
+        <form id="profile-form" class="space-y-8">
+          <!-- Basic Information Section -->
+          <div class="bg-gray-50 p-6 rounded-lg">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+              <i class="fa-solid fa-user mr-2 text-blue-600"></i>
+              基本情報
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">ユーザー名 *</label>
+                <input type="text" id="username"
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  value="田中 太郎" required>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">ユーザーID *</label>
+                <input type="text" id="user-id"
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  value="tanaka_taro" required>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">メールアドレス *</label>
+                <input type="email" id="email"
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  value="tanaka@example.com" required>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">電話番号</label>
+                <input type="tel" id="phone"
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  value="090-1234-5678">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">部署</label>
+                <input type="text" id="department"
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  value="マーケティング部">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">役職</label>
+                <input type="text" id="position"
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  value="マネージャー">
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile Picture Section -->
+          <div class="bg-gray-50 p-6 rounded-lg">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+              <i class="fa-solid fa-image mr-2 text-green-600"></i>
+              プロフィール画像
+            </h3>
+            <div class="flex items-center space-x-6">
+              <div class="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-user text-3xl text-gray-400"></i>
+              </div>
+              <div>
+                <button type="button"
+                  class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">
+                  画像をアップロード
+                </button>
+                <p class="text-sm text-gray-500 mt-2">JPG, PNG形式 (最大2MB)</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Security Settings Section -->
+          <div class="bg-gray-50 p-6 rounded-lg">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+              <i class="fa-solid fa-shield-alt mr-2 text-red-600"></i>
+              セキュリティ設定
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">現在のパスワード</label>
+                <input type="password" id="current-password"
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">新しいパスワード</label>
+                <input type="password" id="new-password"
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">パスワード確認</label>
+                <input type="password" id="confirm-password"
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">二段階認証</label>
+                <div class="flex items-center">
+                  <input type="checkbox" id="two-factor" class="mr-2">
+                  <span class="text-sm text-gray-600">二段階認証を有効にする</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Role and Permissions Section -->
+          <div class="bg-gray-50 p-6 rounded-lg">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+              <i class="fa-solid fa-user-shield mr-2 text-purple-600"></i>
+              権限・ロール設定
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">ユーザーロール</label>
+                <select id="user-role"
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  <option value="admin">管理者</option>
+                  <option value="editor" selected>編集者</option>
+                  <option value="author">投稿者</option>
+                  <option value="contributor">寄稿者</option>
+                  <option value="subscriber">購読者</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">アクセスレベル</label>
+                <select id="access-level"
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  <option value="full">フルアクセス</option>
+                  <option value="limited" selected>制限付きアクセス</option>
+                  <option value="read-only">読み取り専用</option>
+                </select>
+              </div>
+            </div>
+            <div class="mt-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">特別権限</label>
+              <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2" checked>
+                  <span class="text-sm">記事作成</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2" checked>
+                  <span class="text-sm">記事編集</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2">
+                  <span class="text-sm">記事削除</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2" checked>
+                  <span class="text-sm">メディア管理</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2">
+                  <span class="text-sm">ユーザー管理</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2">
+                  <span class="text-sm">システム設定</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Preferences Section -->
+          <div class="bg-gray-50 p-6 rounded-lg">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+              <i class="fa-solid fa-cog mr-2 text-orange-600"></i>
+              環境設定
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">言語設定</label>
+                <select id="language"
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  <option value="ja" selected>日本語</option>
+                  <option value="en">English</option>
+                  <option value="ko">한국어</option>
+                  <option value="zh">中文</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">タイムゾーン</label>
+                <select id="timezone"
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  <option value="Asia/Tokyo" selected>Asia/Tokyo (JST)</option>
+                  <option value="UTC">UTC</option>
+                  <option value="America/New_York">America/New_York (EST)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">エディタテーマ</label>
+                <select id="editor-theme"
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  <option value="light" selected>ライト</option>
+                  <option value="dark">ダーク</option>
+                  <option value="auto">自動</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">通知設定</label>
+                <div class="space-y-2">
+                  <label class="flex items-center">
+                    <input type="checkbox" class="mr-2" checked>
+                    <span class="text-sm">メール通知</span>
+                  </label>
+                  <label class="flex items-center">
+                    <input type="checkbox" class="mr-2" checked>
+                    <span class="text-sm">ブラウザ通知</span>
+                  </label>
+                  <label class="flex items-center">
+                    <input type="checkbox" class="mr-2">
+                    <span class="text-sm">SMS通知</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Account Information Section -->
+          <div class="bg-gray-50 p-6 rounded-lg">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+              <i class="fa-solid fa-info-circle mr-2 text-blue-600"></i>
+              アカウント情報
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">アカウント作成日</label>
+                <input type="text" class="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-100"
+                  value="2023年4月15日" readonly>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">最終ログイン</label>
+                <input type="text" class="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-100"
+                  value="2024年1月15日 14:30" readonly>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">ログイン回数</label>
+                <input type="text" class="w-full border border-gray-300 rounded-md px-3 py-2 bg-gray-100" value="1,247回"
+                  readonly>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">アカウント状態</label>
+                <span
+                  class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                  <i class="fa-solid fa-check-circle mr-1"></i>
+                  アクティブ
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex justify-end space-x-4 pt-6 border-t">
+            <button type="button" id="cancel-profile"
+              class="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors">
+              キャンセル
+            </button>
+            <button type="button" id="save-profile"
+              class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+              <i class="fa-solid fa-save mr-2"></i>
+              変更を保存
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     // --- Existing sidebar toggle and child sidebar functions ---
@@ -3101,8 +3391,117 @@
       });
     }
 
-    // --- Placeholder for other JS functions you might have ---
-    // e.g., showNotification, validateForm, etc.
+    // Initialize user profile dropdown
+    function initUserProfile() {
+      const profileDropdown = document.getElementById('profile-dropdown');
+      const dropdownMenu = document.getElementById('dropdown-menu');
+      const profileLink = document.getElementById('profile-link');
+      const profileModal = document.getElementById('profile-modal');
+      const closeProfileModal = document.getElementById('close-profile-modal');
+      const cancelProfile = document.getElementById('cancel-profile');
+      const saveProfile = document.getElementById('save-profile');
+
+      profileDropdown.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdownMenu.classList.toggle('hidden');
+      });
+
+      // Open profile modal
+      profileLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        dropdownMenu.classList.add('hidden');
+        profileModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      });
+
+      // Close profile modal
+      function closeModal() {
+        profileModal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+      }
+
+      closeProfileModal.addEventListener('click', closeModal);
+      cancelProfile.addEventListener('click', closeModal);
+
+      // Close modal when clicking outside
+      profileModal.addEventListener('click', (e) => {
+        if (e.target === profileModal) {
+          closeModal();
+        }
+      });
+
+      // Save profile changes
+      saveProfile.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // Validate required fields
+        const username = document.getElementById('username').value;
+        const userId = document.getElementById('user-id').value;
+        const email = document.getElementById('email').value;
+
+        if (!username || !userId || !email) {
+          alert('必須項目を入力してください。');
+          return;
+        }
+
+        // Validate password if changing
+        const newPassword = document.getElementById('new-password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+
+        if (newPassword && newPassword !== confirmPassword) {
+          alert('新しいパスワードと確認パスワードが一致しません。');
+          return;
+        }
+
+        // Simulate saving (replace with actual API call)
+        const formData = {
+          username: username,
+          userId: userId,
+          email: email,
+          phone: document.getElementById('phone').value,
+          department: document.getElementById('department').value,
+          position: document.getElementById('position').value,
+          role: document.getElementById('user-role').value,
+          accessLevel: document.getElementById('access-level').value,
+          language: document.getElementById('language').value,
+          timezone: document.getElementById('timezone').value,
+          editorTheme: document.getElementById('editor-theme').value
+        };
+
+        console.log('Saving profile data:', formData);
+
+        // Show success message
+        alert('プロフィールが正常に更新されました。');
+
+        // Update the header display name
+        const headerName = document.querySelector('#profile-dropdown span');
+        if (headerName) {
+          headerName.textContent = `${username} (${document.getElementById('user-role').value === 'admin' ? '管理者' : 'エディター'})`;
+        }
+
+        closeModal();
+      });
+
+      document.getElementById('logout-btn').addEventListener('click', () => {
+        if (confirm('ログアウトしますか？')) {
+          // Add real logout logic here
+          alert('ログアウトしました');
+          // window.location.href = '/login';
+        }
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!document.getElementById('user-section').contains(e.target)) {
+          dropdownMenu.classList.add('hidden');
+        }
+      });
+    }
+
+    // Profile modal handlers
+    document.addEventListener('DOMContentLoaded', function () {
+      initUserProfile();
+    });
   </script>
 </body>
 
