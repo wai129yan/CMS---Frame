@@ -18,13 +18,20 @@
       --secondary-color: #f1f5f9;
       --text-color: #1e293b;
       --secondary-text: #c5c8cc;
-      --sidebar-bg: #f8fafc;
+      --sidebar-bg: #eafbf94b;
       --card-bg: #ffffff;
       --border-color: #e2e8f0;
-      --hover-bg: #f1f5f9;
+      --hover-bg: rgba(223, 228, 226, 0.918);
       --active-bg: #e2e8f0;
       --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       --graph-line: #8aafee;
+      /* Add consistent spacing variables */
+      --spacing-xs: 0.25rem;  
+      --spacing-sm: 0.5rem;   
+      --spacing-md: 1rem;  
+      --spacing-lg: 1.5rem;   
+      --spacing-xl: 2rem;   
+      --spacing-2xl: 3rem;   
     }
 
     body {
@@ -32,26 +39,72 @@
       background-color: var(--secondary-color);
       color: var(--text-color);
       margin: 0;
+      padding: 0;
       overflow-x: hidden;
     }
 
-    /* Sidebar Styles */
+    /* Sidebar Styles - Enhanced for better icon visibility */
     .sidebar {
       background-color: var(--sidebar-bg);
       min-height: 100vh;
       transition: all 0.3s ease;
       border-right: 1px solid var(--border-color);
+      padding: 0;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     }
 
     .sidebar-item {
       cursor: pointer;
-      padding: 12px 16px;
+      padding: var(--spacing-md);
       border-radius: 8px;
       transition: all 0.3s ease;
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 4px;
+      gap: var(--spacing-md);
+      margin: var(--spacing-xs) var(--spacing-md);
+      position: relative;
+      justify-content: flex-start;
+    }
+
+    /* Enhanced styling for collapsed sidebar */
+    .sidebar.w-16 .sidebar-item {
+      justify-content: center;
+      padding: var(--spacing-md) 0; /* Remove horizontal padding */
+      margin: var(--spacing-xs) 0; /* Remove horizontal margin */
+      width: 100%;
+      position: relative;
+    }
+
+    /* Fix icon positioning and remove margins when collapsed */
+    .sidebar.w-16 .sidebar-item i:first-child {
+      margin-right: 0 !important;
+      font-size: 1.5rem !important; /* Larger icons when collapsed */
+      color: var(--text-color);
+      opacity: 1 !important;
+      position: static;
+    }
+
+    /* Completely hide text and caret icons when collapsed */
+    .sidebar.w-16 .menu-text {
+      display: none !important;
+    }
+
+    .sidebar.w-16 .fa-caret-down,
+    .sidebar.w-16 .fa-caret-right {
+      display: none !important;
+    }
+
+    /* Ensure proper flex layout for collapsed sidebar items */
+    .sidebar.w-16 .sidebar-item {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      flex-direction: row !important;
+    }
+
+    /* Remove any conflicting margins from flex items */
+    .sidebar.w-16 .sidebar-item > * {
+      margin: 0 !important;
     }
 
     .sidebar-item:hover {
@@ -60,28 +113,82 @@
     }
 
     .sidebar-item.active {
-
+      background-color: var(--active-bg);
       color: var(--primary-color);
       font-weight: 600;
     }
 
-    /* Child sidebar styling */
+    .sidebar-item.active i {
+      color: var(--primary-color);
+    }
+
+    /* Enhanced tooltip positioning */
+    .sidebar.w-16 .sidebar-item:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      left: calc(100% + 12px); /* More space from sidebar */
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      white-space: nowrap;
+      z-index: 1000;
+      opacity: 0;
+      animation: fadeInTooltip 0.2s ease forwards;
+      pointer-events: none;
+    }
+
+    /* Add arrow to tooltip */
+    .sidebar.w-16 .sidebar-item:hover::before {
+      content: '';
+      position: absolute;
+      left: calc(100% + 6px);
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      border-right: 6px solid rgba(0, 0, 0, 0.8);
+      z-index: 1001;
+      opacity: 0;
+      animation: fadeInTooltip 0.2s ease forwards;
+    }
+
+    @keyframes fadeInTooltip {
+      from {
+        opacity: 0;
+        transform: translateY(-50%) translateX(-5px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(-50%) translateX(0);
+      }
+    }
+
+    /* Child sidebar styling - Fixed spacing */
     .child-sidebar {
       background-color: #e2e8f0;
       border-right: 1px solid var(--border-color);
       min-height: 100vh;
+      padding: 0; /* Remove default padding */
     }
 
     .child-sidebar .sidebar-item {
       font-size: 0.875rem;
-      padding: 10px 12px;
+      padding: var(--spacing-sm) var(--spacing-md);
+      margin: var(--spacing-xs) var(--spacing-sm);
     }
 
-    /* Content section styles */
+    /* Content section styles - Consistent padding */
     .content-section {
       display: none;
       opacity: 0;
       transition: opacity 0.3s ease;
+      padding: var(--spacing-xl);
     }
 
     .content-section.active {
@@ -113,14 +220,14 @@
       color: var(--primary-color) !important;
     }
 
-    /* Card styles */
+    /* Card styles - Consistent spacing */
     .card {
       background-color: var(--card-bg);
       border-radius: 1rem;
-      padding: 2rem;
+      padding: var(--spacing-xl);
       box-shadow: var(--shadow);
       transition: transform 0.2s ease;
-      margin-bottom: 1.5rem;
+      margin-bottom: var(--spacing-lg);
     }
 
     .card:hover {
@@ -141,43 +248,52 @@
       transform: translateY(0);
     }
 
-    /* Header styles */
+    /* Header styles - Fixed positioning */
     header {
       background-color: var(--card-bg);
       border-bottom: 1px solid var(--border-color);
-      /* padding: 1rem 2rem; */
+      padding: var(--spacing-md) var(--spacing-xl);
       box-shadow: var(--shadow);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      height: 70px; /* Fixed height */
     }
 
-    /* Button styles */
+    /* Button styles - Fixed spacing */
     .btn-primary {
       background-color: var(--primary-color);
       color: white;
-      /* padding: 0.5rem 1rem; */
+      padding: var(--spacing-sm) var(--spacing-md);
       border-radius: 0.5rem;
       border: none;
       cursor: pointer;
       transition: background-color 0.2s ease;
+      margin: var(--spacing-xs);
     }
 
     .btn-primary:hover {
       background-color: #2563eb;
     }
 
-    /* Table styles */
+    /* Table styles - Fixed spacing */
     .table-container {
       overflow-x: auto;
       border-radius: 0.5rem;
       border: 1px solid var(--border-color);
+      margin: var(--spacing-md) 0;
     }
 
-    /* Responsive styles */
+    /* Responsive styles - Fixed mobile spacing */
     @media (max-width: 768px) {
       .sidebar {
         width: 100%;
         position: fixed;
         z-index: 50;
         transform: translateX(-100%);
+        padding: var(--spacing-md); /* Add mobile padding */
       }
 
       .sidebar.open {
@@ -189,10 +305,26 @@
         top: 0;
         left: 100%;
         width: 100%;
+        padding: var(--spacing-md);
       }
 
       .main-content {
         margin-left: 0;
+        padding: var(--spacing-md);
+        padding-top: 90px;
+      }
+
+      .content-section {
+        padding: var(--spacing-md);
+      }
+
+      .card {
+        padding: var(--spacing-lg);
+        margin-bottom: var(--spacing-md);
+      }
+
+      header {
+        padding: var(--spacing-sm) var(--spacing-md);
       }
     }
 
@@ -222,6 +354,35 @@
     .modal.hidden {
       display: none;
     }
+
+    /* Spacing utilities */
+    .p-xs { padding: var(--spacing-xs); }
+    .p-sm { padding: var(--spacing-sm); }
+    .p-md { padding: var(--spacing-md); }
+    .p-lg { padding: var(--spacing-lg); }
+    .p-xl { padding: var(--spacing-xl); }
+    .p-2xl { padding: var(--spacing-2xl); }
+
+    .m-xs { margin: var(--spacing-xs); }
+    .m-sm { margin: var(--spacing-sm); }
+    .m-md { margin: var(--spacing-md); }
+    .m-lg { margin: var(--spacing-lg); }
+    .m-xl { margin: var(--spacing-xl); }
+    .m-2xl { margin: var(--spacing-2xl); }
+
+    /* Responsive spacing */
+    @media (max-width: 768px) {
+      .mobile-p-sm { padding: var(--spacing-sm); }
+      .mobile-p-md { padding: var(--spacing-md); }
+      .mobile-m-sm { margin: var(--spacing-sm); }
+      .mobile-m-md { margin: var(--spacing-md); }
+    }
+
+    /* Fix for content overlap */
+    .content-wrapper {
+      padding-top: 90px;
+      min-height: calc(100vh - 90px);
+    }
   </style>
 </head>
 
@@ -231,8 +392,8 @@
     <div class="flex">
       <!-- Main Sidebar -->
       <div id="main-sidebar"
-        class="h-screen bg-slate-50 text-gray-800 transition-all duration-500 ease-in-out flex flex-col w-16 overflow-hidden">
-        <div class="flex items-center justify-between p-4 pt-[80px] mx-2">
+        class="sidebar h-screen bg-slate-50 text-gray-800 transition-all duration-500 ease-in-out flex flex-col w-16 overflow-hidden">
+        <div class="flex items-center justify-between p-4 pt-20 mx-2">
           <button id="sidebarToggle" class="text-blue-500 hover:text-gray-700 focus:outline-none">
             <i class="fa-solid fa-chevron-left text-2xl transition-transform duration-500 ease-in-out"
               id="sidebarArrow"></i>
@@ -241,61 +402,63 @@
         </div>
         <!-- Sidebar Items -->
         <nav class="flex-1 space-y-1 pt-5 px-4">
-          <div class="sidebar-item flex items-center active" data-category="dashboard">
+          <div class="sidebar-item flex items-center active" data-category="dashboard" data-tooltip="ダッシュボード">
             <i class="fa-solid fa-table-cells text-lg mr-2 flex-shrink-0"></i>
-            <span
-              class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">ダッシュボード</span>
+            <span class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">ダッシュボード</span>
           </div>
-          <div class="sidebar-item flex items-center" data-category="home">
-            <i class="fa-solid fa-house text-lg mr-2 flex-shrink-0"></i>
-            <span class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">ホーム</span>
-          </div>
-          <div class="sidebar-item flex items-center" data-category="articles"
+          
+          <div class="sidebar-item flex items-center" data-category="articles" data-tooltip="記事"
             onclick="toggleChildSidebar(this, 'articles-child-sidebar')">
             <i class="fa-solid fa-newspaper text-lg mr-2 flex-shrink-0"></i>
             <span class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">記事</span>
             <i class="fa-solid fa-caret-down ml-auto transition-transform duration-200 ease-in-out"></i>
           </div>
-          <div class="sidebar-item flex items-center" data-category="pages">
+          
+          <div class="sidebar-item flex items-center" data-category="pages" data-tooltip="固定ページ">
             <i class="fa-solid fa-file-circle-plus text-lg mr-2 flex-shrink-0"></i>
             <span class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">固定ページ</span>
           </div>
-          <div class="sidebar-item flex items-center" data-category="design"
+          
+          <div class="sidebar-item flex items-center" data-category="design" data-tooltip="デザイン管理"
             onclick="toggleChildSidebar(this, 'design-child-sidebar')">
             <i class="fa-solid fa-chart-area text-lg mr-2 flex-shrink-0"></i>
-            <span
-              class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">デザイン管理</span>
+            <span class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">デザイン管理</span>
             <i class="fa-solid fa-caret-down ml-auto transition-transform duration-200 ease-in-out"></i>
           </div>
-          <div class="sidebar-item flex items-center" data-category="announce"
+          
+          <div class="sidebar-item flex items-center" data-category="announce" data-tooltip="お知らせ"
             onclick="toggleChildSidebar(this, 'announce-child-sidebar')">
             <i class="fa-solid fa-bell text-lg mr-2 flex-shrink-0"></i>
             <span class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">お知らせ</span>
             <i class="fa-solid fa-caret-down ml-auto transition-transform duration-200 ease-in-out"></i>
           </div>
-          <div class="sidebar-item flex items-center" data-category="forms">
+          
+          <div class="sidebar-item flex items-center" data-category="forms" data-tooltip="フォーム">
             <i class="fa-solid fa-folder text-lg mr-2 flex-shrink-0"></i>
             <span class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">フォーム</span>
           </div>
-          <div class="sidebar-item flex items-center" data-category="files">
+          
+          <div class="sidebar-item flex items-center" data-category="files" data-tooltip="ファイル">
             <i class="fa-solid fa-file text-lg mr-2 flex-shrink-0"></i>
             <span class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">ファイル</span>
           </div>
-          <div class="sidebar-item flex items-center" data-category="logs">
+          
+          <!-- <div class="sidebar-item flex items-center" data-category="logs" data-tooltip="CMS操作管理者ログ">
             <i class="fa-solid fa-user-tie text-lg mr-2 flex-shrink-0"></i>
-            <span
-              class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">CMS操作管理者ログ</span>
-          </div>
-          <div class="sidebar-item flex items-center" data-category="categories">
+            <span class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">CMS操作管理者ログ</span>
+          </div> -->
+          
+          <div class="sidebar-item flex items-center" data-category="categories" data-tooltip="カテゴリ・タグ">
             <i class="fa-solid fa-layer-group text-lg mr-2 flex-shrink-0"></i>
-            <span
-              class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">カテゴリ・タグ</span>
+            <span class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">カテゴリ・タグ</span>
           </div>
-          <div class="sidebar-item flex items-center" data-category="users">
+          
+          <div class="sidebar-item flex items-center" data-category="users" data-tooltip="ユーザー">
             <i class="fa-solid fa-users text-lg mr-2 flex-shrink-0"></i>
             <span class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">ユーザー</span>
           </div>
-          <div class="sidebar-item flex items-center" data-category="settings">
+          
+          <div class="sidebar-item flex items-center" data-category="settings" data-tooltip="設定">
             <i class="fa-solid fa-gear text-lg mr-2 flex-shrink-0"></i>
             <span class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">設定</span>
           </div>
@@ -376,7 +539,7 @@
     </div>
 
     <!-- Main Content -->
-    <div class="flex-1">
+    <div class="flex-1 main-content">
       <!-- Header -->
       <header
         class="fixed top-0 left-0 right-0 z-50 bg-[var(--card-bg)] border-b border-[var(--border-color)] shadow-[var(--shadow)]">
@@ -416,11 +579,8 @@
         </nav>
       </header>
 
-      <!-- Add margin-top to offset fixed header -->
-      <div class="mt-20"></div>
-
-      <!-- Content Area -->
-      <main class="p-6">
+      <!-- Content Area with proper spacing -->
+      <main class="p-6" style="padding-top: 90px; min-height: calc(100vh - 90px);">
         <!-- Dashboard Content -->
         <div class="content-section active" data-section="dashboard">
           <div class="flex items-center gap-4 mb-6">
@@ -448,6 +608,7 @@
 
           <div class="card">
             <h3 class="text-lg font-semibold text-gray-800 mb-4">記事パフォーマンス</h3>
+            <h1 class="font-semibold text-4xl text-red-800 mb-4">Please keep it like this; we will use it later.</h1>
             <div class="chart-container">
               <canvas id="performance-chart"></canvas>
             </div>
@@ -505,7 +666,7 @@
           </div>
         </div>
         <!-- Home Content -->
-        <div class="content-section" data-section="home">
+        <!-- <div class="content-section" data-section="home">
           <div class="flex items-center gap-4 mb-6">
             <h1 class="text-3xl font-bold text-gray-800">ホーム</h1>
             <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">サイトのホーム画面</span>
@@ -519,7 +680,7 @@
               <span>ホームページを編集</span>
             </button>
           </div>
-        </div>
+        </div> -->
 
         <!-- Article List Content -->
         <div class="content-section" data-section="article-list">
@@ -2719,10 +2880,11 @@
           </div>
           <div class="card">
             <p>ファイルの管理を行います。</p>
+             <h1 class="font-semibold text-4xl text-red-800 mb-4">Please keep it like this; we will use it later.</h1>
           </div>
         </div>
 
-        <div class="content-section" data-section="logs">
+        <!-- <div class="content-section" data-section="logs">
           <div class="flex items-center gap-4 mb-6">
             <h1 class="text-3xl font-bold text-gray-800">CMS操作管理者ログ</h1>
             <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">CMSの管理</span>
@@ -2730,7 +2892,7 @@
           <div class="card">
             <p>管理者の操作ログを確認します。</p>
           </div>
-        </div>
+        </div> -->
 
 
         <div class="content-section" data-section="categories">
@@ -3164,68 +3326,99 @@
   <script>
     // --- Existing sidebar toggle and child sidebar functions ---
 
-    // Toggle main sidebar collapse/expand
-    document.getElementById('sidebarToggle').addEventListener('click', function () {
+    function sidebarToggle() {
       const sidebar = document.getElementById('main-sidebar');
-      const sidebarArrow = document.getElementById('sidebarArrow');
+      const arrow = document.getElementById('sidebarArrow');
       const menuTexts = document.querySelectorAll('.menu-text');
-      const caretIcons = document.querySelectorAll('.fa-caret-down');
+      const caretIcons = document.querySelectorAll('.fa-caret-down, .fa-caret-right');
+      const mainIcons = document.querySelectorAll('.sidebar-item i:first-child');
 
-      // Toggle sidebar width
-      sidebar.classList.toggle('w-64');
-      sidebar.classList.toggle('w-16');
-
-      // Toggle text visibility with opacity
       if (sidebar.classList.contains('w-16')) {
-        menuTexts.forEach(text => {
-          text.classList.add('opacity-0');
-          text.classList.remove('opacity-100');
-        });
-        caretIcons.forEach(caret => {
-          caret.classList.add('opacity-0');
-          caret.classList.remove('opacity-100');
-        });
-        sidebarArrow.classList.remove('fa-chevron-left');
-        sidebarArrow.classList.add('fa-chevron-right');
+        // Expand sidebar
+        sidebar.classList.remove('w-16');
+        sidebar.classList.add('w-64');
+        arrow.style.transform = 'rotate(0deg)';
+        
+        // Show menu texts with animation
+        setTimeout(() => {
+          menuTexts.forEach(text => {
+            text.classList.remove('opacity-0');
+            text.classList.add('opacity-100');
+          });
+          
+          // Show caret icons
+          caretIcons.forEach(icon => {
+            icon.style.display = 'block';
+          });
+        }, 150);
+        
       } else {
+        // Collapse sidebar
+        sidebar.classList.remove('w-64');
+        sidebar.classList.add('w-16');
+        arrow.style.transform = 'rotate(180deg)';
+        
+        // Hide menu texts immediately
         menuTexts.forEach(text => {
-          text.classList.remove('opacity-0');
-          text.classList.add('opacity-100');
+          text.classList.remove('opacity-100');
+          text.classList.add('opacity-0');
         });
-        caretIcons.forEach(caret => {
-          caret.classList.remove('opacity-0');
-          caret.classList.add('opacity-100');
+        
+        // Hide caret icons immediately
+        caretIcons.forEach(icon => {
+          icon.style.display = 'none';
         });
-        sidebarArrow.classList.remove('fa-chevron-right');
-        sidebarArrow.classList.add('fa-chevron-left');
+        
+        // Hide any open child sidebars
+        const childSidebars = document.querySelectorAll('.child-sidebar');
+        childSidebars.forEach(child => {
+          child.classList.add('hidden');
+        });
       }
-    });
+    }
+
+    // Toggle main sidebar collapse/expand
+    document.getElementById('sidebarToggle').addEventListener('click', sidebarToggle);
 
     // Toggle child sidebar
     function toggleChildSidebar(element, childSidebarId) {
       const childSidebar = document.getElementById(childSidebarId);
-      const caretIcon = element.querySelector('.fa-caret-down');
+      const caretIcon = element.querySelector('.fa-caret-down, .fa-caret-right');
 
-      // If the element has a direct onclick handler for child sidebar, don't trigger this general function
-      if (element.getAttribute('onclick').includes('toggleChildSidebar')) {
-        // Hide all other child sidebars first
-        document.querySelectorAll('.child-sidebar').forEach(sidebar => {
-          if (sidebar.id !== childSidebarId) {
-            sidebar.classList.add('hidden');
-          }
-        });
+      // Hide all other child sidebars first
+      document.querySelectorAll('.child-sidebar').forEach(sidebar => {
+        if (sidebar.id !== childSidebarId) {
+          sidebar.classList.add('hidden');
+        }
+      });
 
-        // Reset all caret icons
-        document.querySelectorAll('.fa-caret-down').forEach(icon => {
-          if (icon !== caretIcon) {
-            icon.classList.remove('rotate-180');
-          }
-        });
+      // Reset all other caret icons to down position
+      document.querySelectorAll('.sidebar-item .fa-caret-down, .sidebar-item .fa-caret-right').forEach(icon => {
+        if (icon !== caretIcon) {
+          icon.classList.remove('fa-caret-right');
+          icon.classList.add('fa-caret-down');
+          icon.classList.remove('rotate-180'); // Remove any existing rotation
+        }
+      });
 
-        // Toggle the selected child sidebar
-        childSidebar.classList.toggle('hidden');
+      // Toggle the selected child sidebar
+      const isCurrentlyHidden = childSidebar.classList.contains('hidden');
+      
+      if (isCurrentlyHidden) {
+        // Show the child sidebar and change caret to right
+        childSidebar.classList.remove('hidden');
         if (caretIcon) {
-          caretIcon.classList.toggle('rotate-180');
+          caretIcon.classList.remove('fa-caret-down');
+          caretIcon.classList.add('fa-caret-right');
+          caretIcon.classList.remove('rotate-180'); // Remove any rotation
+        }
+      } else {
+        // Hide the child sidebar and change caret back to down
+        childSidebar.classList.add('hidden');
+        if (caretIcon) {
+          caretIcon.classList.remove('fa-caret-right');
+          caretIcon.classList.add('fa-caret-down');
+          caretIcon.classList.remove('rotate-180'); // Remove any rotation
         }
       }
     }
