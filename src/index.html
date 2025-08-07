@@ -43,6 +43,213 @@
       overflow-x: hidden;
     }
 
+    /* Login Modal Styles */
+    .login-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-modal.show {
+      display: flex;
+    }
+
+    .login-container {
+      background-color: var(--card-bg);
+      border-radius: 1rem;
+      padding: var(--spacing-2xl);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      width: 100%;
+      max-width: 400px;
+      margin: var(--spacing-md);
+      position: relative;
+    }
+
+    .login-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--secondary-text);
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+      transition: all 0.2s ease;
+    }
+
+    .login-close:hover {
+      color: var(--text-color);
+      background-color: var(--border-color);
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .logo h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary-color);
+      margin: 0;
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .logo p {
+      color: var(--secondary-text);
+      font-size: 0.875rem;
+      margin: 0;
+    }
+
+    .form-group {
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 500;
+      color: var(--text-color);
+      margin-bottom: var(--spacing-sm);
+      font-size: 0.875rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.75rem var(--spacing-md);
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+      background-color: #ffffff;
+      box-sizing: border-box;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .form-input::placeholder {
+      color: var(--secondary-text);
+    }
+
+    .password-container {
+      position: relative;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--secondary-text);
+      cursor: pointer;
+      padding: 0;
+      font-size: 1rem;
+    }
+
+    .password-toggle:hover {
+      color: var(--text-color);
+    }
+
+    .login-btn {
+      width: 100%;
+      background: var(--primary-gradient);
+      color: white;
+      padding: 0.75rem var(--spacing-md);
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .login-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-btn:active {
+      transform: translateY(0);
+    }
+
+    .login-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .forgot-password {
+      text-align: center;
+      margin-top: var(--spacing-md);
+    }
+
+    .forgot-password a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .forgot-password a:hover {
+      text-decoration: underline;
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .remember-me input[type="checkbox"] {
+      width: 1rem;
+      height: 1rem;
+      accent-color: var(--primary-color);
+    }
+
+    .remember-me label {
+      font-size: 0.875rem;
+      color: var(--text-color);
+      cursor: pointer;
+    }
+
+    .error-message {
+      background-color: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #dc2626;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      margin-bottom: var(--spacing-lg);
+      display: none;
+    }
+
+    .success-message {
+      background-color: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #16a34a;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      margin-bottom: var(--spacing-lg);
+      display: none;
+    }
+
     /* Sidebar Styles - Enhanced for better icon visibility */
     .sidebar {
       background-color: var(--sidebar-bg);
@@ -334,6 +541,15 @@
       header {
         padding: var(--spacing-sm) var(--spacing-md);
       }
+
+      .login-container {
+        padding: var(--spacing-xl);
+        margin: var(--spacing-sm);
+      }
+
+      .logo h1 {
+        font-size: 1.75rem;
+      }
     }
 
     /* Hidden by default */
@@ -440,6 +656,87 @@
 </head>
 
 <body>
+  <!-- Login Modal -->
+  <div id="login-modal" class="login-modal">
+    <div class="login-container">
+      <button class="login-close" onclick="closeLoginModal()">
+        <i class="fa-solid fa-times"></i>
+      </button>
+      
+      <!-- Logo and Title -->
+      <div class="logo">
+        <h1>OUTWARD</h1>
+        <p>CMS管理画面にログイン</p>
+      </div>
+
+      <!-- Error/Success Messages -->
+      <div id="error-message" class="error-message">
+        <i class="fa-solid fa-exclamation-circle"></i>
+        <span id="error-text">ログインに失敗しました。</span>
+      </div>
+
+      <div id="success-message" class="success-message">
+        <i class="fa-solid fa-check-circle"></i>
+        <span id="success-text">ログインしています...</span>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login-form">
+        <!-- Email/Username Field -->
+        <div class="form-group">
+          <label for="email" class="form-label">
+            <i class="fa-solid fa-envelope"></i>
+            メールアドレス
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-input"
+            placeholder="example@outward.co.jp"
+            required
+          >
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group">
+          <label for="password" class="form-label">
+            <i class="fa-solid fa-lock"></i>
+            パスワード
+          </label>
+          <div class="password-container">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-input"
+              placeholder="パスワードを入力してください"
+              required
+            >
+            <button type="button" class="password-toggle" onclick="togglePassword()">
+              <i class="fa-solid fa-eye" id="password-icon"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Remember Me -->
+        <div class="remember-me">
+          <input type="checkbox" id="remember" name="remember">
+          <label for="remember">ログイン状態を保持する</label>
+        </div>
+
+        <!-- Login Button -->
+        <button type="submit" class="login-btn">
+          <i class="fa-solid fa-sign-in-alt"></i>
+          ログイン
+        </button>
+      </form>
+
+      <!-- Forgot Password Link -->
+     
+    </div>
+  </div>
+
   <div class="flex min-h-screen">
     <!-- Sidebar Container -->
     <div class="flex">
@@ -628,7 +925,7 @@
               <div id="dropdown-menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
                 <a href="#" id="profile-link"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">プロフィール設定</a>
-                <a id="logout-btn" href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">ログアウト</a>
+                <a id="logout-btn" href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onclick="showLoginModal()">ログアウト</a>
               </div>
             </div>
           </div>
@@ -3547,6 +3844,136 @@
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
+    // Login Modal Functions
+    function showLoginModal() {
+      document.getElementById('login-modal').classList.add('show');
+      hideMessages();
+    }
+
+    function closeLoginModal() {
+      document.getElementById('login-modal').classList.remove('show');
+      hideMessages();
+      // Reset form
+      document.getElementById('login-form').reset();
+    }
+
+    // Toggle password visibility
+    function togglePassword() {
+      const passwordInput = document.getElementById('password');
+      const passwordIcon = document.getElementById('password-icon');
+      
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        passwordIcon.className = 'fa-solid fa-eye-slash';
+      } else {
+        passwordInput.type = 'password';
+        passwordIcon.className = 'fa-solid fa-eye';
+      }
+    }
+    // Show error message
+    function showError(message) {
+      const errorDiv = document.getElementById('error-message');
+      const errorText = document.getElementById('error-text');
+      errorText.textContent = message;
+      errorDiv.style.display = 'block';
+      
+      // Hide success message if visible
+      document.getElementById('success-message').style.display = 'none';
+    }
+
+    // Show success message
+    function showSuccess(message) {
+      const successDiv = document.getElementById('success-message');
+      const successText = document.getElementById('success-text');
+      successText.textContent = message;
+      successDiv.style.display = 'block';
+      
+      // Hide error message if visible
+      document.getElementById('error-message').style.display = 'none';
+    }
+
+    // Hide all messages
+    function hideMessages() {
+      document.getElementById('error-message').style.display = 'none';
+      document.getElementById('success-message').style.display = 'none';
+    }
+
+    // Handle form submission
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const remember = document.getElementById('remember').checked;
+      
+      // Hide previous messages
+      hideMessages();
+      
+      // Basic validation
+      if (!email || !password) {
+        showError('メールアドレスとパスワードを入力してください。');
+        return;
+      }
+      
+      // Show loading state
+      const loginBtn = document.querySelector('.login-btn');
+      const originalText = loginBtn.innerHTML;
+      loginBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ログイン中...';
+      loginBtn.disabled = true;
+      
+      // Simulate login process (replace with actual authentication)
+      setTimeout(() => {
+        // Demo credentials for testing
+        if (email === 'admin@outward.co.jp' && password === 'password123') {
+          showSuccess('ログインに成功しました。ダッシュボードに移動します...');
+          
+          // Close modal and reset form after 2 seconds
+          setTimeout(() => {
+            closeLoginModal();
+            loginBtn.innerHTML = originalText;
+            loginBtn.disabled = false;
+          }, 2000);
+        } else {
+          showError('メールアドレスまたはパスワードが正しくありません。');
+          loginBtn.innerHTML = originalText;
+          loginBtn.disabled = false;
+        }
+      }, 1500);
+    });
+    
+    // Auto-hide messages after 5 seconds
+    function autoHideMessage(elementId) {
+      setTimeout(() => {
+        const element = document.getElementById(elementId);
+        if (element.style.display === 'block') {
+          element.style.display = 'none';
+        }
+      }, 5000);
+    }
+
+    // Add event listeners for auto-hide
+    document.addEventListener('DOMContentLoaded', function() {
+      const errorMessage = document.getElementById('error-message');
+      const successMessage = document.getElementById('success-message');
+      
+      // Observer to auto-hide messages
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+            if (mutation.target.style.display === 'block') {
+              autoHideMessage(mutation.target.id);
+            }
+          }
+        });
+      });
+      
+      observer.observe(errorMessage, { attributes: true });
+      observer.observe(successMessage, { attributes: true });
+
+      // Show login modal on page load for demo
+      // Remove this line in production
+      // showLoginModal();
+    });
     // --- Existing sidebar toggle and child sidebar functions ---
 
     function sidebarToggle() {
