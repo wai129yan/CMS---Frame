@@ -1499,28 +1499,36 @@
                     </table>
                   </div>
                 </div>
-                <div class="flex items-center justify-between p-4 border-t border-gray-200 mt-auto">
-                  <div class="flex items-center space-x-2 text-sm text-gray-700">
-                    <span>表示件数:</span>
-                    <select class="border border-gray-300 rounded-md p-1">
-                      <option value="25">25</option>
-                      <option value="50">50</option>
-                      <option value="100">100</option>
-                    </select>
-                  </div>
-                  <span class="text-sm text-gray-700">
-                    全 <span class="font-semibold text-gray-900">25</span> 件中 <span
-                      class="font-semibold text-gray-900">1-25</span> 件を表示
-                  </span>
-                  <div class="inline-flex -space-x-px rounded-md shadow-sm">
-                    <button
-                      class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">前へ</button>
-                    <button
-                      class="px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300">1</button>
-                    <button
-                      class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">2</button>
-                    <button
-                      class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">次へ</button>
+                <div class="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6">
+                  <div class="flex items-center justify-between w-full">
+                    <div class="text-sm text-gray-700">
+                      全 <span class="font-semibold text-gray-900">50</span> 件中
+                      <span class="font-semibold text-gray-900">1-25</span> 件を表示
+                    </div>
+                    <div class="inline-flex rounded-lg shadow-sm border border-gray-200 bg-white">
+                      <button
+                        class="relative inline-flex items-center px-4 py-2 rounded-l-lg text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 hover:text-gray-700 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                        disabled aria-label="前のページ">
+                        <i class="fas fa-chevron-left mr-2 text-xs"></i>
+                        前へ
+                      </button>
+                      <button
+                        class="relative -ml-px inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-blue-600 hover:bg-blue-700 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                        aria-label="ページ 1" aria-current="page">
+                        1
+                      </button>
+                      <button
+                        class="relative -ml-px inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 hover:text-gray-700 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                        aria-label="ページ 2">
+                        2
+                      </button>
+                      <button
+                        class="relative -ml-px inline-flex items-center px-4 py-2 rounded-r-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 hover:text-gray-700 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                        aria-label="次のページ">
+                        次へ
+                        <i class="fas fa-chevron-right ml-2 text-xs"></i>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1989,12 +1997,25 @@
                 全 <span class="font-semibold text-gray-900">10</span> 件中 <span
                   class="font-semibold text-gray-900">1-5</span> 件を表示
               </span>
-              <div class="inline-flex -space-x-px rounded-md shadow-sm">
-                <button
-                  class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">前へ</button>
-                <button
-                  class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">次へ</button>
-              </div>
+              <div class="inline-flex rounded-lg shadow-sm border border-gray-200 bg-white">
+                  <button
+                    class="relative inline-flex items-center px-4 py-2 rounded-l-lg text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 hover:text-gray-700 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                    disabled aria-label="前のページ">
+                    <i class="fas fa-chevron-left mr-2 text-xs"></i>
+                    前へ
+                  </button>
+                  <button
+                    class="relative -ml-px inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-blue-600 hover:bg-blue-700 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    aria-label="ページ 1" aria-current="page">
+                    1
+                  </button>
+                  <button
+                    class="relative -ml-px inline-flex items-center px-4 py-2 rounded-r-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 hover:text-gray-700 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                    disabled aria-label="次のページ">
+                    次へ
+                    <i class="fas fa-chevron-right ml-2 text-xs"></i>
+                  </button>
+                </div>
             </div>
           </div>
         </div>
@@ -3245,6 +3266,40 @@
               </tr>
             </tbody>
           </table>
+          
+          <!-- Pagination for Users Management -->
+          <div class="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6 mt-4">
+            <div class="flex items-center justify-between w-full">
+              <div class="text-sm text-gray-700">
+                全 <span class="font-semibold text-gray-900">15</span> 件中
+                <span class="font-semibold text-gray-900">1-10</span> 件を表示
+              </div>
+              <div class="inline-flex rounded-lg shadow-sm border border-gray-200 bg-white">
+                <button
+                  class="relative inline-flex items-center px-4 py-2 rounded-l-lg text-sm font-medium text-gray-500 bg-white hover:bg-gray-50 hover:text-gray-700 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                  disabled aria-label="前のページ">
+                  <i class="fas fa-chevron-left mr-2 text-xs"></i>
+                  前へ
+                </button>
+                <button
+                  class="relative -ml-px inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-blue-600 hover:bg-blue-700 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                  aria-label="ページ 1" aria-current="page">
+                  1
+                </button>
+                <button
+                  class="relative -ml-px inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 hover:text-gray-700 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                  aria-label="ページ 2">
+                  2
+                </button>
+                <button
+                  class="relative -ml-px inline-flex items-center px-4 py-2 rounded-r-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 hover:text-gray-700 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                  aria-label="次のページ">
+                  次へ
+                  <i class="fas fa-chevron-right ml-2 text-xs"></i>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="content-section" data-section="settings">
