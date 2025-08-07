@@ -492,6 +492,22 @@
       background-color: #2563eb;
     }
 
+    .btn-secondary {
+      background-color: white;
+      color: var(--primary-color);
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-radius: 0.5rem;
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin: var(--spacing-xs);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--hover-bg);
+      border-color: var(--primary-color);
+    }
+
     /* Table styles - Fixed spacing */
     .table-container {
       overflow-x: auto;
@@ -569,6 +585,15 @@
     /* Rotation utility */
     .rotate-180 {
       transform: rotate(180deg);
+    }
+
+    /* Additional rotation utilities */
+    .rotate-90 {
+      transform: rotate(90deg);
+    }
+
+    .rotate-45 {
+      transform: rotate(45deg);
     }
 
     .modal {
@@ -894,38 +919,49 @@
     <!-- Main Content -->
     <div class="flex-1 main-content">
       <!-- Header -->
-      <header
-        class="fixed top-0 left-0 right-0 z-50 bg-[var(--card-bg)] border-b border-[var(--border-color)] shadow-[var(--shadow)]">
-        <nav class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <header class="fixed top-0 left-0 right-0 z-50 bg-[var(--card-bg)] border-b border-[var(--border-color)] shadow-[var(--shadow)]">
+        <nav class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-6 py-2">
           <!-- Logo/Title -->
-          <div class="flex items-center space-x-3">
-            <a href="#" class="flex items-center space-x-3">
-              <h1 class="text-2xl font-bold text-[var(--text-color)]">OUTWARD</h1>
+          <div class="flex items-center justify-center">
+            <a href="#" class="flex items-center">
+              <h1 class="text-2xl font-bold text-[var(--text-color)] hover:text-[var(--primary-color)] transition-colors duration-200">OUTWARD</h1>
             </a>
           </div>
 
           <!-- Desktop Menu and User Profile -->
-          <div class="flex items-center md:order-2 space-x-3 md:space-x-0">
+          <div class="flex items-center space-x-6 justify-center">
             <!-- Notifications Link -->
-            <a href="#"
-              class="flex items-center gap-2 text-[var(--secondary-text)] hover:text-[var(--primary-color)] transition-colors duration-200 mr-4">
-              <i class="fa-regular fa-bell text-lg"></i>
+            <a href="#" class="flex items-center gap-2 text-[var(--secondary-text)] hover:text-[var(--primary-color)] transition-colors duration-200 group h-full">
+              <div class="relative flex items-center">
+                <i class="fa-regular fa-bell text-lg group-hover:scale-110 transition-transform duration-200"></i>
+                <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+              </div>
               <span class="text-sm font-medium">お知らせ</span>
             </a>
+
             <!-- User Profile -->
-            <div id="user-section" class="relative">
-              <div id="profile-dropdown" class="flex items-center gap-3 cursor-pointer">
-                <div class="w-10 h-10 bg-[var(--border-color)] rounded-full flex items-center justify-center">
+            <div id="user-section" class="relative h-full flex items-center">
+              <div id="profile-dropdown" class="flex items-center gap-4 cursor-pointer hover:opacity-80 transition-opacity duration-200 h-full">
+                <div class="w-10 h-10 bg-[var(--border-color)] rounded-full flex items-center justify-center shadow-sm hover:shadow transition-shadow duration-200">
                   <i class="fa-solid fa-user text-[var(--text-color)]"></i>
                 </div>
-                <span class="text-sm font-semibold text-[var(--text-color)]">田中 太郎 (プロ)</span>
-                <i class="fa-solid fa-chevron-down ml-2 text-gray-500"></i>
+                <div class="flex items-center gap-2">
+                  <span class="text-sm font-semibold text-[var(--text-color)]">田中 太郎 (プロ)</span>
+                  <i class="fa-solid fa-chevron-down text-gray-500 transition-transform duration-200"></i>
+                </div>
               </div>
+
               <!-- Dropdown Menu -->
-              <div id="dropdown-menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-                <a href="#" id="profile-link"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">プロフィール設定</a>
-                <a id="logout-btn" href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onclick="showLoginModal()">ログアウト</a>
+              <div id="dropdown-menu" class="hidden absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-50 border border-gray-100 transform origin-top scale-95 transition-transform duration-200">
+                <a href="#" id="profile-link" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150">
+                  <i class="fa-solid fa-user-gear mr-2"></i>
+                  プロフィール設定
+                </a>
+                <div class="h-px bg-gray-200 my-1"></div>
+                <a id="logout-btn" href="#" class="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors duration-150" onclick="showLoginModal()">
+                  <i class="fa-solid fa-right-from-bracket mr-2"></i>
+                  ログアウト
+                </a>
               </div>
             </div>
           </div>
@@ -1092,13 +1128,92 @@
               <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">記事の一覧と管理</span>
             </div>
             <div class="flex items-center gap-4">
-              <input type="text" placeholder="記事を検索..." class="px-4 py-2 border border-gray-300 rounded-lg">
               <button
                 class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-medium rounded-lg hover:from-blue-700 hover:to-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                 <i class="fa-solid fa-plus mr-2 text-white"></i>
                 <span>記事登録</span>
               </button>
             </div>
+          </div>
+
+          <!-- 詳細検索ボックス -->
+          <div x-data="{ open: false }" class="mb-6"> 
+            <button @click="open = !open" class="flex items-center text-blue-600 font-semibold mb-4 hover:text-blue-700 transition-colors duration-200"> 
+              <span class="material-icons transition-transform duration-200" :class="open ? 'rotate-180' : ''">expand_more</span> 
+              <span class="ml-2">検索</span> 
+            </button> 
+            <div class="p-6 bg-white rounded-lg shadow-md" x-show="open" 
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 transform -translate-y-2"
+                 x-transition:enter-end="opacity-100 transform translate-y-0"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 transform translate-y-0"
+                 x-transition:leave-end="opacity-0 transform -translate-y-2"> 
+              <div class="grid grid-cols-1 md:grid-cols-4 gap-6"> 
+                <div> 
+                  <label class="block text-sm font-medium text-gray-700 mb-2">記事ID</label> 
+                  <input type="text" 
+                         placeholder="例: 000001"
+                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white"> 
+                </div> 
+                <div> 
+                  <label class="block text-sm font-medium text-gray-700 mb-2">キーワード</label> 
+                  <input type="text" 
+                         placeholder="記事タイトルや内容で検索"
+                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white"> 
+                </div> 
+                <div> 
+                  <label class="block text-sm font-medium text-gray-700 mb-2">記事作成者</label> 
+                  <input type="text" 
+                         placeholder="作成者名"
+                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white"> 
+                </div> 
+                <div> 
+                  <label class="block text-sm font-medium text-gray-700 mb-2">メモ</label> 
+                  <input type="text" 
+                         placeholder="メモ内容"
+                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white"> 
+                </div> 
+                <div> 
+                  <label class="block text-sm font-medium text-gray-700 mb-2">カテゴリ・タグ</label> 
+                  <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white"> 
+                    <option value="">すべて</option> 
+                    <option value="column">コラム</option> 
+                    <option value="knowhow">ノウハウ</option> 
+                    <option value="news">ニュース</option> 
+                  </select> 
+                </div> 
+                <div class="col-span-2"> 
+                  <label class="block text-sm font-medium text-gray-700 mb-2">公開日時</label> 
+                  <div class="flex items-center space-x-3"> 
+                    <input type="date" 
+                           class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white"> 
+                    <span class="text-gray-500 font-medium">〜</span> 
+                    <input type="date" 
+                           class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white"> 
+                  </div> 
+                </div> 
+                <div> 
+                  <label class="block text-sm font-medium text-gray-700 mb-2">ソース元</label> 
+                  <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white"> 
+                    <option value="">すべて</option> 
+                    <option value="menu1">メニュー1</option> 
+                    <option value="menu2">メニュー2</option> 
+                    <option value="menu3">メニュー3</option> 
+                  </select> 
+                </div> 
+              </div> 
+              <div class="flex justify-end mt-6 space-x-3"> 
+                <button type="button" 
+                        class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium rounded-lg hover:from-blue-700 hover:to-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                  検索
+                </button> 
+                <button type="button" 
+                        class="px-6 py-3 bg-white border-2 border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 hover:border-gray-400 focus:ring-4 focus:ring-gray-200 focus:outline-none transition-all duration-200">
+                  検索条件を保存する
+                </button> 
+              </div> 
+            </div> 
           </div>
 
           <!-- Tabs -->
@@ -3843,6 +3958,7 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <script>
     // Login Modal Functions
     function showLoginModal() {
