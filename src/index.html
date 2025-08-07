@@ -809,11 +809,6 @@
             <span class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">ファイル</span>
           </div>
 
-          <!-- <div class="sidebar-item flex items-center" data-category="logs" data-tooltip="CMS操作管理者ログ">
-            <i class="fa-solid fa-user-tie text-lg mr-2 flex-shrink-0"></i>
-            <span class="menu-text opacity-0 transition-opacity duration-500 ease-in-out whitespace-nowrap">CMS操作管理者ログ</span>
-          </div> -->
-
           <div class="sidebar-item flex items-center" data-category="categories" data-tooltip="カテゴリ・タグ">
             <i class="fa-solid fa-layer-group text-lg mr-2 flex-shrink-0"></i>
             <span
@@ -850,10 +845,6 @@
               <i class="fa-solid fa-list"></i>
               <span>記事一覧</span>
             </div>
-            <div class="sidebar-item" data-category="article-edit">
-              <i class="fa-solid fa-pen-to-square"></i>
-              <span>記事編集</span>
-            </div>
             <div class="sidebar-item" data-category="article-register">
               <i class="fa-regular fa-address-card"></i>
               <span>記事登録</span>
@@ -879,10 +870,6 @@
             <div class="sidebar-item" data-category="announce-list">
               <i class="fa-solid fa-list"></i>
               <span>一覧</span>
-            </div>
-            <div class="sidebar-item" data-category="announce-edit">
-              <i class="fa-solid fa-pen-to-square"></i>
-              <span>編集</span>
             </div>
             <div class="sidebar-item" data-category="announce-register">
               <i class="fa-regular fa-address-card"></i>
@@ -933,11 +920,11 @@
           </div>
           <nav class="space-y-1">
             <div class="sidebar-item" data-category="pages">
-              <i class="fa-solid fa-list mr-2 text-blue-500"></i>
+              <i class="fa-solid fa-list mr-2"></i>
               <span>ページ一覧</span>
             </div>
             <div class="sidebar-item" data-category="page-register">
-              <i class="fa-solid fa-plus mr-2 text-green-500"></i>
+              <i class="fa-solid fa-plus mr-2"></i>
               <span>ページ登録</span>
             </div>
           </nav>
@@ -1161,7 +1148,6 @@
           <div class="tab-content active" data-tab-content="draft">
             <div class="card">
               <div class="table-container">
-
                 <table class="w-full text-sm text-left border-collapse shadow-lg rounded-lg overflow-hidden">
                   <thead class="text-xs text-gray-700 uppercase bg-gray-100">
                     <tr>
@@ -1201,7 +1187,7 @@
                       <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">2023/10/28 09:00</td>
                       <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center justify-center space-x-3">
-                          <button
+                          <button onclick="editArticleFromRow(this)" data-article-id="0000000444"
                             class="inline-flex items-center px-3 py-1.5 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-all duration-150 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300">
                             <i class="fa-solid fa-pen-to-square text-xs mr-1.5"></i>
                             <span class="text-sm font-medium">編集</span>
@@ -1214,38 +1200,7 @@
                         </div>
                       </td>
                     </tr>
-                    <tr class="bg-white border-b hover:bg-gray-50 transition-colors duration-150">
-                      <td class="px-6 py-4 whitespace-nowrap">
-                        <span
-                          class="inline-flex items-center justify-center px-3 py-1.5 text-xs font-medium rounded-full bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 shadow-sm hover:from-blue-200 hover:to-blue-300 transition-all duration-200 transform hover:scale-105 cursor-default">
-                          編集者
-                        </span>
-                      </td>
-                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">0000000555</td>
-                      <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900 text-center">佐藤 花子</td>
-                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">sato@example.com</td>
-                      <td class="px-6 py-4 whitespace-nowrap text-center">
-                        <span
-                          class="inline-flex items-center justify-center px-3 py-1.5 text-xs font-medium rounded-full bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 shadow-sm hover:from-blue-200 hover:to-blue-300 transition-all duration-200 transform hover:scale-105 cursor-default">
-                          編集者
-                        </span>
-                      </td>
-                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">2023/10/27 16:30</td>
-                      <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="flex items-center justify-center space-x-3">
-                          <button
-                            class="inline-flex items-center px-3 py-1.5 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-all duration-150 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300">
-                            <i class="fa-solid fa-pen-to-square text-xs mr-1.5"></i>
-                            <span class="text-sm font-medium">編集</span>
-                          </button>
-                          <button
-                            class="inline-flex items-center px-3 py-1.5 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-all duration-150 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-300">
-                            <i class="fa-solid fa-trash text-xs mr-1.5"></i>
-                            <span class="text-sm font-medium">削除</span>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
+                   
                   </tbody>
                 </table>
               </div>
@@ -1577,716 +1532,160 @@
         <div class="content-section" data-section="article-edit">
           <div class="flex justify-between items-center mb-8">
             <div class="flex items-center gap-4">
-              <h1 class="text-3xl font-bold text-gray-800">記事編集一覧</h1>
-              <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">編集一覧管理</span>
+              <h1 class="text-3xl font-bold text-gray-800">記事編集</h1>
+              <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">記事の編集</span>
             </div>
             <div class="flex items-center space-x-4">
-              <div class="text-sm">
-                <span class="font-bold">記事 URL:</span>
-                <a class="text-blue-600 hover:underline"
-                  href="https://outward.co.jp/aaa/bbb/">https://outward.co.jp/aaa/bbb/</a>
-              </div>
-              <button
-                class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">一覧</button>
+              <button onclick="showContentSection('article-list')"
+                class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 transition-all duration-200">
+                <i class="fa-solid fa-arrow-left mr-2"></i>
+                一覧へ戻る
+              </button>
             </div>
           </div>
-          <div class="border-b border-gray-200 mb-6">
-            <nav class="flex gap-8 -mb-px">
-              <button class="tab-button px-1 py-4 border-b-2 border-blue-600 text-blue-600 font-semibold active"
-                data-tab="draft">
-                下書き
-              </button>
-              <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600"
-                data-tab="pending">
-                申請中・保留
-              </button>
-              <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600"
-                data-tab="published">
-                公開・非公開
-              </button>
-            </nav>
-          </div>
-          <div>
-            <!-- Tab 1: 下書き -->
-            <div id="edit-tab-draft" role="tabpanel" aria-labelledby="edit-tab-draft-tab">
-              <div class="p-4 border border-gray-100 rounded-lg bg-white shadow">
-                <div class="flex-grow grid grid-cols-3 gap-6">
-                  <div class="col-span-2 bg-white p-6 rounded-lg shadow">
-                    <div class="mb-6">
-                      <label class="block text-sm font-medium text-gray-700 mb-1" for="headline">見出し</label>
-                      <input
-                        class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                        id="headline" type="text" />
-                    </div>
-                    <div class="mb-6">
-                      <label class="block text-sm font-medium text-gray-700 mb-1">本文</label>
-                      <div class="border border-gray-300 rounded-md">
-                        <div class="p-2 bg-gray-50 border-b border-gray-300 flex flex-wrap items-center gap-2">
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded"><span
-                              class="material-icons text-base">format_h2</span></button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded"><span
-                              class="material-icons text-base">format_align_right</span></button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded"><span
-                              class="material-icons text-base">format_align_center</span></button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded"><span
-                              class="material-icons text-base">link</span></button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">NewTabLink</button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded"><span
-                              class="material-icons text-base">format_bold</span></button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">改ページ</button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">キャプション</button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">ルビ</button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">会話（左）</button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">会話（右）</button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">プロフィール</button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">プロフィール詳細</button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">文字サイズ</button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">ルビ（JS）</button>
-                        </div>
-                        <textarea class="w-full h-64 p-4 border-0 focus:ring-0"></textarea>
-                      </div>
-                    </div>
-                    <div class="mb-6">
-                      <label class="block text-sm font-medium text-gray-700 mb-1">写真</label>
-                      <div class="border-2 border-dashed border-gray-300 rounded-md p-6 text-center">
-                        <p class="text-gray-500 mb-2">写真を選択・アップロード</p>
-                        <button
-                          class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">ファイルを開く</button>
-                      </div>
-                    </div>
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700 mb-2">動画タグ</label>
-                      <div class="border border-gray-300 rounded-lg">
-                        <div class="flex border-b" id="video-tag-tabs">
-                          <button class="px-4 py-2 text-sm text-blue-600 border-b-2 border-blue-600 video-tag-tab"
-                            data-target="add-tag">追加</button>
-                        </div>
-                        <div class="p-4 space-y-4 tab-content active" id="add-tag">
-                          <div>
-                            <label class="block text-xs font-medium text-gray-600" for="tag-name">タグ名</label>
-                            <input
-                              class="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                              id="tag-name" type="text" value="movie_1" />
-                          </div>
-                          <div class="flex justify-end space-x-2">
-                            <button
-                              class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">本文中へ挿入</button>
-                            <button
-                              class="px-4 py-2 text-sm font-medium text-red-600 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">削除</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+          
+          <div class="card">
+            <form class="space-y-6">
+              <!-- Basic Information -->
+              <div class="border-b border-gray-200 pb-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                  <i class="fa-solid fa-info-circle mr-2 text-blue-500"></i>
+                  基本情報
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                      <i class="fa-solid fa-heading mr-1 text-gray-500"></i>
+                      記事タイトル <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" id="edit-article-title"
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white"
+                      placeholder="記事タイトルを入力">
                   </div>
-                  <div class="col-span-1 space-y-6">
-                    <div class="bg-white p-6 rounded-lg shadow">
-                      <div class="mb-4">
-                        <p class="text-sm font-medium text-gray-700">フロントの表示状態: <span class="font-normal">非公開</span>
-                        </p>
-                      </div>
-                      <div class="mb-4">
-                        <p class="text-sm font-medium text-gray-700">記事ステータス: <span class="font-normal">編集中</span></p>
-                      </div>
-                      <h3 class="text-lg font-semibold text-gray-800 mb-4">カテゴリ・タグ</h3>
-                      <div
-                        class="border border-gray-300 rounded-md p-4 h-32 cursor-pointer hover:bg-gray-50 flex items-center justify-center">
-                        <span class="text-gray-500">選択してください</span>
-                      </div>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow">
-                      <h3 class="text-lg font-semibold text-gray-800 mb-4">メモ</h3>
-                      <textarea
-                        class="w-full h-24 p-4 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="テキストを入力"></textarea>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                      <button
-                        class="w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700">PC
-                        プレビュー</button>
-                      <button
-                        class="w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700">SPプレビュー</button>
-                    </div>
-                    <div class="flex justify-end">
-                      <button
-                        class="w-1/2 px-4 py-2 text-sm font-medium text-white bg-orange-500 border border-transparent rounded-md shadow-sm hover:bg-orange-600">下書き保存</button>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                      <button
-                        class="w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700">申請中・保留に保存</button>
-                      <button
-                        class="w-full px-4 py-2 text-sm font-medium text-white bg-orange-500 border border-transparent rounded-md shadow-sm hover:bg-orange-600">別記事に保存</button>
-                    </div>
-                    <div class="space-y-4 bg-white p-6 rounded-lg shadow">
-                      <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1" for="publish-start">公開開始日時</label>
-                        <div class="flex items-center space-x-2">
-                          <input
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                            id="publish-start-date" type="date" />
-                          <input
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                            id="publish-start-time" type="time" />
-                        </div>
-                      </div>
-                      <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1" for="publish-end">公開終了日時</label>
-                        <div class="flex items-center space-x-2">
-                          <input
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                            id="publish-end-date" type="date" />
-                          <input
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                            id="publish-end-time" type="time" />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="space-y-4 bg-white p-6 rounded-lg shadow">
-                      <div class="grid grid-cols-2 gap-4">
-                        <div class="space-y-2">
-                          <label class="block text-sm font-medium text-gray-700">PCテンプレート設定</label>
-                          <select
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                            <option>選択してください</option>
-                          </select>
-                        </div>
-                        <div class="space-y-2">
-                          <label class="block text-sm font-medium text-gray-700">SPテンプレート設定</label>
-                          <select
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                            <option>選択してください</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="grid grid-cols-2 gap-4 mt-4">
-                        <div class="space-y-2">
-                          <label class="block text-sm font-medium text-gray-700">PCテンプレート設定</label>
-                          <select
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                            <option>選択してください</option>
-                          </select>
-                        </div>
-                        <div class="space-y-2">
-                          <label class="block text-sm font-medium text-gray-700">SPテンプレート設定</label>
-                          <select
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                            <option>選択してください</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="grid grid-cols-2 gap-4 mt-4">
-                        <div class="space-y-2">
-                          <label class="block text-sm font-medium text-gray-700">PC動画テンプレート設定</label>
-                          <select
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                            <option>選択してください</option>
-                          </select>
-                        </div>
-                        <div class="space-y-2">
-                          <label class="block text-sm font-medium text-gray-700">SP動画テンプレート設定</label>
-                          <select
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                            <option>選択してください</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="space-y-4 bg-white p-6 rounded-lg shadow">
-                      <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1" for="article-author">記事作成者</label>
-                        <input
-                          class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                          id="article-author" type="text" />
-                      </div>
-                      <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1" for="related-articles">関連記事</label>
-                        <a class="text-sm text-blue-600 hover:underline" href="#">記事検索はこちら</a>
-                      </div>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow">
-                      <label class="block text-sm font-medium text-gray-700 mb-1"
-                        for="meta-description">メタdescription設定</label>
-                      <textarea
-                        class="w-full h-24 p-4 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                        id="meta-description"></textarea>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow">
-                      <label class="block text-sm font-medium text-gray-700 mb-2">PDF</label>
-                      <div class="border-2 border-dashed border-gray-300 rounded-md p-6 text-center">
-                        <p class="text-gray-500 mb-2">ファイルを選択・アップロード</p>
-                        <button
-                          class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">ファイルを開く</button>
-                      </div>
-                    </div>
-                    <button
-                      class="w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700">下書き記事の削除</button>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                      <i class="fa-solid fa-user mr-1 text-gray-500"></i>
+                      作成者
+                    </label>
+                    <input type="text" id="edit-article-author"
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white"
+                      placeholder="作成者名">
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                      <i class="fa-solid fa-toggle-on mr-1 text-gray-500"></i>
+                      公開状態
+                    </label>
+                    <select id="edit-article-status"
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white">
+                      <option value="published">公開中</option>
+                      <option value="draft">下書き</option>
+                      <option value="private">非公開</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                      <i class="fa-solid fa-tags mr-1 text-gray-500"></i>
+                      カテゴリ
+                    </label>
+                    <select id="edit-article-category"
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white">
+                      <option value="">選択してください</option>
+                      <option value="column">コラム</option>
+                      <option value="news">お知らせ</option>
+                      <option value="event">イベント</option>
+                    </select>
                   </div>
                 </div>
-
               </div>
-            </div>
-            <!-- Tab 2: 申請中・保留 -->
-            <div id="edit-tab-pending" class="hidden" role="tabpanel" aria-labelledby="edit-tab-pending-tab">
-              <div class="p-4 border border-gray-100 rounded-lg bg-white shadow">
-                <div class="flex-grow grid grid-cols-3 gap-6">
-                  <div class="col-span-2 bg-white p-6 rounded-lg shadow">
-                    <div class="mb-6">
-                      <label class="block text-sm font-medium text-gray-700 mb-1" for="headline">見出し</label>
-                      <input
-                        class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                        id="headline" type="text" />
-                    </div>
-                    <div class="mb-6">
-                      <label class="block text-sm font-medium text-gray-700 mb-1">本文</label>
-                      <div class="border border-gray-300 rounded-md">
-                        <div class="p-2 bg-gray-50 border-b border-gray-300 flex flex-wrap items-center gap-2">
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded"><span
-                              class="material-icons text-base">format_h2</span></button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded"><span
-                              class="material-icons text-base">format_align_right</span></button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded"><span
-                              class="material-icons text-base">format_align_center</span></button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded"><span
-                              class="material-icons text-base">link</span></button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">NewTabLink</button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded"><span
-                              class="material-icons text-base">format_bold</span></button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">改ページ</button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">キャプション</button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">ルビ</button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">会話（左）</button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">会話（右）</button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">プロフィール</button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">プロフィール詳細</button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">文字サイズ</button>
-                          <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">ルビ（JS）</button>
-                        </div>
-                        <textarea class="w-full h-64 p-4 border-0 focus:ring-0"></textarea>
-                      </div>
-                    </div>
-                    <div class="mb-6">
-                      <label class="block text-sm font-medium text-gray-700 mb-1">写真</label>
-                      <div class="border-2 border-dashed border-gray-300 rounded-md p-6 text-center">
-                        <p class="text-gray-500 mb-2">写真を選択・アップロード</p>
-                        <button
-                          class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">ファイルを開く</button>
-                      </div>
-                    </div>
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700 mb-2">動画タグ</label>
-                      <div class="border border-gray-300 rounded-lg">
-                        <div class="flex border-b" id="video-tag-tabs">
-                          <button class="px-4 py-2 text-sm text-blue-600 border-b-2 border-blue-600 video-tag-tab"
-                            data-target="add-tag">追加</button>
-                        </div>
-                        <div class="p-4 space-y-4 tab-content active" id="add-tag">
-                          <div>
-                            <label class="block text-xs font-medium text-gray-600" for="tag-name">タグ名</label>
-                            <input
-                              class="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                              id="tag-name" type="text" value="movie_1" />
-                          </div>
-                          <div class="flex justify-end space-x-2">
-                            <button
-                              class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">本文中へ挿入</button>
-                            <button
-                              class="px-4 py-2 text-sm font-medium text-red-600 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">削除</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+
+              <!-- SEO Settings -->
+              <div class="border-b border-gray-200 pb-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                  <i class="fa-solid fa-search mr-2 text-green-500"></i>
+                  SEO設定
+                </h2>
+                <div class="space-y-4">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                      <i class="fa-solid fa-heading mr-1 text-gray-500"></i>
+                      メタタイトル
+                    </label>
+                    <input type="text" id="edit-article-meta-title"
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white"
+                      placeholder="SEO用のタイトルを入力">
                   </div>
-                  <div class="col-span-1 space-y-6">
-                    <div class="bg-white p-6 rounded-lg shadow">
-                      <div class="mb-4">
-                        <p class="text-sm font-medium text-gray-700">フロントの表示状態: <span class="font-normal">非公開</span>
-                        </p>
-                      </div>
-                      <div class="mb-4">
-                        <p class="text-sm font-medium text-gray-700">記事ステータス: <span class="font-normal">編集完了</span>
-                        </p>
-                      </div>
-                      <h3 class="text-lg font-semibold text-gray-800 mb-4">カテゴリ・タグ</h3>
-                      <div
-                        class="border border-gray-300 rounded-md p-4 h-32 cursor-pointer hover:bg-gray-50 flex items-center justify-center">
-                        <span class="text-gray-500">選択してください</span>
-                      </div>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow">
-                      <h3 class="text-lg font-semibold text-gray-800 mb-4">メモ</h3>
-                      <textarea
-                        class="w-full h-24 p-4 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="テキストを入力"></textarea>
-                    </div>
-                    <div class="space-y-4">
-                      <div class="flex space-x-4">
-                        <button
-                          class="w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700">PC
-                          プレビュー</button>
-                        <button
-                          class="w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700">SPプレビュー</button>
-                      </div>
-                      <div class="flex space-x-4">
-                        <button
-                          class="w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700">編集履歴</button>
-                        <button
-                          class="w-full px-4 py-2 text-sm font-medium text-white bg-orange-500 border border-transparent rounded-md shadow-sm hover:bg-orange-600">下書き保存</button>
-                      </div>
-                      <div class="flex space-x-4">
-                        <button
-                          class="w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700">申請中・保留に保存</button>
-                        <button
-                          class="w-full px-4 py-2 text-sm font-medium text-white bg-orange-500 border border-transparent rounded-md shadow-sm hover:bg-orange-600">別記事に保存</button>
-                      </div>
-                    </div>
-                    <button
-                      class="w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700">公開</button>
-                    <div class="space-y-4 bg-white p-6 rounded-lg shadow">
-                      <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1" for="publish-start">公開開始日時</label>
-                        <div class="flex items-center space-x-2">
-                          <input
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                            id="publish-start-date" type="date" />
-                          <input
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                            id="publish-start-time" type="time" />
-                        </div>
-                      </div>
-                      <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1" for="publish-end">公開終了日時</label>
-                        <div class="flex items-center space-x-2">
-                          <input
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                            id="publish-end-date" type="date" />
-                          <input
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                            id="publish-end-time" type="time" />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="space-y-4 bg-white p-6 rounded-lg shadow">
-                      <div class="grid grid-cols-2 gap-4">
-                        <div class="space-y-2">
-                          <label class="block text-sm font-medium text-gray-700">PCテンプレート設定</label>
-                          <select
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                            <option>選択してください</option>
-                          </select>
-                        </div>
-                        <div class="space-y-2">
-                          <label class="block text-sm font-medium text-gray-700">SPテンプレート設定</label>
-                          <select
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                            <option>選択してください</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="grid grid-cols-2 gap-4 mt-4">
-                        <div class="space-y-2">
-                          <label class="block text-sm font-medium text-gray-700">PCテンプレート設定</label>
-                          <select
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                            <option>選択してください</option>
-                          </select>
-                        </div>
-                        <div class="space-y-2">
-                          <label class="block text-sm font-medium text-gray-700">SPテンプレート設定</label>
-                          <select
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                            <option>選択してください</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="grid grid-cols-2 gap-4 mt-4">
-                        <div class="space-y-2">
-                          <label class="block text-sm font-medium text-gray-700">PC動画テンプレート設定</label>
-                          <select
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                            <option>選択してください</option>
-                          </select>
-                        </div>
-                        <div class="space-y-2">
-                          <label class="block text-sm font-medium text-gray-700">SP動画テンプレート設定</label>
-                          <select
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                            <option>選択してください</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="space-y-4 bg-white p-6 rounded-lg shadow">
-                      <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1" for="article-author">記事作成者</label>
-                        <input
-                          class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                          id="article-author" type="text" />
-                      </div>
-                      <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1" for="related-articles">関連記事</label>
-                        <a class="text-sm text-blue-600 hover:underline" href="#">記事検索はこちら</a>
-                      </div>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow">
-                      <label class="block text-sm font-medium text-gray-700 mb-1"
-                        for="meta-description">メタdescription設定</label>
-                      <textarea
-                        class="w-full h-24 p-4 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                        id="meta-description"></textarea>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow">
-                      <label class="block text-sm font-medium text-gray-700 mb-2">PDF</label>
-                      <div class="border-2 border-dashed border-gray-300 rounded-md p-6 text-center">
-                        <p class="text-gray-500 mb-2">ファイルを選択・アップロード</p>
-                        <button
-                          class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">ファイルを開く</button>
-                      </div>
-                    </div>
-                    <button
-                      class="w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700">申請中記事の削除</button>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                      <i class="fa-solid fa-align-left mr-1 text-gray-500"></i>
+                      メタディスクリプション
+                    </label>
+                    <textarea id="edit-article-meta-description" rows="3"
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white"
+                      placeholder="検索結果に表示される説明文を入力"></textarea>
                   </div>
                 </div>
-
               </div>
-            </div>
-            <!-- Tab 3: 公開・非公開 -->
-            <div id="edit-tab-published" class="hidden" role="tabpanel" aria-labelledby="edit-tab-published-tab">
-              <div class="p-4 border border-gray-100 rounded-lg bg-white shadow">
-                <div id="tab-content-container">
-                  <div class="tab-pane" id="draft">
-                    <p>Draft content goes here.</p>
-                  </div>
-                  <div class="tab-pane" id="pending">
-                    <p>Pending content goes here.</p>
-                  </div>
-                  <div class="tab-pane active" id="published">
-                    <div class="grid grid-cols-3 gap-6">
-                      <div class="col-span-2 bg-white p-6 rounded-lg shadow">
-                        <div class="mb-6">
-                          <label class="block text-sm font-medium text-gray-700 mb-1"
-                            for="headline-published">見出し</label>
-                          <input
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                            id="headline-published" type="text" />
-                        </div>
-                        <div class="mb-6">
-                          <label class="block text-sm font-medium text-gray-700 mb-1">本文</label>
-                          <div class="border border-gray-300 rounded-md">
-                            <div class="p-2 bg-gray-50 border-b border-gray-300 flex flex-wrap items-center gap-2">
-                              <button class="p-1 text-gray-600 hover:bg-gray-200 rounded"><span
-                                  class="material-icons text-base">format_h2</span></button>
-                              <button class="p-1 text-gray-600 hover:bg-gray-200 rounded"><span
-                                  class="material-icons text-base">format_align_right</span></button>
-                              <button class="p-1 text-gray-600 hover:bg-gray-200 rounded"><span
-                                  class="material-icons text-base">format_align_center</span></button>
-                              <button class="p-1 text-gray-600 hover:bg-gray-200 rounded"><span
-                                  class="material-icons text-base">link</span></button>
-                              <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">NewTabLink</button>
-                              <button class="p-1 text-gray-600 hover:bg-gray-200 rounded"><span
-                                  class="material-icons text-base">format_bold</span></button>
-                              <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">改ページ</button>
-                              <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">キャプション</button>
-                              <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">ルビ</button>
-                              <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">会話（左）</button>
-                              <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">会話（右）</button>
-                              <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">プロフィール</button>
-                              <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">プロフィール詳細</button>
-                              <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">文字サイズ</button>
-                              <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">ルビ（JS）</button>
-                            </div>
-                            <textarea class="w-full h-64 p-4 border-0 focus:ring-0"></textarea>
-                          </div>
-                        </div>
-                        <div class="mb-6">
-                          <label class="block text-sm font-medium text-gray-700 mb-1">写真</label>
-                          <div class="border-2 border-dashed border-gray-300 rounded-md p-6 text-center">
-                            <p class="text-gray-500 mb-2">写真を選択・アップロード</p>
-                            <button
-                              class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">ファイルを開く</button>
-                          </div>
-                        </div>
-                        <div>
-                          <label class="block text-sm font-medium text-gray-700 mb-2">動画タグ</label>
-                          <div class="border border-gray-300 rounded-lg">
-                            <div class="flex border-b" id="video-tag-tabs-published">
-                              <button class="px-4 py-2 text-sm text-blue-600 border-b-2 border-blue-600 video-tag-tab"
-                                data-target="add-tag-published">追加</button>
-                            </div>
-                            <div class="p-4 space-y-4 tab-content active" id="add-tag-published">
-                              <div>
-                                <label class="block text-xs font-medium text-gray-600"
-                                  for="tag-name-published">タグ名</label>
-                                <input
-                                  class="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                                  id="tag-name-published" type="text" value="movie_1" />
-                              </div>
-                              <div class="flex justify-end space-x-2">
-                                <button
-                                  class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">本文中へ挿入</button>
-                                <button
-                                  class="px-4 py-2 text-sm font-medium text-red-600 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">削除</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-span-1 space-y-6">
-                        <div class="bg-white p-6 rounded-lg shadow">
-                          <div class="mb-4">
-                            <p class="text-sm font-medium text-gray-700">フロントの表示状態: <span class="font-normal">非公開</span>
-                            </p>
-                          </div>
-                          <div class="mb-4">
-                            <p class="text-sm font-medium text-gray-700">記事ステータス: <span class="font-normal">編集完了</span>
-                            </p>
-                          </div>
-                          <h3 class="text-lg font-semibold text-gray-800 mb-4">カテゴリ・タグ</h3>
-                          <div
-                            class="border border-gray-300 rounded-md p-4 h-32 cursor-pointer hover:bg-gray-50 flex items-center justify-center">
-                            <span class="text-gray-500">選択してください</span>
-                          </div>
-                        </div>
-                        <div class="bg-white p-6 rounded-lg shadow">
-                          <h3 class="text-lg font-semibold text-gray-800 mb-4">メモ</h3>
-                          <textarea
-                            class="w-full h-24 p-4 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="テキストを入力"></textarea>
-                        </div>
-                        <div class="flex space-x-4">
-                          <button
-                            class="w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700">PC
-                            プレビュー</button>
-                          <button
-                            class="w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700">SPプレビュー</button>
-                        </div>
-                        <div class="flex space-x-4">
-                          <button
-                            class="w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700">編集履歴</button>
-                          <button
-                            class="w-full px-4 py-2 text-sm font-medium text-white bg-orange-500 border border-transparent rounded-md shadow-sm hover:bg-orange-600">下書き保存</button>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4">
-                          <button
-                            class="w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700">申請中・保留に保存</button>
-                          <button
-                            class="w-full px-4 py-2 text-sm font-medium text-white bg-orange-500 border border-transparent rounded-md shadow-sm hover:bg-orange-600">別記事に保存</button>
-                        </div>
-                        <button
-                          class="w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700">公開</button>
-                        <div class="space-y-4 bg-white p-6 rounded-lg shadow">
-                          <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1"
-                              for="publish-start">公開開始日時</label>
-                            <div class="flex items-center space-x-2">
-                              <input
-                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                                id="publish-start-date" type="date" />
-                              <input
-                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                                id="publish-start-time" type="time" />
-                            </div>
-                          </div>
-                          <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1" for="publish-end">公開終了日時</label>
-                            <div class="flex items-center space-x-2">
-                              <input
-                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                                id="publish-end-date" type="date" />
-                              <input
-                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                                id="publish-end-time" type="time" />
-                            </div>
-                          </div>
-                        </div>
-                        <div class="space-y-4 bg-white p-6 rounded-lg shadow">
-                          <div class="grid grid-cols-2 gap-4">
-                            <div class="space-y-2">
-                              <label class="block text-sm font-medium text-gray-700">PCテンプレート設定</label>
-                              <select
-                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                                <option>選択してください</option>
-                              </select>
-                            </div>
-                            <div class="space-y-2">
-                              <label class="block text-sm font-medium text-gray-700">SPテンプレート設定</label>
-                              <select
-                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                                <option>選択してください</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="grid grid-cols-2 gap-4 mt-4">
-                            <div class="space-y-2">
-                              <label class="block text-sm font-medium text-gray-700">PCテンプレート設定</label>
-                              <select
-                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                                <option>選択してください</option>
-                              </select>
-                            </div>
-                            <div class="space-y-2">
-                              <label class="block text-sm font-medium text-gray-700">SPテンプレート設定</label>
-                              <select
-                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                                <option>選択してください</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="grid grid-cols-2 gap-4 mt-4">
-                            <div class="space-y-2">
-                              <label class="block text-sm font-medium text-gray-700">PC動画テンプレート設定</label>
-                              <select
-                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                                <option>選択してください</option>
-                              </select>
-                            </div>
-                            <div class="space-y-2">
-                              <label class="block text-sm font-medium text-gray-700">SP動画テンプレート設定</label>
-                              <select
-                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                                <option>選択してください</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="space-y-4 bg-white p-6 rounded-lg shadow">
-                          <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1"
-                              for="article-author">記事作成者</label>
-                            <input
-                              class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                              id="article-author" type="text" />
-                          </div>
-                          <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1"
-                              for="related-articles">関連記事</label>
-                            <a class="text-sm text-blue-600 hover:underline" href="#">記事検索はこちら</a>
-                          </div>
-                        </div>
-                        <div class="bg-white p-6 rounded-lg shadow">
-                          <label class="block text-sm font-medium text-gray-700 mb-1"
-                            for="meta-description">メタdescription設定</label>
-                          <textarea
-                            class="w-full h-24 p-4 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                            id="meta-description"></textarea>
-                        </div>
-                        <div class="bg-white p-6 rounded-lg shadow">
-                          <label class="block text-sm font-medium text-gray-700 mb-2">PDF</label>
-                          <div class="border-2 border-dashed border-gray-300 rounded-md p-6 text-center">
-                            <p class="text-gray-500 mb-2">ファイルを選択・アップロード</p>
-                            <button
-                              class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">ファイルを開く</button>
-                          </div>
-                        </div>
-                        <button
-                          class="w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700">非公開</button>
-                      </div>
+
+              <!-- Content Editor -->
+              <div>
+                <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                  <i class="fa-solid fa-edit mr-2 text-purple-500"></i>
+                  記事内容
+                </h2>
+                <div class="border border-gray-300 rounded-lg">
+                  <div class="p-3 border-b border-gray-300 bg-gray-50">
+                    <div class="flex items-center space-x-4">
+                      <button type="button" class="text-sm font-medium text-blue-600 hover:text-blue-700">
+                        <i class="fa-solid fa-bold mr-1"></i>太字
+                      </button>
+                      <button type="button" class="text-sm font-medium text-blue-600 hover:text-blue-700">
+                        <i class="fa-solid fa-italic mr-1"></i>斜体
+                      </button>
+                      <button type="button" class="text-sm font-medium text-blue-600 hover:text-blue-700">
+                        <i class="fa-solid fa-underline mr-1"></i>下線
+                      </button>
+                      <button type="button" class="text-sm font-medium text-blue-600 hover:text-blue-700">
+                        <i class="fa-solid fa-link mr-1"></i>リンク
+                      </button>
+                      <button type="button" class="text-sm font-medium text-blue-600 hover:text-blue-700">
+                        <i class="fa-solid fa-image mr-1"></i>画像
+                      </button>
                     </div>
                   </div>
+                  <textarea id="edit-article-content" rows="15"
+                    class="w-full p-4 border-0 rounded-b-lg focus:ring-0 focus:outline-none resize-none"
+                    placeholder="記事の内容を入力してください..."></textarea>
                 </div>
-
               </div>
-            </div>
+
+              <!-- Action Buttons -->
+              <div class="flex justify-end space-x-4 pt-6">
+                <button type="button" onclick="showContentSection('article-list')"
+                  class="px-6 py-3 bg-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-400 focus:ring-4 focus:ring-gray-200 focus:outline-none transition-all duration-200">
+                  <i class="fa-solid fa-times mr-2"></i>
+                  キャンセル
+                </button>
+                <button type="button"
+                  class="px-6 py-3 bg-white border-2 border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 hover:border-gray-400 focus:ring-4 focus:ring-gray-200 focus:outline-none transition-all duration-200">
+                  <i class="fa-solid fa-eye mr-2"></i>
+                  プレビュー
+                </button>
+                <button type="button"
+                  class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none transition-all duration-200">
+                  <i class="fa-solid fa-save mr-2"></i>
+                  下書き保存
+                </button>
+                <button type="button"
+                  class="px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white font-medium rounded-lg hover:from-green-700 hover:to-green-800 focus:ring-4 focus:ring-green-300 focus:outline-none transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                  <i class="fa-solid fa-check mr-2"></i>
+                  更新
+                </button>
+              </div>
+            </form>
           </div>
         </div>
+       
 
         <!-- Article Register Content -->
         <div class="content-section" data-section="article-register">
@@ -2495,12 +1894,12 @@
                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">2023/10/27 15:30</td>
                     <td class="px-6 py-4 whitespace-nowrap">
                       <div class="flex items-center space-x-2">
-                        <button
+                        <button onclick="editPageFromRow(this)" 
                           class="inline-flex items-center px-3 py-2 text-sm font-medium text-blue-700 bg-blue-50 rounded-md hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 transform hover:scale-105">
                           <i class="fa-solid fa-pen-to-square w-4 h-4 mr-1.5"></i>
                           編集
                         </button>
-                        <button
+                        <button onclick="deletePage(this)"
                           class="inline-flex items-center px-3 py-2 text-sm font-medium text-red-700 bg-red-50 rounded-md hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-200 transform hover:scale-105">
                           <i class="fa-solid fa-trash-can w-4 h-4 mr-1.5"></i>
                           削除
@@ -2525,6 +1924,156 @@
             </div>
           </div>
         </div>
+        <!-- Page Edit Content -->
+        <div class="content-section" data-section="page-edit">
+          <div class="flex justify-between items-center mb-8">
+            <div class="flex items-center gap-4">
+              <h1 class="text-3xl font-bold text-gray-800">ページ編集</h1>
+              <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">ページの編集</span>
+            </div>
+            <div class="flex items-center space-x-4">
+              <button onclick="showContentSection('pages')" 
+                class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 transition-all duration-200">
+                <i class="fa-solid fa-arrow-left mr-2"></i>
+                一覧へ戻る
+              </button>
+            </div>
+          </div>
+          
+          <div class="card">
+            <form class="space-y-6">
+              <!-- Basic Information -->
+              <div class="border-b border-gray-200 pb-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                  <i class="fa-solid fa-info-circle mr-2 text-blue-500"></i>
+                  基本情報
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                      <i class="fa-solid fa-file-lines mr-1 text-gray-500"></i>
+                      ページ名 <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" id="edit-page-name" 
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white"
+                      placeholder="ページ名を入力">
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                      <i class="fa-solid fa-link mr-1 text-gray-500"></i>
+                      URL <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" id="edit-page-url"
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white"
+                      placeholder="例: /about">
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                      <i class="fa-solid fa-toggle-on mr-1 text-gray-500"></i>
+                      公開状態
+                    </label>
+                    <select id="edit-page-status"
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white">
+                      <option value="published">公開中</option>
+                      <option value="draft">下書き</option>
+                      <option value="private">非公開</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                      <i class="fa-solid fa-calendar mr-1 text-gray-500"></i>
+                      公開日時
+                    </label>
+                    <input type="datetime-local" id="edit-publish-date"
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white">
+                  </div>
+                </div>
+              </div>
+
+              <!-- SEO Settings -->
+              <div class="border-b border-gray-200 pb-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                  <i class="fa-solid fa-search mr-2 text-green-500"></i>
+                  SEO設定
+                </h2>
+                <div class="space-y-4">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                      <i class="fa-solid fa-heading mr-1 text-gray-500"></i>
+                      メタタイトル
+                    </label>
+                    <input type="text" id="edit-meta-title"
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white"
+                      placeholder="SEO用のタイトルを入力">
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                      <i class="fa-solid fa-align-left mr-1 text-gray-500"></i>
+                      メタディスクリプション
+                    </label>
+                    <textarea id="edit-meta-description" rows="3"
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white"
+                      placeholder="検索結果に表示される説明文を入力"></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Content Editor -->
+              <div>
+                <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                  <i class="fa-solid fa-edit mr-2 text-purple-500"></i>
+                  コンテンツ
+                </h2>
+                <div class="border border-gray-300 rounded-lg">
+                  <div class="p-3 border-b border-gray-300 bg-gray-50">
+                    <div class="flex items-center space-x-4">
+                      <button type="button" class="text-sm font-medium text-blue-600 hover:text-blue-700">
+                        <i class="fa-solid fa-bold mr-1"></i>太字
+                      </button>
+                      <button type="button" class="text-sm font-medium text-blue-600 hover:text-blue-700">
+                        <i class="fa-solid fa-italic mr-1"></i>斜体
+                      </button>
+                      <button type="button" class="text-sm font-medium text-blue-600 hover:text-blue-700">
+                        <i class="fa-solid fa-link mr-1"></i>リンク
+                      </button>
+                      <button type="button" class="text-sm font-medium text-blue-600 hover:text-blue-700">
+                        <i class="fa-solid fa-image mr-1"></i>画像
+                      </button>
+                    </div>
+                  </div>
+                  <textarea id="edit-page-content" rows="15"
+                    class="w-full p-4 border-0 rounded-b-lg focus:ring-0 focus:outline-none resize-none"
+                    placeholder="ページの内容を入力してください..."></textarea>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="flex justify-end space-x-4 pt-6">
+                <button type="button" onclick="showContentSection('pages')"
+                  class="px-6 py-3 bg-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-400 focus:ring-4 focus:ring-gray-200 focus:outline-none transition-all duration-200">
+                  <i class="fa-solid fa-times mr-2"></i>
+                  キャンセル
+                </button>
+                <button type="button"
+                  class="px-6 py-3 bg-white border-2 border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 hover:border-gray-400 focus:ring-4 focus:ring-gray-200 focus:outline-none transition-all duration-200">
+                  <i class="fa-solid fa-eye mr-2"></i>
+                  プレビュー
+                </button>
+                <button type="button"
+                  class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none transition-all duration-200">
+                  <i class="fa-solid fa-save mr-2"></i>
+                  下書き保存
+                </button>
+                <button type="button"
+                  class="px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white font-medium rounded-lg hover:from-green-700 hover:to-green-800 focus:ring-4 focus:ring-green-300 focus:outline-none transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                  <i class="fa-solid fa-check mr-2"></i>
+                  更新
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
         <!-- Page Register Content -->
         <div class="content-section mt-5" data-section="page-register">
           <div class="flex justify-between items-center mb-6">
@@ -3006,11 +2555,7 @@
                 <i class="fa-solid fa-plus mr-2"></i>
                 <span>テーマ編集</span>
               </button>
-              <!-- <button
-                class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-600 to-green-700 text-white text-sm font-medium rounded-lg hover:from-green-700 hover:to-green-800 focus:ring-4 focus:ring-green-300 focus:outline-none transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-                <i class="fa-solid fa-code-branch mr-2"></i>
-                <span>ステージングへ</span>
-              </button> -->
+            
             </div>
           </div>
 
@@ -3025,22 +2570,7 @@
                 data-tab="recommendTheme">
                 推奨
               </button>
-              <!-- <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600"
-                data-tab="allTheme">
-                すべて
-              </button>
-              <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600"
-                data-tab="blockTheme">
-                ブログ
-              </button>
-              <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600"
-                data-tab="businessTheme">
-                ビジネス
-              </button>
-              <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600"
-                data-tab="storeTheme">
-                ストア
-              </button> -->
+            
             </nav>
           </div>
 
@@ -3340,63 +2870,22 @@
                     <div class="col-span-3 text-gray-600 truncate font-mono text-sm">/news/20231025-01/</div>
                     <div class="col-span-1 text-gray-600">山田 太郎</div>
                     <div class="col-span-2 text-gray-600">2023/10/25 18:30</div>
-                    <div class="col-span-1 flex justify-center gap-2">
+                    <div class="flex items-center justify-center space-x-3">
                       <button
-                        class="inline-flex items-center px-3 py-1.5 bg-blue-50 text-blue-600 rounded-md hover:bg-blue-100 focus:ring-2 focus:ring-blue-400 transition-all duration-150 hover:scale-105"
-                        aria-label="編集">
-                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                        </svg>
-                        編集
+                        onclick="editAnnounceFromRow(this)"
+                        class="inline-flex items-center px-3 py-1.5 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-all duration-150 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                        <i class="fa-solid fa-pen-to-square text-xs mr-1.5"></i>
+                        <span class="text-sm font-medium">編集</span>
                       </button>
                       <button
-                        class="inline-flex items-center px-3 py-1.5 bg-red-50 text-red-600 rounded-md hover:bg-red-100 focus:ring-2 focus:ring-red-400 transition-all duration-150 hover:scale-105"
-                        aria-label="削除">
-                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4a1 1 0 011 1v1H9V4a1 1 0 011-1zm-7 4h18" />
-                        </svg>
-                        削除
+                        onclick="deleteAnnounce(this)"
+                        class="inline-flex items-center px-3 py-1.5 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-all duration-150 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-300">
+                        <i class="fa-solid fa-trash text-xs mr-1.5"></i>
+                        <span class="text-sm font-medium">削除</span>
                       </button>
                     </div>
                   </div>
 
-                  <!-- News item row 2 -->
-                  <div
-                    class="grid grid-cols-12 gap-4 items-center px-6 py-4 hover:bg-gray-50 transition-colors duration-150">
-                    <div class="col-span-1 flex items-center">
-                      <span
-                        class="px-3 py-1 text-xs font-semibold text-yellow-800 bg-yellow-100 rounded-full shadow-sm">保留</span>
-                    </div>
-                    <div class="col-span-1 text-gray-600 font-medium">000003</div>
-                    <div class="col-span-3 text-blue-600 font-medium hover:underline cursor-pointer truncate">
-                      効果的なリモートワーク環境の作り方
-                    </div>
-                    <div class="col-span-3 text-gray-600 truncate font-mono text-sm">/news/20231027-01/</div>
-                    <div class="col-span-1 text-gray-600">鈴木 一郎</div>
-                    <div class="col-span-2 text-gray-600">2023/10/27 11:00</div>
-                    <div class="col-span-1 flex justify-center gap-2">
-                      <button
-                        class="inline-flex items-center px-3 py-1.5 bg-blue-50 text-blue-600 rounded-md hover:bg-blue-100 focus:ring-2 focus:ring-blue-400 transition-all duration-150 hover:scale-105"
-                        aria-label="編集">
-                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                        </svg>
-                        編集
-                      </button>
-                      <button
-                        class="inline-flex items-center px-3 py-1.5 bg-red-50 text-red-600 rounded-md hover:bg-red-100 focus:ring-2 focus:ring-red-400 transition-all duration-150 hover:scale-105"
-                        aria-label="削除">
-                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4a1 1 0 011 1v1H9V4a1 1 0 011-1zm-7 4h18" />
-                        </svg>
-                        削除
-                      </button>
-                    </div>
-                  </div>
                 </div>
               </div>
               <!-- Footer -->
@@ -3439,17 +2928,22 @@
             </div>
           </div>
         </div>
-
+        <!-- announce edit -->
         <div class="content-section" data-section="announce-edit">
           <div class="flex justify-between items-center mb-6">
             <div class="flex items-center gap-4">
               <h1 class="text-3xl font-bold text-gray-800">お知らせ編集</h1>
               <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">お知らせの編集</span>
             </div>
-            <a class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" href="#">一覧へ</a>
+            <div class="flex items-center space-x-4">
+              <button onclick="showContentSection('announce-list')"
+                class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 transition-all duration-200">
+                <i class="fa-solid fa-arrow-left mr-2"></i>
+                一覧へ戻る
+              </button>
+            </div>
           </div>
           <div class="card">
-
 
             <div class="grid grid-cols-3 gap-8">
               <!-- Main content area - 2/3 width -->
@@ -3466,7 +2960,7 @@
                         </button>
                       </div>
                     </div>
-                    <textarea class="w-full h-64 p-4 border-0 focus:ring-0 resize-none"
+                    <textarea id="edit-announce-content" class="w-full h-64 p-4 border-0 focus:ring-0 resize-none"
                       placeholder="お知らせ内容を入力してください"></textarea>
                   </div>
                 </div>
@@ -3474,7 +2968,7 @@
                 <!-- URL input -->
                 <div class="bg-white p-6 rounded-lg shadow-sm">
                   <label class="block text-sm font-medium text-gray-700 mb-2" for="url">URL</label>
-                  <input type="text" id="url" placeholder="/news/20231025-01/"
+                  <input type="text" id="edit-announce-url" placeholder="/news/20231025-01/"
                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out text-sm" />
                 </div>
               </div>
@@ -3484,7 +2978,7 @@
                 <!-- Status -->
                 <div class="bg-white p-6 rounded-lg shadow-sm">
                   <label class="block text-sm font-medium text-gray-700 mb-2" for="status">ステータス</label>
-                  <select id="status"
+                  <select id="edit-announce-status"
                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out text-sm">
                     <option value="draft">下書き</option>
                     <option value="published">公開</option>
@@ -3495,7 +2989,7 @@
                 <!-- Remarks -->
                 <div class="bg-white p-6 rounded-lg shadow-sm">
                   <label class="block text-sm font-medium text-gray-700 mb-2" for="remarks">備考</label>
-                  <textarea id="remarks" rows="4"
+                  <textarea id="edit-announce-remarks" rows="4"
                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out text-sm resize-none"></textarea>
                 </div>
 
@@ -3543,7 +3037,6 @@
                     </div>
                   </div>
                 </div>
-
                 <!-- Delete button -->
                 <button
                   class="w-full py-2 px-4 rounded-md text-white bg-red-600 hover:bg-red-700 font-semibold transition duration-150 ease-in-out">
@@ -3553,7 +3046,7 @@
             </div>
           </div>
         </div>
-
+        <!-- announce register -->
         <div class="content-section" data-section="announce-register">
           <div class="flex items-center gap-4 mb-6">
             <h1 class="text-3xl font-bold text-gray-800">お知らせ登録</h1>
@@ -3563,6 +3056,7 @@
           </div>
         </div>
 
+        
         <div class="content-section" data-section="forms">
           <div class="flex items-center gap-4 mb-6">
             <h1 class="text-3xl font-bold text-gray-800">フォーム</h1>
@@ -3583,16 +3077,6 @@
             <h1 class="font-semibold text-4xl text-red-800 mb-4">Please keep it like this; we will use it later.</h1>
           </div>
         </div>
-
-        <!-- <div class="content-section" data-section="logs">
-          <div class="flex items-center gap-4 mb-6">
-            <h1 class="text-3xl font-bold text-gray-800">CMS操作管理者ログ</h1>
-            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">CMSの管理</span>
-          </div>
-          <div class="card">
-            <p>管理者の操作ログを確認します。</p>
-          </div>
-        </div> -->
 
 
         <div class="content-section" data-section="categories">
@@ -4417,6 +3901,241 @@
       new Chart(ctx, {
         // ... your chart configuration
       });
+    }
+
+    // Function to handle page editing
+    function editPage(pageId) {
+      // Show the page edit section
+      showContentSection('page-edit');
+      
+      // Populate form with existing data (in a real app, this would fetch from API)
+      const sampleData = {
+        '00000001': {
+          name: 'トップページ',
+          url: '/',
+          status: 'published',
+          publishDate: '2023-10-27T15:30',
+          metaTitle: 'OUTWARD - 企業の働き方改革をサポート',
+          metaDescription: '企業の働き方改革をサポートするOUTWARDのトップページです。',
+          content: 'トップページのコンテンツがここに入ります。'
+        }
+      };
+      
+      const data = sampleData[pageId];
+      if (data) {
+        document.getElementById('edit-page-name').value = data.name;
+        document.getElementById('edit-page-url').value = data.url;
+        document.getElementById('edit-page-status').value = data.status;
+        document.getElementById('edit-publish-date').value = data.publishDate;
+        document.getElementById('edit-meta-title').value = data.metaTitle;
+        document.getElementById('edit-meta-description').value = data.metaDescription;
+        document.getElementById('edit-page-content').value = data.content;
+      }
+    }
+
+    // Function to handle article editing from table row
+    function editArticleFromRow(button) {
+      // Get the table row containing this button
+      const row = button.closest('tr');
+      
+      // Extract data from the row cells
+      const cells = row.querySelectorAll('td');
+      const articleData = {
+        status: cells[0].querySelector('span').textContent.trim(), // 状態
+        id: cells[1].textContent.trim(), // 記事ID
+        author: cells[2].textContent.trim(), // 作成者
+        title: cells[3].textContent.trim(), // 記事見出し (assuming this exists)
+        permission: cells[4].textContent.trim(), // 権限
+        createDate: cells[5].textContent.trim() // 作成日時
+      };
+      
+      // Show the article edit section
+      showContentSection('article-edit');
+      
+      // Populate form with extracted data
+      document.getElementById('edit-article-title').value = articleData.title || '新しい働き方とオフィスの未来';
+      document.getElementById('edit-article-author').value = articleData.author;
+      document.getElementById('edit-article-status').value = articleData.status === '下書き' ? 'draft' : 'published';
+      document.getElementById('edit-article-category').value = 'column'; // Default or extract if available
+      document.getElementById('edit-article-meta-title').value = articleData.title + ' - OUTWARD';
+      document.getElementById('edit-article-meta-description').value = '記事の説明がここに入ります。';
+      document.getElementById('edit-article-content').value = '記事の内容がここに入ります。';
+      
+      // Store the article ID for saving later
+      const editForm = document.querySelector('#edit-article-form') || document.querySelector('.content-section[data-section="article-edit"] form');
+      if (editForm) {
+        editForm.setAttribute('data-article-id', articleData.id);
+      }
+    }
+
+    // Keep the original function for backward compatibility
+    function editArticle(articleId) {
+      // Show the article edit section
+      showContentSection('article-edit');
+      
+      // Populate form with existing data (in a real app, this would fetch from API)
+      const sampleData = {
+        '0000000444': {
+          title: '新しい働き方とオフィスの未来',
+          author: '田中 太郎',
+          status: 'draft',
+          category: 'column',
+          metaTitle: '新しい働き方とオフィスの未来 - OUTWARD',
+          metaDescription: '働き方改革とオフィス環境の変化について詳しく解説します。',
+          content: 'この記事では、新しい働き方とオフィスの未来について詳しく説明します。\n\nリモートワークの普及により、従来のオフィス環境は大きく変化しています。'
+        },
+        '0000000555': {
+          title: '効果的なリモートワーク環境の作り方',
+          author: '佐藤 花子',
+          status: 'draft',
+          category: 'news',
+          metaTitle: '効果的なリモートワーク環境の作り方 - OUTWARD',
+          metaDescription: 'リモートワークを成功させるための環境作りのポイントを紹介します。',
+          content: 'リモートワークを効果的に行うためには、適切な環境作りが重要です。\n\n本記事では、生産性を向上させるためのポイントを解説します。'
+        }
+      };
+      
+      const data = sampleData[articleId];
+      if (data) {
+        document.getElementById('edit-article-title').value = data.title;
+        document.getElementById('edit-article-author').value = data.author;
+        document.getElementById('edit-article-status').value = data.status;
+        document.getElementById('edit-article-category').value = data.category;
+        document.getElementById('edit-article-meta-title').value = data.metaTitle;
+        document.getElementById('edit-article-meta-description').value = data.metaDescription;
+        document.getElementById('edit-article-content').value = data.content;
+      }
+    }
+
+    // Function to handle announcement editing from table row
+    function editAnnounceFromRow(button) {
+      // Get the table row containing this button
+      const row = button.closest('.grid');
+      
+      // Extract data from the row cells
+      const status = row.children[0].querySelector('span').textContent.trim();
+      const announceId = row.children[1].textContent.trim();
+      const content = row.children[2].textContent.trim();
+      const url = row.children[3].textContent.trim();
+      const author = row.children[4].textContent.trim();
+      const publishDate = row.children[5].textContent.trim();
+      
+      // Show the announce edit section
+      showContentSection('announce-edit');
+      
+      // Populate the form with extracted data
+      document.getElementById('edit-announce-content').value = content;
+      document.getElementById('edit-announce-url').value = url;
+      
+      // Set status based on the status text
+      const statusSelect = document.getElementById('edit-announce-status');
+      if (status === '公開') {
+        statusSelect.value = 'published';
+      } else if (status === '下書き') {
+        statusSelect.value = 'draft';
+      } else {
+        statusSelect.value = 'private';
+      }
+      
+      // Add author and date info to remarks
+      const remarksField = document.getElementById('edit-announce-remarks');
+      remarksField.value = `作成者: ${author}\n公開日: ${publishDate}\nお知らせID: ${announceId}`;
+    }
+    
+    // Function to handle announcement deletion
+    function deleteAnnounce(button) {
+      // Get the table row containing this button
+      const row = button.closest('.grid');
+      const announceId = row.children[1].textContent.trim();
+      const content = row.children[2].textContent.trim();
+      
+      // Confirm deletion
+      if (confirm(`お知らせ「${content}」を削除しますか？\n\nお知らせID: ${announceId}`)) {
+        // In a real application, this would make an API call to delete the announcement
+        console.log('Deleting announcement:', announceId);
+        
+        // Remove the row from the table
+        row.remove();
+        
+        // Show success message
+        alert('お知らせが正常に削除されました。');
+      }
+    }
+
+    // Function to handle page editing from table row
+    function editPageFromRow(button) {
+      // Get the table row containing this button
+      const row = button.closest('tr');
+      
+      // Extract data from the row cells
+      const cells = row.querySelectorAll('td');
+      const pageData = {
+        status: cells[0].querySelector('span').textContent.trim(), // 状態
+        id: cells[1].textContent.trim(), // 固定ページID
+        name: cells[2].querySelector('a').textContent.trim(), // ページ名
+        url: cells[3].querySelector('a').textContent.trim(), // URL
+        author: cells[5].textContent.trim(), // 作成者
+        updateDate: cells[6].textContent.trim(), // 更新日時
+        publishDate: cells[7].textContent.trim() // 公開日時
+      };
+      
+      // Show the page edit section
+      showContentSection('page-edit');
+      
+      // Populate form with extracted data
+      document.getElementById('edit-page-name').value = pageData.name;
+      document.getElementById('edit-page-url').value = pageData.url;
+      document.getElementById('edit-page-status').value = pageData.status === '公開中' ? 'published' : 'draft';
+      document.getElementById('edit-publish-date').value = convertToDateTimeLocal(pageData.publishDate);
+      document.getElementById('edit-meta-title').value = pageData.name + ' - OUTWARD';
+      document.getElementById('edit-meta-description').value = 'ページの説明がここに入ります。';
+      document.getElementById('edit-page-content').value = 'ページの内容がここに入ります。';
+      
+      // Store the page ID for saving later
+      const editForm = document.querySelector('.content-section[data-section="page-edit"] form');
+      if (editForm) {
+        editForm.setAttribute('data-page-id', pageData.id);
+      }
+    }
+
+    // Function to handle page deletion
+    function deletePage(button) {
+      // Get the table row containing this button
+      const row = button.closest('tr');
+      const cells = row.querySelectorAll('td');
+      const pageId = cells[1].textContent.trim();
+      const pageName = cells[2].querySelector('a').textContent.trim();
+      
+      // Confirm deletion
+      if (confirm(`固定ページ「${pageName}」を削除しますか？\n\nページID: ${pageId}`)) {
+        // In a real application, this would make an API call to delete the page
+        console.log('Deleting page:', pageId);
+        
+        // Remove the row from the table
+        row.remove();
+        
+        // Show success message
+        alert('固定ページが正常に削除されました。');
+      }
+    }
+
+    // Helper function to convert date string to datetime-local format
+    function convertToDateTimeLocal(dateString) {
+      // Convert "2023/10/27 15:30" to "2023-10-27T15:30"
+      if (!dateString || dateString.trim() === '') return '';
+      
+      try {
+        const parts = dateString.split(' ');
+        if (parts.length !== 2) return '';
+        
+        const datePart = parts[0].replace(/\//g, '-');
+        const timePart = parts[1];
+        
+        return `${datePart}T${timePart}`;
+      } catch (error) {
+        console.error('Error converting date:', error);
+        return '';
+      }
     }
 
     // Initialize user profile dropdown
