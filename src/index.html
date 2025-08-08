@@ -516,15 +516,312 @@
       margin: var(--spacing-md) 0;
     }
 
-    /* Responsive styles - Fixed mobile spacing */
-    @media (max-width: 768px) {
+    /* Responsive styles - Enhanced for iPad Pro and tablets */
+    
+    /* iPad Pro and large tablets (1024px and up) */
+    @media (min-width: 1024px) and (max-width: 1366px) {
+      .sidebar {
+        width: 280px;
+        position: relative;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+      }
+      
+      .sidebar.w-16 {
+        width: 80px;
+      }
+      
+      .child-sidebar {
+        width: 260px;
+        position: relative;
+      }
+      
+      .main-content {
+        padding: var(--spacing-xl);
+        margin-left: 0;
+      }
+      
+      .content-section {
+        padding: var(--spacing-xl);
+      }
+      
+      .card {
+        padding: var(--spacing-2xl);
+        margin-bottom: var(--spacing-xl);
+        border-radius: 1.25rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+      
+      .table-container {
+        font-size: 0.95rem;
+        border-radius: 0.75rem;
+        overflow: hidden;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+      
+      .table-container th {
+        padding: 1.25rem 1.5rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+      
+      .table-container td {
+        padding: 1.25rem 1.5rem;
+        font-size: 0.9rem;
+      }
+      
+      .form-input {
+        padding: 1rem var(--spacing-lg);
+        font-size: 1rem;
+        min-height: 52px;
+        touch-action: manipulation;
+      }
+      
+      .form-input:focus {
+        transform: scale(1.01);
+        transition: all 0.2s ease;
+      }
+      
+      .btn-primary, .btn-secondary {
+        padding: var(--spacing-md) var(--spacing-xl);
+        font-size: 1rem;
+        min-height: 52px;
+        touch-action: manipulation;
+        cursor: pointer;
+      }
+      
+      .btn-primary:active, .btn-secondary:active {
+        transform: scale(0.95);
+      }
+      
+      /* Enhanced grid layouts for iPad Pro */
+      .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: var(--spacing-xl);
+      }
+      
+      .form-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: var(--spacing-lg);
+      }
+      
+      /* Better sidebar item spacing */
+      .sidebar-item {
+        padding: var(--spacing-lg) var(--spacing-md);
+        margin: var(--spacing-sm) var(--spacing-md);
+        min-height: 52px;
+        cursor: pointer;
+        touch-action: manipulation;
+      }
+      
+      .sidebar-item:active {
+        background-color: var(--hover-bg);
+        transform: scale(0.98);
+      }
+      
+      /* Enhanced header for iPad Pro */
+      header {
+        height: 80px;
+        padding: var(--spacing-lg) var(--spacing-xl);
+      }
+      
+      .content-wrapper {
+        padding-top: 100px;
+      }
+      
+      /* Enhanced tab buttons */
+      .tab-button {
+        min-height: 52px;
+        touch-action: manipulation;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+      
+      .tab-button:active {
+        transform: scale(0.98);
+      }
+      
+      /* Enhanced dropdown and select elements */
+      select {
+        min-height: 52px;
+        font-size: 1rem;
+        padding: var(--spacing-md) var(--spacing-lg);
+        touch-action: manipulation;
+      }
+      
+      /* Better pagination for iPad Pro */
+      .pagination {
+        gap: var(--spacing-lg);
+      }
+      
+      .pagination button {
+        min-height: 48px;
+        min-width: 48px;
+        font-size: 1rem;
+        touch-action: manipulation;
+      }
+    }
+    
+    /* Standard tablets (768px to 1023px) */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .sidebar {
+        width: 260px;
+        position: relative;
+        transform: translateX(0);
+        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+      }
+      
+      .sidebar.w-16 {
+        width: 72px;
+      }
+      
+      .child-sidebar {
+        width: 220px;
+        position: relative;
+      }
+      
+      .main-content {
+        margin-left: 0;
+        padding: var(--spacing-lg) var(--spacing-xl);
+        padding-top: 100px;
+      }
+      
+      .content-section {
+        padding: var(--spacing-lg) var(--spacing-xl);
+      }
+      
+      .card {
+        padding: var(--spacing-xl) var(--spacing-2xl);
+        margin-bottom: var(--spacing-xl);
+        border-radius: 1.25rem;
+      }
+      
+      .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 1rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+      
+      .table-container table {
+        min-width: 800px;
+      }
+      
+      .table-container th {
+        padding: 1rem 1.25rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+      }
+      
+      .table-container td {
+        padding: 1rem 1.25rem;
+        font-size: 0.875rem;
+      }
+      
+      .form-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: var(--spacing-lg);
+      }
+      
+      /* Enhanced search form for tablets */
+      .search-form {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: var(--spacing-md) var(--spacing-lg);
+      }
+      
+      /* Better sidebar items for tablets */
+      .sidebar-item {
+        padding: var(--spacing-lg) var(--spacing-md);
+        margin: var(--spacing-xs) var(--spacing-md);
+        min-height: 48px;
+        border-radius: 0.75rem;
+        cursor: pointer;
+        touch-action: manipulation;
+      }
+      
+      .sidebar-item:active {
+        background-color: var(--hover-bg);
+        transform: scale(0.98);
+      }
+      
+      /* Enhanced header for tablets */
+      header {
+        height: 85px;
+        padding: var(--spacing-md) var(--spacing-lg);
+      }
+      
+      .content-wrapper {
+        padding-top: 105px;
+      }
+      
+      .form-input {
+        padding: 0.75rem var(--spacing-md);
+        font-size: 1rem;
+        min-height: 48px;
+        touch-action: manipulation;
+      }
+      
+      .form-input:focus {
+        transform: scale(1.01);
+        transition: all 0.2s ease;
+      }
+      
+      .btn-primary, .btn-secondary {
+        padding: var(--spacing-sm) var(--spacing-lg);
+        font-size: 0.95rem;
+        min-height: 48px;
+        touch-action: manipulation;
+        cursor: pointer;
+      }
+      
+      .btn-primary:active, .btn-secondary:active {
+        transform: scale(0.95);
+      }
+      
+      .login-container {
+        max-width: 450px;
+        padding: var(--spacing-2xl);
+      }
+      
+      .tab-button {
+        padding: var(--spacing-md) var(--spacing-lg);
+        min-height: 48px;
+        touch-action: manipulation;
+        cursor: pointer;
+      }
+      
+      .tab-button:active {
+        transform: scale(0.98);
+      }
+      
+      /* Enhanced dropdown and select elements */
+      select {
+        min-height: 48px;
+        font-size: 1rem;
+        padding: var(--spacing-md) var(--spacing-lg);
+        touch-action: manipulation;
+      }
+      
+      /* Better pagination for tablets */
+      .pagination {
+        gap: var(--spacing-md);
+      }
+      
+      .pagination button {
+        min-height: 44px;
+        min-width: 44px;
+        font-size: 1rem;
+        touch-action: manipulation;
+      }
+    }
+    
+    /* Mobile devices (767px and below) */
+    @media (max-width: 767px) {
       .sidebar {
         width: 100%;
         position: fixed;
         z-index: 50;
         transform: translateX(-100%);
         padding: var(--spacing-md);
-        /* Add mobile padding */
       }
 
       .sidebar.open {
@@ -565,6 +862,19 @@
 
       .logo h1 {
         font-size: 1.75rem;
+      }
+      
+      .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      .table-container table {
+        min-width: 600px;
+      }
+      
+      .form-grid {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -653,8 +963,71 @@
       margin: var(--spacing-2xl);
     }
 
-    /* Responsive spacing */
-    @media (max-width: 768px) {
+    /* Enhanced responsive spacing and utilities */
+    
+    /* Tablet-specific utilities */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .tablet-grid-1 {
+        grid-template-columns: 1fr;
+      }
+      
+      .tablet-grid-2 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .tablet-flex-col {
+        flex-direction: column;
+      }
+      
+      .tablet-w-full {
+        width: 100%;
+      }
+      
+      .tablet-text-sm {
+        font-size: 0.875rem;
+      }
+      
+      .tablet-p-lg {
+        padding: var(--spacing-lg);
+      }
+      
+      .tablet-m-lg {
+        margin: var(--spacing-lg);
+      }
+      
+      /* Better button spacing for tablets */
+      .tablet-btn-spacing {
+        gap: var(--spacing-md);
+      }
+      
+      /* Improved form layouts for tablets */
+      .tablet-form-stack {
+        flex-direction: column;
+        gap: var(--spacing-md);
+      }
+    }
+    
+    /* iPad Pro specific optimizations */
+    @media (min-width: 1024px) and (max-width: 1366px) {
+      .ipad-pro-grid-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      
+      .ipad-pro-grid-4 {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      
+      .ipad-pro-text-base {
+        font-size: 1rem;
+      }
+      
+      .ipad-pro-p-xl {
+        padding: var(--spacing-xl);
+      }
+    }
+    
+    /* Mobile utilities */
+    @media (max-width: 767px) {
       .mobile-p-sm {
         padding: var(--spacing-sm);
       }
@@ -670,12 +1043,189 @@
       .mobile-m-md {
         margin: var(--spacing-md);
       }
+      
+      .mobile-grid-1 {
+        grid-template-columns: 1fr;
+      }
+      
+      .mobile-flex-col {
+        flex-direction: column;
+      }
+      
+      .mobile-w-full {
+        width: 100%;
+      }
+      
+      .mobile-text-xs {
+        font-size: 0.75rem;
+      }
     }
 
     /* Fix for content overlap */
     .content-wrapper {
       padding-top: 90px;
       min-height: calc(100vh - 90px);
+    }
+    
+    /* Enhanced tablet and iPad Pro specific styles */
+    
+    /* Improved navigation for tablets */
+    @media (min-width: 768px) and (max-width: 1366px) {
+      /* Better sidebar behavior on tablets */
+      .sidebar {
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+      }
+      
+      /* Enhanced touch targets */
+      .sidebar-item {
+        cursor: pointer;
+        touch-action: manipulation;
+      }
+      
+      .sidebar-item:active {
+        background-color: var(--active-bg);
+        transform: scale(0.98);
+      }
+      
+      /* Better table responsiveness */
+      .table-container {
+        border-radius: 0.75rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+      
+      .table-container th {
+        padding: 1rem 1.5rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+      }
+      
+      .table-container td {
+        padding: 1rem 1.5rem;
+        font-size: 0.875rem;
+      }
+      
+      /* Enhanced form controls */
+      .form-input {
+        min-height: 44px;
+        touch-action: manipulation;
+      }
+      
+      .form-input:focus {
+        transform: scale(1.02);
+        transition: all 0.2s ease;
+      }
+      
+      /* Better button interactions */
+      .btn-primary, .btn-secondary {
+        min-height: 44px;
+        touch-action: manipulation;
+        cursor: pointer;
+      }
+      
+      .btn-primary:active, .btn-secondary:active {
+        transform: scale(0.95);
+      }
+      
+      /* Improved modal sizing */
+      .login-container {
+        width: 90%;
+        max-width: 500px;
+      }
+      
+      /* Better tab navigation */
+      .tab-button {
+        touch-action: manipulation;
+        cursor: pointer;
+      }
+      
+      .tab-button:active {
+        transform: scale(0.95);
+      }
+      
+      /* Enhanced card layouts */
+      .card {
+        border-radius: 1rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      }
+      
+      /* Better pagination for tablets */
+      .pagination {
+        gap: 0.5rem;
+      }
+      
+      .pagination button {
+        min-height: 44px;
+        min-width: 44px;
+        touch-action: manipulation;
+      }
+      
+      /* Improved search and filter forms */
+      .search-form {
+        gap: 1rem;
+      }
+      
+      .search-form .form-input {
+        flex: 1;
+        min-width: 200px;
+      }
+      
+      /* Better dropdown menus */
+      select.form-input {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 0.75rem center;
+        background-repeat: no-repeat;
+        background-size: 1.5em 1.5em;
+        padding-right: 3rem;
+      }
+    }
+    
+    /* iPad Pro landscape specific optimizations */
+    @media (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
+      .main-content {
+        padding: var(--spacing-xl) var(--spacing-2xl);
+      }
+      
+      .content-section {
+        max-width: none;
+      }
+      
+      .card {
+        padding: var(--spacing-2xl);
+      }
+      
+      /* Better use of horizontal space */
+      .form-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: var(--spacing-xl);
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      }
+    }
+    
+    /* iPad Pro portrait specific optimizations */
+    @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+      .sidebar {
+        width: 280px;
+      }
+      
+      .child-sidebar {
+        width: 240px;
+      }
+      
+      .main-content {
+        padding: var(--spacing-lg) var(--spacing-xl);
+      }
+      
+      .table-container {
+        font-size: 0.875rem;
+      }
+      
+      .form-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+      }
     }
   </style>
 </head>
@@ -937,7 +1487,7 @@
       <!-- Header -->
       <header
         class="fixed top-0 left-0 right-0 z-50 bg-[var(--card-bg)] border-b border-[var(--border-color)] shadow-[var(--shadow)]">
-        <nav class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-6 py-2">
+        <nav class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4 md:px-6 py-2">
           <!-- Logo/Title -->
           <div class="flex items-center justify-center">
             <a href="#" class="flex items-center">
@@ -995,15 +1545,15 @@
       </header>
 
       <!-- Content Area with proper spacing -->
-      <main class="p-6" style="padding-top: 90px; min-height: calc(100vh - 90px);">
+      <main class="p-4 md:p-6 lg:p-8 xl:p-12" style="padding-top: 90px; min-height: calc(100vh - 90px);">
         <!-- Dashboard Content -->
         <div class="content-section active" data-section="dashboard">
-          <div class="flex items-center gap-4 mb-6">
-            <h1 class="text-3xl font-bold text-gray-800">ダッシュボード</h1>
-            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">コンテンツの概要</span>
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6 lg:mb-8">
+            <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800">ダッシュボード</h1>
+            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm lg:text-base rounded-full">コンテンツの概要</span>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 lg:gap-8 mb-8 lg:mb-12 stats-grid">
             <div class="card">
               <h3 class="text-xl font-semibold text-gray-800 mb-2">総記事件数</h3>
               <p class="text-3xl font-bold text-blue-600 mb-2">150</p>
@@ -1032,14 +1582,14 @@
 
         <!-- Article List Content -->
         <div class="content-section" data-section="article-list">
-          <div class="flex justify-between items-center mb-8">
-            <div class="flex items-center gap-4">
-              <h1 class="text-3xl font-bold text-gray-800">記事一覧</h1>
-              <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">記事の一覧と管理</span>
+          <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 lg:gap-8 mb-8 lg:mb-12">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800">記事一覧</h1>
+              <span class="px-3 py-1 bg-blue-100 text-blue-800 text-sm lg:text-base rounded-full">記事の一覧と管理</span>
             </div>
-            <div class="flex items-center gap-4">
+            <div class="flex items-center gap-4 w-full lg:w-auto">
               <button
-                class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-medium rounded-lg hover:from-blue-700 hover:to-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                class="inline-flex items-center px-4 md:px-6 lg:px-8 py-2 md:py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm md:text-base font-medium rounded-lg hover:from-blue-700 hover:to-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 w-full lg:w-auto justify-center">
                 <i class="fa-solid fa-plus mr-2 text-white"></i>
                 <span>記事登録</span>
               </button>
@@ -1061,7 +1611,7 @@
               x-transition:leave="transition ease-in duration-200"
               x-transition:leave-start="opacity-100 transform translate-y-0"
               x-transition:leave-end="opacity-0 transform -translate-y-2">
-              <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 form-grid search-form">
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-2">記事ID</label>
                   <input type="text" placeholder="例: 000001"
@@ -1113,13 +1663,13 @@
                   </select>
                 </div>
               </div>
-              <div class="flex justify-end mt-6 space-x-3">
+              <div class="flex flex-col sm:flex-row justify-end mt-6 gap-3 tablet-btn-spacing">
                 <button type="button"
-                  class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium rounded-lg hover:from-blue-700 hover:to-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                  class="btn-primary px-4 md:px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-medium rounded-lg hover:from-blue-700 hover:to-blue-800 focus:ring-4 focus:ring-blue-300 focus:outline-none transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                   検索
                 </button>
                 <button type="button"
-                  class="px-6 py-3 bg-white border-2 border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 hover:border-gray-400 focus:ring-4 focus:ring-gray-200 focus:outline-none transition-all duration-200">
+                  class="btn-secondary px-4 md:px-6 py-3 bg-white border-2 border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 hover:border-gray-400 focus:ring-4 focus:ring-gray-200 focus:outline-none transition-all duration-200">
                   検索条件を保存する
                 </button>
               </div>
@@ -1128,16 +1678,16 @@
 
           <!-- Tabs -->
           <div class="border-b border-gray-200 mb-6">
-            <nav class="flex gap-8 -mb-px">
-              <button class="tab-button px-1 py-4 border-b-2 border-blue-600 text-blue-600 font-semibold active"
+            <nav class="flex flex-wrap gap-4 md:gap-8 -mb-px">
+              <button class="tab-button px-2 md:px-4 py-3 md:py-4 border-b-2 border-blue-600 text-blue-600 font-semibold active text-sm md:text-base"
                 data-tab="draft">
                 下書き
               </button>
-              <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600"
+              <button class="tab-button px-2 md:px-4 py-3 md:py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600 text-sm md:text-base"
                 data-tab="pending">
                 申請中・保留
               </button>
-              <button class="tab-button px-1 py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600"
+              <button class="tab-button px-2 md:px-4 py-3 md:py-4 border-b-2 border-transparent text-gray-500 hover:text-blue-600 text-sm md:text-base"
                 data-tab="published">
                 公開・非公開
               </button>
@@ -1148,23 +1698,23 @@
           <div class="tab-content active" data-tab-content="draft">
             <div class="card">
               <div class="table-container">
-                <table class="w-full text-sm text-left border-collapse shadow-lg rounded-lg overflow-hidden">
-                  <thead class="text-xs text-gray-700 uppercase bg-gray-100">
+                <table class="w-full text-sm md:text-base text-left border-collapse shadow-lg rounded-lg overflow-hidden">
+                  <thead class="text-xs md:text-sm lg:text-base text-gray-700 uppercase bg-gray-100">
                     <tr>
-                      <th class="px-6 py-4 font-medium">状態</th>
-                      <th class="px-6 py-4 font-medium">記事ID</th>
-                      <th class="px-6 py-4 font-medium text-center">作成者</th>
-                      <th class="px-6 py-4 font-medium">記事見出し</th>
-                      <th class="px-6 py-4 font-medium text-center">権限</th>
-                      <th class="px-6 py-4 font-medium">作成日時</th>
-                      <th class="px-6 py-4 font-medium text-center">操作</th>
+                      <th class="px-3 md:px-6 lg:px-8 py-3 md:py-4 lg:py-5 font-medium">状態</th>
+                      <th class="px-3 md:px-6 lg:px-8 py-3 md:py-4 lg:py-5 font-medium">記事ID</th>
+                      <th class="px-3 md:px-6 lg:px-8 py-3 md:py-4 lg:py-5 font-medium text-center">作成者</th>
+                      <th class="px-3 md:px-6 lg:px-8 py-3 md:py-4 lg:py-5 font-medium">記事見出し</th>
+                      <th class="px-3 md:px-6 lg:px-8 py-3 md:py-4 lg:py-5 font-medium text-center">権限</th>
+                      <th class="px-3 md:px-6 lg:px-8 py-3 md:py-4 lg:py-5 font-medium">作成日時</th>
+                      <th class="px-3 md:px-6 lg:px-8 py-3 md:py-4 lg:py-5 font-medium text-center">操作</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr class="bg-white border-b hover:bg-gray-50 transition-colors duration-150">
-                      <td class="px-6 py-4 whitespace-nowrap">
+                      <td class="px-3 md:px-6 lg:px-8 py-3 md:py-4 lg:py-5 whitespace-nowrap">
                         <span
-                          class="inline-flex items-center px-3 py-1 text-sm font-medium rounded-full bg-gradient-to-r from-yellow-200 to-yellow-100 text-yellow-800 shadow-sm border border-yellow-200">
+                          class="inline-flex items-center px-3 py-1 text-xs md:text-sm font-medium rounded-full bg-gradient-to-r from-yellow-200 to-yellow-100 text-yellow-800 shadow-sm border border-yellow-200">
                           <svg class="w-3 h-3 mr-1.5" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
                             <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
@@ -1175,27 +1725,27 @@
                           下書き
                         </span>
                       </td>
-                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">0000000444</td>
-                      <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900 text-center">田中 太郎</td>
-                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">tanaka@example.com</td>
-                      <td class="px-6 py-4 whitespace-nowrap text-center">
+                      <td class="px-3 md:px-6 lg:px-8 py-3 md:py-4 lg:py-5 whitespace-nowrap text-xs md:text-sm text-gray-600">0000000444</td>
+                      <td class="px-3 md:px-6 lg:px-8 py-3 md:py-4 lg:py-5 whitespace-nowrap font-medium text-gray-900 text-center text-xs md:text-sm">田中 太郎</td>
+                      <td class="px-3 md:px-6 lg:px-8 py-3 md:py-4 lg:py-5 whitespace-nowrap text-xs md:text-sm text-gray-600">tanaka@example.com</td>
+                      <td class="px-3 md:px-6 lg:px-8 py-3 md:py-4 lg:py-5 whitespace-nowrap text-center">
                         <span
-                          class="inline-flex items-center justify-center px-3 py-1.5 text-xs font-medium rounded-full bg-gradient-to-r from-red-100 to-red-200 text-red-800 shadow-sm hover:from-red-200 hover:to-red-300 transition-all duration-200 transform hover:scale-105 cursor-default">
+                          class="inline-flex items-center justify-center px-3 py-1.5 text-xs md:text-sm font-medium rounded-full bg-gradient-to-r from-red-100 to-red-200 text-red-800 shadow-sm hover:from-red-200 hover:to-red-300 transition-all duration-200 transform hover:scale-105 cursor-default">
                           管理者
                         </span>
                       </td>
-                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">2023/10/28 09:00</td>
-                      <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="flex items-center justify-center space-x-3">
+                      <td class="px-3 md:px-6 lg:px-8 py-3 md:py-4 lg:py-5 whitespace-nowrap text-xs md:text-sm text-gray-600">2023/10/28 09:00</td>
+                      <td class="px-3 md:px-6 lg:px-8 py-3 md:py-4 lg:py-5 whitespace-nowrap">
+                        <div class="flex items-center justify-center space-x-2 lg:space-x-3">
                           <button onclick="editArticleFromRow(this)" data-article-id="0000000444"
-                            class="inline-flex items-center px-3 py-1.5 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-all duration-150 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300">
-                            <i class="fa-solid fa-pen-to-square text-xs mr-1.5"></i>
-                            <span class="text-sm font-medium">編集</span>
+                            class="inline-flex items-center px-2 md:px-3 lg:px-4 py-1.5 md:py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-all duration-150 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                            <i class="fa-solid fa-pen-to-square text-xs mr-1 md:mr-1.5"></i>
+                            <span class="text-xs md:text-sm font-medium">編集</span>
                           </button>
                           <button
-                            class="inline-flex items-center px-3 py-1.5 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-all duration-150 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-300">
-                            <i class="fa-solid fa-trash text-xs mr-1.5"></i>
-                            <span class="text-sm font-medium">削除</span>
+                            class="inline-flex items-center px-2 md:px-3 lg:px-4 py-1.5 md:py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-all duration-150 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-300">
+                            <i class="fa-solid fa-trash text-xs mr-1 md:mr-1.5"></i>
+                            <span class="text-xs md:text-sm font-medium">削除</span>
                           </button>
                         </div>
                       </td>
@@ -1629,7 +2179,7 @@
                         class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">ファイルを開く</button>
                     </div>
                   </div>
-                  <div>
+                  <div class="mb-6">
                     <label class="block text-sm font-medium text-gray-700 mb-2">動画タグ</label>
                     <div class="border border-gray-300 rounded-lg">
                       <div class="flex border-b" id="video-tag-tabs">
@@ -1650,6 +2200,33 @@
                             class="px-4 py-2 text-sm font-medium text-red-600 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">削除</button>
                         </div>
                       </div>
+                    </div>
+                  </div>
+                  <div class="mb-6 bg-white p-6 rounded-lg shadow">
+                    <div class="mb-4">
+                      <label class="block text-sm font-medium text-gray-700 mb-1" for="article-author">記事作成者</label>
+                      <input
+                        class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        id="article-author" type="text" />
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-1" for="related-articles">関連記事</label>
+                      <a class="text-sm text-blue-600 hover:underline" href="#">記事検索はこちら</a>
+                    </div>
+                  </div>
+                  <div class="mb-6 bg-white p-6 rounded-lg shadow">
+                    <label class="block text-sm font-medium text-gray-700 mb-1"
+                      for="meta-description">メタdescription設定</label>
+                    <textarea
+                      class="w-full h-24 p-4 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      id="meta-description"></textarea>
+                  </div>
+                  <div class="bg-white p-6 rounded-lg shadow">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">PDF</label>
+                    <div class="border-2 border-dashed border-gray-300 rounded-md p-6 text-center">
+                      <p class="text-gray-500 mb-2">ファイルを選択・アップロード</p>
+                      <button
+                        class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">ファイルを開く</button>
                     </div>
                   </div>
                 </div>
@@ -1765,33 +2342,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="space-y-4 bg-white p-6 rounded-lg shadow">
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700 mb-1" for="article-author">記事作成者</label>
-                      <input
-                        class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                        id="article-author" type="text" />
-                    </div>
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700 mb-1" for="related-articles">関連記事</label>
-                      <a class="text-sm text-blue-600 hover:underline" href="#">記事検索はこちら</a>
-                    </div>
-                  </div>
-                  <div class="bg-white p-6 rounded-lg shadow">
-                    <label class="block text-sm font-medium text-gray-700 mb-1"
-                      for="meta-description">メタdescription設定</label>
-                    <textarea
-                      class="w-full h-24 p-4 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                      id="meta-description"></textarea>
-                  </div>
-                  <div class="bg-white p-6 rounded-lg shadow">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">PDF</label>
-                    <div class="border-2 border-dashed border-gray-300 rounded-md p-6 text-center">
-                      <p class="text-gray-500 mb-2">ファイルを選択・アップロード</p>
-                      <button
-                        class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">ファイルを開く</button>
-                    </div>
-                  </div>
+
                   <button
                     class="w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700">下書き記事の削除</button>
                 </div>
