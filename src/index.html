@@ -1754,6 +1754,53 @@
                   </tbody>
                 </table>
               </div>
+              
+              <!-- Pagination -->
+              <div class="flex items-center justify-between p-6 border-t border-gray-200 mt-auto bg-white">
+                <div class="flex items-center space-x-3">
+                  <span class="text-sm font-medium text-gray-600">表示件数:</span>
+                  <select
+                    class="border border-gray-300 rounded-lg px-3 py-2 bg-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 cursor-pointer hover:border-blue-400">
+                    <option value="25">25件</option>
+                    <option value="50">50件</option>
+                    <option value="100">100件</option>
+                  </select>
+                </div>
+
+                <span class="text-sm font-medium text-gray-600">
+                  全 <span class="font-bold text-blue-600">50</span> 件中
+                  <span class="font-bold text-blue-600">1-25</span> 件を表示
+                </span>
+
+                <div class="inline-flex items-center rounded-xl shadow-sm border border-gray-200 bg-white p-1">
+                  <button
+                    class="relative inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium text-gray-400 bg-gray-50 cursor-not-allowed transition-all duration-200"
+                    disabled aria-label="前のページ">
+                    <i class="fas fa-chevron-left mr-2"></i>
+                    前へ
+                  </button>
+
+                  <div class="flex items-center mx-2 space-x-1">
+                    <button
+                      class="relative inline-flex items-center justify-center w-10 h-10 text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg shadow-inner transition-all duration-200 hover:from-blue-600 hover:to-blue-700"
+                      aria-label="ページ 1" aria-current="page">
+                      1
+                    </button>
+                    <button
+                      class="relative inline-flex items-center justify-center w-10 h-10 text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 hover:text-blue-600 rounded-lg transition-all duration-200"
+                      aria-label="ページ 2">
+                      2
+                    </button>
+                  </div>
+
+                  <button
+                    class="relative inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 hover:text-blue-600 transition-all duration-200"
+                    aria-label="次のページ">
+                    次へ
+                    <i class="fas fa-chevron-right ml-2"></i>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -2634,137 +2681,155 @@
             </div>
           </div>
 
-          <div class="card">
-            <form class="space-y-6">
-              <!-- Basic Information -->
-              <div class="border-b border-gray-200 pb-6">
-                <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                  <i class="fa-solid fa-info-circle mr-2 text-blue-500"></i>
-                  基本情報
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">
-                      <i class="fa-solid fa-file-lines mr-1 text-gray-500"></i>
-                      ページ名 <span class="text-red-500">*</span>
-                    </label>
-                    <input type="text" id="edit-page-name"
-                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white"
-                      placeholder="ページ名を入力">
+          <div class="p-4 border border-gray-100 rounded-lg bg-white shadow">
+            <div class="flex-grow grid grid-cols-3 gap-6">
+              <div class="col-span-2 bg-white p-6 rounded-lg shadow">
+                <div class="mb-6">
+                  <label class="block text-sm font-medium text-gray-700 mb-1" for="page-title">ページタイトル</label>
+                  <input class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    id="page-title" type="text" placeholder="ページタイトルを入力" />
+                </div>
+                <div class="mb-6">
+                  <label class="block text-sm font-medium text-gray-700 mb-1" for="page-url">URL</label>
+                  <input class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    id="page-url" type="text" placeholder="例: /about" />
+                </div>
+                <div class="mb-6">
+                  <label class="block text-sm font-medium text-gray-700 mb-1">本文</label>
+                  <div class="border border-gray-300 rounded-md">
+                    <div class="p-2 bg-gray-50 border-b border-gray-300 flex flex-wrap items-center gap-2">
+                      <button class="p-1 text-gray-600 hover:bg-gray-200 rounded"><span
+                          class="material-icons text-base">format_h2</span></button>
+                      <button class="p-1 text-gray-600 hover:bg-gray-200 rounded"><span
+                          class="material-icons text-base">format_align_right</span></button>
+                      <button class="p-1 text-gray-600 hover:bg-gray-200 rounded"><span
+                          class="material-icons text-base">format_align_center</span></button>
+                      <button class="p-1 text-gray-600 hover:bg-gray-200 rounded"><span
+                          class="material-icons text-base">link</span></button>
+                      <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">NewTabLink</button>
+                      <button class="p-1 text-gray-600 hover:bg-gray-200 rounded"><span
+                          class="material-icons text-base">format_bold</span></button>
+                      <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">改ページ</button>
+                      <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">キャプション</button>
+                      <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">ルビ</button>
+                      <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">会話（左）</button>
+                      <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">会話（右）</button>
+                      <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">プロフィール</button>
+                      <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">プロフィール詳細</button>
+                      <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">文字サイズ</button>
+                      <button class="p-1 text-gray-600 hover:bg-gray-200 rounded text-xs">ルビ（JS）</button>
+                    </div>
+                    <textarea class="w-full h-64 p-4 border-0 focus:ring-0" placeholder="ページの内容を入力してください..."></textarea>
                   </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">
-                      <i class="fa-solid fa-link mr-1 text-gray-500"></i>
-                      URL <span class="text-red-500">*</span>
-                    </label>
-                    <input type="text" id="edit-page-url"
-                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white"
-                      placeholder="例: /about">
+                </div>
+                <div class="mb-6">
+                  <label class="block text-sm font-medium text-gray-700 mb-1">画像</label>
+                  <div class="border-2 border-dashed border-gray-300 rounded-md p-6 text-center">
+                    <p class="text-gray-500 mb-2">画像を選択・アップロード</p>
+                    <button
+                      class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">ファイルを開く</button>
                   </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">
-                      <i class="fa-solid fa-toggle-on mr-1 text-gray-500"></i>
-                      公開状態
-                    </label>
-                    <select id="edit-page-status"
-                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white">
-                      <option value="published">公開中</option>
-                      <option value="draft">下書き</option>
-                      <option value="private">非公開</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">
-                      <i class="fa-solid fa-calendar mr-1 text-gray-500"></i>
-                      公開日時
-                    </label>
-                    <input type="datetime-local" id="edit-publish-date"
-                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white">
+                </div>
+                <div class="mb-6 bg-white p-6 rounded-lg shadow">
+                  <label class="block text-sm font-medium text-gray-700 mb-1"
+                    for="page-meta-description">メタdescription設定</label>
+                  <textarea
+                    class="w-full h-24 p-4 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                    id="page-meta-description" placeholder="検索結果に表示される説明文を入力"></textarea>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow">
+                  <label class="block text-sm font-medium text-gray-700 mb-2">添付ファイル</label>
+                  <div class="border-2 border-dashed border-gray-300 rounded-md p-6 text-center">
+                    <p class="text-gray-500 mb-2">ファイルを選択・アップロード</p>
+                    <button
+                      class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50">ファイルを開く</button>
                   </div>
                 </div>
               </div>
-
-              <!-- SEO Settings -->
-              <div class="border-b border-gray-200 pb-6">
-                <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                  <i class="fa-solid fa-search mr-2 text-green-500"></i>
-                  SEO設定
-                </h2>
-                <div class="space-y-4">
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">
-                      <i class="fa-solid fa-heading mr-1 text-gray-500"></i>
-                      メタタイトル
-                    </label>
-                    <input type="text" id="edit-meta-title"
-                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white"
-                      placeholder="SEO用のタイトルを入力">
+              <div class="col-span-1 space-y-6">
+                <div class="bg-white p-6 rounded-lg shadow">
+                  <div class="mb-4">
+                    <p class="text-sm font-medium text-gray-700">フロントの表示状態: <span class="font-normal">非公開</span>
+                    </p>
                   </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">
-                      <i class="fa-solid fa-align-left mr-1 text-gray-500"></i>
-                      メタディスクリプション
-                    </label>
-                    <textarea id="edit-meta-description" rows="3"
-                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400 bg-white"
-                      placeholder="検索結果に表示される説明文を入力"></textarea>
+                  <div class="mb-4">
+                    <p class="text-sm font-medium text-gray-700">ページステータス: <span class="font-normal">編集中</span></p>
+                  </div>
+                  <h3 class="text-lg font-semibold text-gray-800 mb-4">カテゴリ・タグ</h3>
+                  <div
+                    class="border border-gray-300 rounded-md p-4 h-32 cursor-pointer hover:bg-gray-50 flex items-center justify-center">
+                    <span class="text-gray-500">選択してください</span>
                   </div>
                 </div>
-              </div>
-
-              <!-- Content Editor -->
-              <div>
-                <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                  <i class="fa-solid fa-edit mr-2 text-purple-500"></i>
-                  コンテンツ
-                </h2>
-                <div class="border border-gray-300 rounded-lg">
-                  <div class="p-3 border-b border-gray-300 bg-gray-50">
-                    <div class="flex items-center space-x-4">
-                      <button type="button" class="text-sm font-medium text-blue-600 hover:text-blue-700">
-                        <i class="fa-solid fa-bold mr-1"></i>太字
-                      </button>
-                      <button type="button" class="text-sm font-medium text-blue-600 hover:text-blue-700">
-                        <i class="fa-solid fa-italic mr-1"></i>斜体
-                      </button>
-                      <button type="button" class="text-sm font-medium text-blue-600 hover:text-blue-700">
-                        <i class="fa-solid fa-link mr-1"></i>リンク
-                      </button>
-                      <button type="button" class="text-sm font-medium text-blue-600 hover:text-blue-700">
-                        <i class="fa-solid fa-image mr-1"></i>画像
-                      </button>
+                <div class="bg-white p-6 rounded-lg shadow">
+                  <h3 class="text-lg font-semibold text-gray-800 mb-4">メモ</h3>
+                  <textarea
+                    class="w-full h-24 p-4 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="テキストを入力"></textarea>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                  <button
+                    class="w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700">PC
+                    プレビュー</button>
+                  <button
+                    class="w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700">SPプレビュー</button>
+                </div>
+                <div class="flex justify-end">
+                  <button
+                    class="w-1/2 px-4 py-2 text-sm font-medium text-white bg-orange-500 border border-transparent rounded-md shadow-sm hover:bg-orange-600">下書き保存</button>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                  <button
+                    class="w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700">申請中・保留に保存</button>
+                  <button
+                    class="w-full px-4 py-2 text-sm font-medium text-white bg-orange-500 border border-transparent rounded-md shadow-sm hover:bg-orange-600">別ページに保存</button>
+                </div>
+                <div class="space-y-4 bg-white p-6 rounded-lg shadow">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1" for="page-publish-start">公開開始日時</label>
+                    <div class="flex items-center space-x-2">
+                      <input
+                        class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        id="page-publish-start-date" type="date" />
+                      <input
+                        class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        id="page-publish-start-time" type="time" />
                     </div>
                   </div>
-                  <textarea id="edit-page-content" rows="15"
-                    class="w-full p-4 border-0 rounded-b-lg focus:ring-0 focus:outline-none resize-none"
-                    placeholder="ページの内容を入力してください..."></textarea>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1" for="page-publish-end">公開終了日時</label>
+                    <div class="flex items-center space-x-2">
+                      <input
+                        class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        id="page-publish-end-date" type="date" />
+                      <input
+                        class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        id="page-publish-end-time" type="time" />
+                    </div>
+                  </div>
                 </div>
+                <div class="space-y-4 bg-white p-6 rounded-lg shadow">
+                  <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-2">
+                      <label class="block text-sm font-medium text-gray-700">PCテンプレート設定</label>
+                      <select
+                        class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        <option>選択してください</option>
+                      </select>
+                    </div>
+                    <div class="space-y-2">
+                      <label class="block text-sm font-medium text-gray-700">SPテンプレート設定</label>
+                      <select
+                        class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        <option>選択してください</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  class="w-full px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700">下書きページの削除</button>
               </div>
-
-              <!-- Action Buttons -->
-              <div class="flex justify-end space-x-4 pt-6">
-                <button type="button" onclick="showContentSection('pages')"
-                  class="px-6 py-3 bg-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-400 focus:ring-4 focus:ring-gray-200 focus:outline-none transition-all duration-200">
-                  <i class="fa-solid fa-times mr-2"></i>
-                  キャンセル
-                </button>
-                <button type="button"
-                  class="px-6 py-3 bg-white border-2 border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 hover:border-gray-400 focus:ring-4 focus:ring-gray-200 focus:outline-none transition-all duration-200">
-                  <i class="fa-solid fa-eye mr-2"></i>
-                  プレビュー
-                </button>
-                <button type="button"
-                  class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none transition-all duration-200">
-                  <i class="fa-solid fa-save mr-2"></i>
-                  下書き保存
-                </button>
-                <button type="button"
-                  class="px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white font-medium rounded-lg hover:from-green-700 hover:to-green-800 focus:ring-4 focus:ring-green-300 focus:outline-none transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-                  <i class="fa-solid fa-check mr-2"></i>
-                  更新
-                </button>
-              </div>
-            </form>
+            </div>
           </div>
         </div>
 
