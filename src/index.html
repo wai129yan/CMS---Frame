@@ -43,7 +43,7 @@
       overflow-x: hidden;
     }
 
-    /* Login Modal Styles */
+    /* Modern Login Modal Styles */
     .login-modal {
       display: none;
       position: fixed;
@@ -51,151 +51,463 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: #e5e7eb;
       z-index: 9999;
       align-items: center;
       justify-content: center;
+      backdrop-filter: blur(10px);
     }
 
     .login-modal.show {
       display: flex;
     }
 
-    .login-container {
-      background-color: var(--card-bg);
-      border-radius: 1rem;
-      padding: var(--spacing-2xl);
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-      width: 100%;
-      max-width: 400px;
-      margin: var(--spacing-md);
+    .login-wrapper {
+      display: flex;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      box-shadow: 0 32px 64px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+      width: 90%;
+      max-width: 1000px;
+      min-height: 600px;
       position: relative;
+    }
+
+    /* Left Side - Branding */
+    .login-brand-side {
+      flex: 1;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem;
+      color: white;
+    }
+
+    .login-brand-side::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="10" cy="60" r="0.5" fill="white" opacity="0.1"/><circle cx="90" cy="40" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.3;
+    }
+
+    .brand-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .brand-logo {
+      margin-bottom: 2rem;
+    }
+
+    .logo-icon {
+      width: 80px;
+      height: 80px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .logo-icon i {
+      font-size: 2rem;
+      color: white;
+    }
+
+    .brand-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin: 0;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-description {
+      margin: 2rem 0;
+    }
+
+    .brand-description h2 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin: 0 0 1rem 0;
+      opacity: 0.95;
+    }
+
+    .brand-description p {
+      font-size: 1.1rem;
+      opacity: 0.8;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .brand-features {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    .feature-item i {
+      width: 20px;
+      text-align: center;
+    }
+
+    /* Right Side - Form */
+    .login-form-side {
+      flex: 1;
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      background: white;
     }
 
     .login-close {
       position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: none;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: rgba(0, 0, 0, 0.05);
       border: none;
-      font-size: 1.5rem;
-      color: var(--secondary-text);
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
-      padding: 0.5rem;
-      border-radius: 0.25rem;
       transition: all 0.2s ease;
+      color: #6b7280;
     }
 
     .login-close:hover {
-      color: var(--text-color);
-      background-color: var(--border-color);
+      background: rgba(0, 0, 0, 0.1);
+      color: #374151;
+      transform: scale(1.05);
     }
 
-    .logo {
-      text-align: center;
-      margin-bottom: var(--spacing-xl);
-    }
-
-    .logo h1 {
-      font-size: 2rem;
-      font-weight: 800;
-      color: var(--primary-color);
-      margin: 0;
-      margin-bottom: var(--spacing-xs);
-    }
-
-    .logo p {
-      color: var(--secondary-text);
-      font-size: 0.875rem;
-      margin: 0;
-    }
-
-    .form-group {
-      margin-bottom: var(--spacing-lg);
-    }
-
-    .form-label {
-      display: block;
-      font-weight: 500;
-      color: var(--text-color);
-      margin-bottom: var(--spacing-sm);
-      font-size: 0.875rem;
-    }
-
-    .form-input {
+    .form-container {
+      max-width: 400px;
       width: 100%;
-      padding: 0.75rem var(--spacing-md);
-      border: 1px solid var(--border-color);
-      border-radius: 0.5rem;
+      margin: 0 auto;
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .form-header h3 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1f2937;
+      margin: 0 0 0.5rem 0;
+      letter-spacing: -0.02em;
+    }
+
+    .form-header p {
+      color: #6b7280;
       font-size: 1rem;
-      transition: all 0.2s ease;
-      background-color: #ffffff;
+      margin: 0;
+    }
+
+    /* Modern Form Styles */
+    .modern-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .input-group {
+      position: relative;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 1rem;
+      color: #9ca3af;
+      font-size: 1rem;
+      z-index: 2;
+      transition: color 0.2s ease;
+    }
+
+    .modern-input {
+      width: 100%;
+      padding: 1rem 1rem 1rem 3rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      font-size: 1rem;
+      background: #f9fafb;
+      transition: all 0.3s ease;
       box-sizing: border-box;
     }
 
-    .form-input:focus {
+    .modern-input:focus {
       outline: none;
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      border-color: #667eea;
+      background: white;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
     }
 
-    .form-input::placeholder {
-      color: var(--secondary-text);
+    .modern-input:focus + .floating-label,
+    .modern-input:not(:placeholder-shown) + .floating-label {
+      transform: translateY(-2.5rem) scale(0.85);
+      color: #667eea;
     }
 
-    .password-container {
-      position: relative;
+    .modern-input:focus ~ .input-icon {
+      color: #667eea;
+    }
+
+    .floating-label {
+      position: absolute;
+      left: 3rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9ca3af;
+      font-size: 1rem;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      background: white;
+      padding: 0 0.25rem;
     }
 
     .password-toggle {
       position: absolute;
-      right: 0.75rem;
-      top: 50%;
-      transform: translateY(-50%);
+      right: 1rem;
       background: none;
       border: none;
-      color: var(--secondary-text);
+      color: #9ca3af;
       cursor: pointer;
-      padding: 0;
-      font-size: 1rem;
+      padding: 0.5rem;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      z-index: 2;
     }
 
     .password-toggle:hover {
-      color: var(--text-color);
+      color: #667eea;
+      background: rgba(102, 126, 234, 0.1);
     }
 
-    .login-btn {
-      width: 100%;
-      background: var(--primary-gradient);
+    .form-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0.5rem 0;
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .modern-checkbox {
+      width: 18px;
+      height: 18px;
+      border: 2px solid #d1d5db;
+      border-radius: 4px;
+      cursor: pointer;
+      position: relative;
+      appearance: none;
+      transition: all 0.2s ease;
+    }
+
+    .modern-checkbox:checked {
+      background: #667eea;
+      border-color: #667eea;
+    }
+
+    .modern-checkbox:checked::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       color: white;
-      padding: 0.75rem var(--spacing-md);
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .checkbox-label {
+      font-size: 0.9rem;
+      color: #6b7280;
+      cursor: pointer;
+    }
+
+    .forgot-link {
+      color: #667eea;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .forgot-link:hover {
+      color: #5a67d8;
+    }
+
+    .modern-login-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
       border: none;
-      border-radius: 0.5rem;
+      padding: 1rem 2rem;
+      border-radius: 12px;
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s ease;
-      margin-bottom: var(--spacing-lg);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      position: relative;
+      overflow: hidden;
     }
 
-    .login-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    .modern-login-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
     }
 
-    .login-btn:active {
+    .modern-login-btn:hover::before {
+      left: 100%;
+    }
+
+    .modern-login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(102, 126, 234, 0.3);
+    }
+
+    .modern-login-btn:active {
       transform: translateY(0);
     }
 
-    .login-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
+    .btn-icon {
+      transition: transform 0.2s ease;
     }
 
-    .forgot-password {
+    .modern-login-btn:hover .btn-icon {
+      transform: translateX(4px);
+    }
+
+    .form-footer {
       text-align: center;
-      margin-top: var(--spacing-md);
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .form-footer p {
+      color: #6b7280;
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .signup-link {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+
+    .signup-link:hover {
+      color: #5a67d8;
+    }
+
+    /* Error/Success Messages */
+    .error-message,
+    .success-message {
+      display: none;
+      padding: 1rem;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .error-message {
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fecaca;
+    }
+
+    .success-message {
+      background: #f0fdf4;
+      color: #16a34a;
+      border: 1px solid #bbf7d0;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .login-wrapper {
+        flex-direction: column;
+        width: 95%;
+        max-width: 400px;
+        min-height: auto;
+      }
+
+      .login-brand-side {
+        padding: 2rem;
+        min-height: 200px;
+      }
+
+      .brand-features {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .login-form-side {
+        padding: 2rem;
+      }
+
+      .form-header h3 {
+        font-size: 1.75rem;
+      }
+
+      .brand-description h2 {
+        font-size: 1.5rem;
+      }
+
+      .brand-title {
+        font-size: 2rem;
+      }
     }
 
     .forgot-password a {
@@ -1233,69 +1545,106 @@
 <body>
   <!-- Login Modal -->
   <div id="login-modal" class="login-modal">
-    <div class="login-container">
-      <button class="login-close" onclick="closeLoginModal()">
-        <i class="fa-solid fa-times"></i>
-      </button>
-
-      <!-- Logo and Title -->
-      <div class="logo">
-        <h1>OUTWARD</h1>
-        <p>CMS管理画面にログイン</p>
-      </div>
-
-      <!-- Error/Success Messages -->
-      <div id="error-message" class="error-message">
-        <i class="fa-solid fa-exclamation-circle"></i>
-        <span id="error-text">ログインに失敗しました。</span>
-      </div>
-
-      <div id="success-message" class="success-message">
-        <i class="fa-solid fa-check-circle"></i>
-        <span id="success-text">ログインしています...</span>
-      </div>
-
-      <!-- Login Form -->
-      <form id="login-form">
-        <!-- Email/Username Field -->
-        <div class="form-group">
-          <label for="email" class="form-label">
-            <i class="fa-solid fa-envelope"></i>
-            メールアドレス
-          </label>
-          <input type="email" id="email" name="email" class="form-input" placeholder="example@outward.co.jp" required>
-        </div>
-
-        <!-- Password Field -->
-        <div class="form-group">
-          <label for="password" class="form-label">
-            <i class="fa-solid fa-lock"></i>
-            パスワード
-          </label>
-          <div class="password-container">
-            <input type="password" id="password" name="password" class="form-input" placeholder="パスワードを入力してください"
-              required>
-            <button type="button" class="password-toggle" onclick="togglePassword()">
-              <i class="fa-solid fa-eye" id="password-icon"></i>
-            </button>
+    <div class="login-wrapper">
+      <!-- Left Side - Branding/Illustration -->
+      <div class="login-brand-side">
+        <div class="brand-content">
+          <div class="brand-logo">
+            <div class="logo-icon">
+              <i class="fa-solid fa-rocket"></i>
+            </div>
+            <h1 class="brand-title">OUTWARD</h1>
+          </div>
+          <div class="brand-description">
+            <h2>Welcome Back!</h2>
+            <p>Sign in to access your CMS dashboard and manage your content with ease.</p>
+          </div>
+          <div class="brand-features">
+            <div class="feature-item">
+              <i class="fa-solid fa-shield-halved"></i>
+              <span>Secure & Reliable</span>
+            </div>
+            <div class="feature-item">
+              <i class="fa-solid fa-bolt"></i>
+              <span>Fast Performance</span>
+            </div>
+            <div class="feature-item">
+              <i class="fa-solid fa-users"></i>
+              <span>Team Collaboration</span>
+            </div>
           </div>
         </div>
+      </div>
 
-        <!-- Remember Me -->
-        <div class="remember-me">
-          <input type="checkbox" id="remember" name="remember">
-          <label for="remember">ログイン状態を保持する</label>
-        </div>
-
-        <!-- Login Button -->
-        <button type="submit" class="login-btn">
-          <i class="fa-solid fa-sign-in-alt"></i>
-          ログイン
+      <!-- Right Side - Login Form -->
+      <div class="login-form-side">
+        <button class="login-close" onclick="closeLoginModal()">
+          <i class="fa-solid fa-times"></i>
         </button>
-      </form>
 
-      <!-- Forgot Password Link -->
+        <div class="form-container">
+          <!-- Header -->
+          <div class="form-header">
+            <h3>Sign In</h3>
+            <p>Enter your credentials to access your account</p>
+          </div>
 
+          <!-- Error/Success Messages -->
+          <div id="error-message" class="error-message">
+            <i class="fa-solid fa-exclamation-circle"></i>
+            <span id="error-text">ログインに失敗しました。</span>
+          </div>
+
+          <div id="success-message" class="success-message">
+            <i class="fa-solid fa-check-circle"></i>
+            <span id="success-text">ログインしています...</span>
+          </div>
+
+          <!-- Login Form -->
+          <form id="login-form" class="modern-form">
+            <!-- Email Field -->
+            <div class="input-group">
+              <div class="input-wrapper">
+                <i class="fa-solid fa-envelope input-icon"></i>
+                <input type="email" id="email" name="email" class="modern-input" placeholder="Enter your email" required>
+                <label for="email" class="floating-label">Email Address</label>
+              </div>
+            </div>
+
+            <!-- Password Field -->
+            <div class="input-group">
+              <div class="input-wrapper">
+                <i class="fa-solid fa-lock input-icon"></i>
+                <input type="password" id="password" name="password" class="modern-input" placeholder="Enter your password" required>
+                <label for="password" class="floating-label">Password</label>
+                <button type="button" class="password-toggle" onclick="togglePassword()">
+                  <i class="fa-solid fa-eye" id="password-icon"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Options Row -->
+            <div class="form-options">
+              <div class="remember-me">
+                <input type="checkbox" id="remember" name="remember" class="modern-checkbox">
+                <label for="remember" class="checkbox-label">Remember me</label>
+              </div>
+              <a href="#" class="forgot-link">Forgot password?</a>
+            </div>
+
+            <!-- Login Button -->
+            <button type="submit" class="modern-login-btn">
+              <span class="btn-text">Sign In</span>
+              <i class="fa-solid fa-arrow-right btn-icon"></i>
+            </button>
+          </form>
+
+          <!-- Footer -->
+          <div class="form-footer">
+            <p>Don't have an account? <a href="#" class="signup-link">Sign up</a></p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
